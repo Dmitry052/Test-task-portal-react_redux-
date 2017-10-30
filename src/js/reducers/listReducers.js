@@ -8,7 +8,9 @@ import transpStatus from './transport/transpStatuses';
 import transpUserToWg from './transport/transpUserToWg';
 import transpExecutor from './transport/transpExecutor';
 import currentOrder from './transport/_currentOrder';
+import directoties from './transport/_directories';
 import closureStatuses from './transport/closure_statuses';
+
 
 const transpReducer = combineReducers ({
     transp
@@ -37,6 +39,9 @@ const currentOrderReducer = combineReducers ({
 const closureStatusesReducer = combineReducers ({
     closureStatuses
 });
+const directotiesReducer = combineReducers ({
+    directoties
+});
 
 export default combineReducers({
     transp,
@@ -47,5 +52,6 @@ export default combineReducers({
     transpUserToWg,
     transpExecutor,
     currentOrder,
-    closureStatuses
+    closureStatuses,
+    directoties
 });

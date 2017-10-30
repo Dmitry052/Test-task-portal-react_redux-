@@ -129,6 +129,7 @@ app.get('/transp', function (req, res) {
     else if (req.session.serviceType === 1) { res.redirect('/expl') }
     res.render('index');
 });
+
 // Разлог
 app.get('/logout', (req, res) => {
     console.log(`Exit user ${req.session.authUser}`);

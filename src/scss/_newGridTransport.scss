@@ -29,9 +29,14 @@ body > div.ReactModalPortal > div > div > div.modalBody {
     background: #2780e3 !important;
     color: #fff !important;
 }
+// Шапка грида 
+#root > div > div.transport > div > div > div.react-bs-table.react-bs-table-bordered > div.react-bs-container-header.table-header-wrapper > table > thead > tr > th:nth-child(6) > div > div > select,
+#root > div > div.transport > div > div > div.react-bs-table.react-bs-table-bordered > div.react-bs-container-header.table-header-wrapper > table > thead > tr > th:nth-child(7) > div > div > select{
+    padding: 0 10px;
+}
 // Параметры модального окна
 body > div.ReactModalPortal > div > div {
-    height: 66%;
+    height: 90%;
 }
 body > div:nth-child(5) > div > div{
     width: 50%;
@@ -264,4 +269,8 @@ body > div:nth-child(5) > div > div{
 }
 body > div:nth-child(5) > div > div > div > div.panel-heading{
     padding: 0;
+}
+// Подробнее
+body > div:nth-child(5) > div > div > div > div.panel-heading > h4{
+    padding: 4px 15px;
 }

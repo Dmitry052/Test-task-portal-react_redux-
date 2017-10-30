@@ -30,8 +30,8 @@ class LeftMenu extends Component {
             iconDirectory2: 'fa fa-car',
 
             nameFilters: 'Фильтры',
-            nameFilter1: 'На мой рабочие группы',
-            nameFilter2: 'Назначеные мне',
+            nameFilter1: 'На мои рабочие группы',
+            nameFilter2: 'Назначены мне',
             nameFilter3: 'Завершённые поездки',
             nameFilter4: 'Данные отправлены',
             nameFilter5: 'Отозваны клиентом',
@@ -71,8 +71,8 @@ class LeftMenu extends Component {
                 iconDirectories: '',
 
                 nameFilters: 'Фильтры',
-                nameFilter1: 'На мой рабочие группы',
-                nameFilter2: 'Назначеные мне',
+                nameFilter1: 'На мои рабочие группы',
+                nameFilter2: 'Назначены мне',
                 nameFilter3: 'Завершённые поездки',
                 nameFilter4: 'Данные отправлены',
                 nameFilter5: 'Отозваны клиентом',
@@ -159,7 +159,6 @@ export default connect(
     }),
     dispatch => ({
         myWG: () => {
-            console.log("my wg")
             dispatch(transpMyWG());
         },
         toMe: () => {

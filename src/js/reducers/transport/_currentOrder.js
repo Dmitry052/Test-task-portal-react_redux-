@@ -243,7 +243,6 @@ export default function currentOrder(state = initialState, action) {
         state.edit_description = true;
     }
     if (action.type === 'currentOrder') {
-        console.log("на входе", action.data);
         switch (action.data[0].status) {
             case action.data[2][0].status:
                 assignedToWG();
@@ -395,6 +394,5 @@ export default function currentOrder(state = initialState, action) {
     if (action.type === 'setSolution') {
         state.order_solution = action.data;
     }
-    // console.log('на выходе state:',state);
     return state;
 }
