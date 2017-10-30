@@ -1,0 +1,5 @@
+# OS generated files #
+######################
+/node_modules/
+/.vscode/
+/public/js/bundle.js

@@ -1,0 +1,32 @@
+
+#root > div > div.leftMenu > div{
+    background: #455464;
+    margin-top: 2px;
+}
+#root > div > div.leftMenu > div > ul > li {
+    width: 100%;
+}
+#root > div > div.leftMenu > div > ul > li > a{
+    color : #fff;
+    font-size: 14px;
+}
+#root > div > div.leftMenu > div > ul > li > a:hover{
+    color: #23527c;
+}
+#root > div > div.leftMenu > div > ul > li > a:focus{
+    background-color: #337ab7;
+    color : #fff;
+}
+.leftMenu button {
+    width: 100%;
+    text-align: left;
+    border: none; 
+    background-color: #2b5a84;
+}
+.leftMenu button:focus,.leftMenu button:active,.leftMenu button:hover{
+    background-color: #2b5a84;
+    border: none; 
+  
+}
+
+

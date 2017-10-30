@@ -1,0 +1,36 @@
+.headerApp {
+    width: 100%;
+    background: #303a46;
+    border-bottom: 3px solid #455464; }
+  
+  #logoText {
+    letter-spacing: 0.03em;
+    font-size: 17pt;
+    font-weight: 300;
+    margin-left: 20px;
+    color: #fff;
+    text-decoration: none; }
+  
+  #globalSearch, #logout {
+    display: inline-block;
+    float: right; }
+  
+  #globalSearchQuery, #globalSearch > button, #logout > button {
+    height: 34px;
+    padding: 6px 12px;
+    border-width: 0px;
+    font-size: 14px; }
+  
+  #globalSearchQuery {
+    transition-property: width;
+    transition: 0.5s; }
+  
+  #globalSearch > button {
+    background: #337ab7; }
+  
+  #logout {
+    margin-left: 8%;
+    margin-right: 0%; }
+  
+  #logout > button {
+    border-radius: 0px; }
