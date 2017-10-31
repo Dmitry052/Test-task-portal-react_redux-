@@ -83,7 +83,15 @@ export default function directoties(state = initialState, action) {
         state.car_vehicle_id_number = action.data.vehicle_id_number
         state.car_vehicle_color = action.data.vehicle_color
         // state.car_compan = action.data.
-       
+
+        return state;
+    }
+    if (action.type === "SET_STATUS_DRIVER_DIRECT") {
+        state.driver_status = action.data;
+        return state;
+    }
+    if (action.type === "SET_COMPANY_DRIVER_DIRECT") {
+        state.driver_company = action.data;
         return state;
     }
     return state;

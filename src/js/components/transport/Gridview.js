@@ -633,7 +633,7 @@ class Gridview extends Component {
                             {/* <Button id='btn6' className={this.props.order.headerBtnSendToBank} bsStyle="default">Передать данные о поездке в банк</Button> */}
                         </div>
                         <Modal isOpen={this.state.showInfoModal} contentLabel="Modal">
-                            <div className="panel panel-default col-lg-12 col-md-12 col-sm-12">
+                            <div id="fullDescr" className="panel panel-default col-lg-12 col-md-12 col-sm-12">
                                 <div className="panel-heading">
                                     <h4>Описание</h4>
                                     <Button id='btn1' onClick={this.onoffInfo}><i className="fa fa-times" aria-hidden="true"></i></Button>

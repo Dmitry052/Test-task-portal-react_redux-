@@ -251,3 +251,15 @@ export const showEditCar = (row, company) => dispatch => {
     data: [row, company]
   });
 };
+export const setStatusDriverDirect = (status) => dispatch => {
+  dispatch({
+    type: "SET_STATUS_DRIVER_DIRECT",
+    data: status
+  });
+};
+export const setCompanyDriverDirect = (driver) => dispatch => {
+  dispatch({
+    type: "SET_COMPANY_DRIVER_DIRECT",
+    data: driver
+  });
+};

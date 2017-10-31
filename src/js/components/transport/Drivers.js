@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { showAddDriver, showEditDriver } from 'Actions/actionTransp';
+import { showAddDriver, showEditDriver, setStatusDriverDirect, setCompanyDriverDirect } from 'Actions/actionTransp';
 import Modal from 'react-modal';
+import MaskedInput from 'react-maskedinput';
 import Dropdown from 'react-dropdown';
+
 import { DropdownButton, MenuItem, Alert } from "react-bootstrap";
 
 class Drivers extends Component {
@@ -22,18 +24,33 @@ class Drivers extends Component {
         this.props.showAddDriver();
         this.setState({});
     }
+    saveToDB() {
+        const newDriver = {
+            driver_fullname: '',
+            driver_phone: '',
+            status: '',
+            car_id: '',
+            company_id: '',
+        }
+    }
+    setStatus(status) {
+        this.props.setStatusDriverDirect(status);
+        this.setState({});
 
+    }
+    setCompany(company) {
+        this.props.setCompanyDriverDirect(company);
+        this.setState({});
+    }
     render() {
         console.log(this.props.transp.companyToUser);
         const options = {
             sizePerPage: 10,
             onRowDoubleClick: this.onRowClick.bind(this),
         };
-
         const dropdtaCompany = this.props.transp.companyToUser.map((name, i) => {
-            return <MenuItem eventKey={i} onSelect={() => this.setClosureCode(name.companyname)}>{name.companyname}</MenuItem>
+            return <MenuItem eventKey={i} onSelect={() => this.setCompany(name.companyname)}>{name.companyname}</MenuItem>
         })
-
         return (
             <div id="gridDrivers">
                 <button className='btn-success' onClick={this.showAddDriver.bind(this)}>Добавить нового водителя</button>
@@ -59,19 +76,32 @@ class Drivers extends Component {
                     </div>
                     <div className='col-lg-12 col-md-12 col-sm-12 modalDriver'>
                         <span>ФИО</span>
-                        <input type='text' value={this.props.transp.directoties.driver_driver_name} />
+                        <input type='text'
+                            value={this.props.transp.directoties.driver_driver_name}
+                            placeholder="Иванов Иван Иванович"
+                        />
                     </div >
                     <div className='col-lg-12 col-md-12 col-sm-12 modalDriver'>
                         <span>Телефон</span>
-                        <input type='text' value={this.props.transp.directoties.driver_driver_phone} />
+                        <MaskedInput
+                            mask="+7-111-111-11-11"
+                            placeholder="+7-xxx-xxx-xx-xx"
+                            value={this.props.transp.directoties.driver_driver_phone}
+                        />
                     </div>
                     <div className='col-lg-12 col-md-12 col-sm-12 modalDriver'>
                         <span>Статус</span>
-                        <input type='text' value={this.props.transp.directoties.driver_status} />
+                        <DropdownButton title={this.props.transp.directoties.driver_status || '-'}>
+                            <MenuItem eventKey={'work'} onSelect={() => this.setStatus('Работает')}>Работает</MenuItem>
+                            <MenuItem eventKey={'dismissed'} onSelect={() => this.setStatus('Уволен')}>Уволен</MenuItem>
+                        </DropdownButton>
                     </div>
                     <div className='col-lg-12 col-md-12 col-sm-12 modalDriver'>
                         <span>Регистрационный номер</span>
-                        <input type='text' value={this.props.transp.directoties.driver_vehicle_id_number} />
+                        <input type='text'
+                            value={this.props.transp.directoties.driver_vehicle_id_number}
+                            placeholder="Е777KX"
+                        />
                     </div>
                     <div className='col-lg-12 col-md-12 col-sm-12 modalDriver'>
                         <span>Компания</span>
@@ -98,6 +128,15 @@ export default connect(
         },
         showEditDriver: (row, company) => {
             dispatch(showEditDriver(row, company));
+        },
+        setStatusDriverDirect: (status) => {
+            dispatch(setStatusDriverDirect(status));
+        },
+        setCompanyDriverDirect: (company) => {
+            dispatch(setCompanyDriverDirect(company));
+        },
+        saveToDBDriverDirect: () => {
+
         }
 
     })

@@ -28,7 +28,7 @@
     background-color: #fff;
     background-image: none;
     border: 1px solid #ccc;
-    border-radius: 4px
+    border-radius: 4px;
 }
 .modalDriver > div{
     width: 100%;
@@ -39,8 +39,10 @@
 .modalDriver > div > button{
     width: 100%;
     padding: 6px 12px;
-    
 }
 .modalDriver > div > button > span{
     display: inline-block;
+}
+.modalDriver button{
+    text-align: left;
 }

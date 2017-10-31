@@ -244,6 +244,7 @@ export default function currentOrder(state = initialState, action) {
         state.edit_description = true;
     }
     if (action.type === 'currentOrder') {
+        console.log(action.data);
         switch (action.data[0].status) {
             case action.data[2][0].status:
                 assignedToWG();

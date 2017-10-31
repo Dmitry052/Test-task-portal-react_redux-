@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { showAddCar, showEditCar } from 'Actions/actionTransp';
 import Modal from 'react-modal';
+import MaskedInput from 'react-maskedinput';
 import Dropdown from 'react-dropdown';
 import { DropdownButton, MenuItem, Alert } from "react-bootstrap";
 
@@ -16,9 +17,6 @@ class Cars extends Component {
         this.props.showAddCar();
         this.setState({});
     }
-    // showEditCar(row) {
-        
-    // }
     render() {
         const options = {
             sizePerPage: 10,
