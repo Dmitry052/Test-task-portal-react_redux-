@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { transpMyWG, transpToMe, transpDoneTrip, transpDataSend,cancelClient } from 'Actions/actionTransp';
-import {Nav,NavItem,Collapse,Button} from 'react-bootstrap';
+import { transpMyWG, transpToMe, transpDoneTrip, transpDataSend, cancelClient, showDirect, showCarsDirect, showDriversDirect } from 'Actions/actionTransp';
+import { Nav, NavItem, Collapse, Button } from 'react-bootstrap';
 
 
 class LeftMenu extends Component {
     constructor(props) {
         super(props);
-        
+
         this.props.myWG();
 
         this.state = {
@@ -35,7 +35,7 @@ class LeftMenu extends Component {
             nameFilter3: 'Завершённые поездки',
             nameFilter4: 'Данные отправлены',
             nameFilter5: 'Отозваны клиентом',
-            
+
 
             nameDirectories: 'Справочники',
             nameDirectory1: 'Водители',
@@ -45,7 +45,7 @@ class LeftMenu extends Component {
         this.handleCheckedMenu = this.handleCheckedMenu.bind(this);
         this.toggleFilters = this.toggleFilters.bind(this);
         this.toggleDirectories = this.toggleDirectories.bind(this);
-        
+
     }
 
     toggleFilters() {
@@ -109,8 +109,7 @@ class LeftMenu extends Component {
     handleChecked() {
         // заглушка
     }
-    
-    
+
     render() {
         // Ширина меню
         const width = { width: this.state.width };
@@ -132,8 +131,8 @@ class LeftMenu extends Component {
                     <Button onClick={this.toggleDirectories}><i className={this.state.iconDirectories}></i>{' '}{this.state.nameDirectories}</Button>
                     <Collapse in={this.state.collapseDirectories}>
                         <Nav bsStyle="pills">
-                            <NavItem eventKey={1} href="#"><i className={this.state.iconDirectory1}></i>{' '}{this.state.nameDirectory1}</NavItem>
-                            <NavItem eventKey={2} href="#"><i className={this.state.iconDirectory2}></i>{' '}{this.state.nameDirectory2}</NavItem>
+                            <NavItem eventKey={1} href="#" onClick={this.props.showDriversDirect}><i className={this.state.iconDirectory1}></i>{' '}{this.state.nameDirectory1}</NavItem>
+                            <NavItem eventKey={2} href="#" onClick={this.props.showCarsDirect}><i className={this.state.iconDirectory2}></i>{' '}{this.state.nameDirectory2}</NavItem>
                         </Nav>
                     </Collapse>
                 </div>
@@ -155,23 +154,35 @@ class LeftMenu extends Component {
 
 export default connect(
     state => ({
-
+        transp: state
     }),
     dispatch => ({
         myWG: () => {
+            dispatch(showDirect());
             dispatch(transpMyWG());
         },
         toMe: () => {
+            dispatch(showDirect());
             dispatch(transpToMe());
         },
         doneTrip: () => {
+            dispatch(showDirect());
             dispatch(transpDoneTrip());
         },
         dataSend: () => {
+            dispatch(showDirect());
             dispatch(transpDataSend());
         },
         canclClient: () => {
+            dispatch(showDirect());
             dispatch(cancelClient());
+        },
+        // ------------------------------
+        showCarsDirect: () => {
+            dispatch(showCarsDirect());
+        },
+        showDriversDirect: (cars,drivers,company) => {
+            dispatch(showDriversDirect());
         },
     })
 )(LeftMenu);

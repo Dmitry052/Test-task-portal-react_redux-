@@ -193,6 +193,9 @@ app.get('/transp/userstowg', function (req, res) {
 app.get('/transp/transpExecutor', function (req, res) {
     sqlConnetction.query(`${dbUtills.listExecutors} + '${req.query.executor}'`, (err, result) => { res.send(result); });
 });
+app.get('/transp/companyToUser', function (req, res) {
+    sqlConnetction.query(dbUtills.companyToUser + req.session.userID, (err, result) => { res.send(result); });
+});
 // ------
 app.get('/transp/closureStatuses', function (req, res) {
     sqlConnetction.query(dbUtills.closureStatuses, (err, result) => { res.send(result); });

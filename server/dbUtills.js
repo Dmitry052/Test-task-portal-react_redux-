@@ -64,30 +64,45 @@ INNER JOIN workgroups ON workgroups.id = requests.workgroup_id
 LEFT JOIN users on users.id = requests.assignee
 WHERE service_type=2 and requests.status=8`,               
 
-    carDrivers: `SELECT * 
-                 FROM transport_drivers 
-                 WHERE company_id=`,
+carDrivers: `select transport_drivers.id,driver_fullname,driver_phone,companyname,company.id as company_id,vehicle_brand,vehicle_id_number,vehicle_color,transport_drivers_status.status as status
+from workgroups
+inner join usertowg on usertowg.wg_id = workgroups.id
+inner join companytowg on companytowg.wg_id  = workgroups.id
+inner join transport_drivers on transport_drivers.company_id = companytowg.company_id
 
-    cars: `SELECT * 
-           FROM transport_cars`,
+inner join company on transport_drivers.company_id = company.id
+inner join transport_cars on transport_cars.id = transport_drivers.car_id
+left join transport_drivers_status on transport_drivers.status = transport_drivers_status.id
+where username_id=`,
 
-    transport_statuses: `SELECT * 
-                         FROM transport_statuses`,
+cars: `SELECT * 
+        FROM transport_cars
+        INNER JOIN company on transport_cars.company_id = company.id`,
 
-    transport_wg: `SELECT * 
-                   FROM workgroups`,
+transport_statuses: `SELECT * 
+                        FROM transport_statuses`,
 
-    usersToWg: `SELECT workgroups.id,wg_name from usertowg 
-                INNER JOIN users ON users.id = usertowg.username_id 
-                INNER JOIN workgroups ON workgroups.id = usertowg.wg_id 
-                WHERE username_id =`,
+transport_wg: `SELECT * 
+                FROM workgroups`,
 
-    listExecutors: `SELECT 
-                    displayname,wg_id,username_id
-                    FROM usertowg 
-                    INNER JOIN workgroups on usertowg.wg_id = workgroups.id 
-                    INNER JOIN users on usertowg.username_id = users.id 
-                    WHERE wg_name =`,
+usersToWg: `SELECT workgroups.id,wg_name from usertowg 
+            INNER JOIN users ON users.id = usertowg.username_id 
+            INNER JOIN workgroups ON workgroups.id = usertowg.wg_id 
+            WHERE username_id =`,
 
-    closureStatuses: `SELECT * FROM closure_statuses`
+listExecutors: `SELECT 
+                displayname,wg_id,username_id
+                FROM usertowg 
+                INNER JOIN workgroups on usertowg.wg_id = workgroups.id 
+                INNER JOIN users on usertowg.username_id = users.id 
+                WHERE wg_name =`,
+
+closureStatuses: `SELECT * FROM closure_statuses`,
+
+companyToUser: `select *
+from users
+left join usertowg on users.id = usertowg.username_id
+left join companytowg on companytowg.wg_id = usertowg.wg_id
+left join company on company.id = companytowg.company_id
+where users.id = `
 } 

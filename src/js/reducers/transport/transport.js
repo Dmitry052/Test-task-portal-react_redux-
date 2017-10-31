@@ -14,6 +14,8 @@ export default function tranportReduce(state = initialState, action) {
                 return state = action.data;
             case 'cancelClient':
                 return state = action.data;
+            case 'clean_up':
+                return state = [];
         }
     }
     

@@ -80,14 +80,15 @@ export default function currentOrder(state = initialState, action) {
                 };
             }
         }
+        console.log('на выходе driverData ',arr);
         return arr;
     }
     function setDriverData(driverData) {
         state.defaultDriver = driverData.length === 0 ? "Выберете водителя" : driverData[0].driver_fullname;
         state.order_driver_phone = driverData.length === 0 ? "---" : driverData[0].driver_phone;
-        state.order_driver_brand_car = driverData.length === 0 ? "---" : driverData[1].vehicle_brand;
-        state.order_driver_color_car = driverData.length === 0 ? "---" : driverData[1].vehicle_color;
-        state.order_driver_num_car = driverData.length === 0 ? "---" : driverData[1].vehicle_id_number;
+        state.order_driver_brand_car = driverData.length === 0 ? "---" : driverData[0].vehicle_brand;
+        state.order_driver_color_car = driverData.length === 0 ? "---" : driverData[0].vehicle_color;
+        state.order_driver_num_car = driverData.length === 0 ? "---" : driverData[0].vehicle_id_number;
     }
     function normalizeTime(time) {
         if (time > 0) {
@@ -264,6 +265,7 @@ export default function currentOrder(state = initialState, action) {
                 dataSend();
                 break;
         }
+
         var driverData = driverData(action.data[1], action.data[0].driver_id || false, action.data[4]);
         // Кнопки управления
         // Информация о заказе
@@ -314,6 +316,7 @@ export default function currentOrder(state = initialState, action) {
         }
         var driverData = driverData(action.data[1], driver_id, action.data[2]);
         setDriverData(driverData);
+        return state;
     }
     if (action.type === 'setStatus') {
         state.order_save_status_val_def = state.order_status_val_def;

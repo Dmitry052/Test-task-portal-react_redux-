@@ -81,6 +81,14 @@ export const transpUserToWg = () => dispatch => {
     });
   });
 };
+export const companyToUser = () => dispatch => {
+  axios.get(`${apiPrefix}/transp/companyToUser`).then((response) => {
+    dispatch({
+      type: "companyToUser",
+      data: response.data
+    });
+  });
+};
 
 export const closureStatuses = () => dispatch => {
   axios.get(`${apiPrefix}/transp/closureStatuses`).then((response) => {
@@ -91,28 +99,28 @@ export const closureStatuses = () => dispatch => {
   });
 };
 // -----------------------------------------------------------
-export const clickCurrentOrder = (row,drivers,statuses,wg,cars,listExecutors,closure_code,index) => dispatch => {
+export const clickCurrentOrder = (row, drivers, statuses, wg, cars, listExecutors, closure_code, index) => dispatch => {
+  dispatch({
+    type: "currentOrder",
+    data: [row, drivers, statuses, wg, cars, closure_code, index]
+  });
+  axios.get(`${apiPrefix}/transp/transpExecutor?executor=${row.wg_name}`).then((response) => {
     dispatch({
-      type: "currentOrder",
-      data: [row,drivers,statuses,wg,cars,closure_code,index]
+      type: "listExecutors",
+      data: response.data
     });
-    axios.get(`${apiPrefix}/transp/transpExecutor?executor=${row.wg_name}`).then((response) => {
-      dispatch({
-        type: "listExecutors",
-        data: response.data
-      });
+  });
+  axios.get(`${apiPrefix}/transp/transpExecutor?executor=${row.wg_name}`).then((response) => {
+    dispatch({
+      type: "transpExecutor",
+      data: response.data
     });
-    axios.get(`${apiPrefix}/transp/transpExecutor?executor=${row.wg_name}`).then((response) => {
-      dispatch({
-        type: "transpExecutor",
-        data: response.data
-      });
-    });
+  });
 };
-export const setDriver = (driver,drivers,cars) => dispatch => {
+export const setDriver = (driver, drivers, cars) => dispatch => {
   dispatch({
     type: "setDriver",
-    data: [driver,drivers,cars]
+    data: [driver, drivers, cars]
   });
 };
 export const setStatus = (status) => dispatch => {
@@ -121,7 +129,7 @@ export const setStatus = (status) => dispatch => {
     data: status
   });
 };
-export const setWG = (wg,name) => dispatch => {
+export const setWG = (wg, name) => dispatch => {
   dispatch({
     type: "setWG",
     data: wg
@@ -131,7 +139,7 @@ export const setWG = (wg,name) => dispatch => {
       type: "listExecutors",
       data: response.data
     });
-});
+  });
 };
 export const setExecutor = (executor) => dispatch => {
   dispatch({
@@ -158,7 +166,7 @@ export const setDistance = (distance) => dispatch => {
     data: distance
   });
 };
-export const setIdletime  = (idletime) => dispatch => {
+export const setIdletime = (idletime) => dispatch => {
   dispatch({
     type: "setIdletime",
     data: idletime
@@ -178,7 +186,7 @@ export const setSolution = (text) => dispatch => {
 };
 // ***********************************************
 export const saveOrder = (orderData) => dispatch => {
-  axios.post(`${apiPrefix}/transp/saveOrder`,orderData).then((response) => {
+  axios.post(`${apiPrefix}/transp/saveOrder`, orderData).then((response) => {
     // console.log('saved successfully');
   });
 };
@@ -194,5 +202,52 @@ export const doneTrip = (status) => dispatch => {
   dispatch({
     type: "doneTrip",
     data: status
+  });
+};
+// **************Справочники***************
+export const showDirect = () => dispatch => {
+  dispatch({
+    type: "SHOW_DIRECT",
+  });
+
+};
+export const showCarsDirect = () => dispatch => {
+  dispatch({
+    type: "SHOW_CARS",
+  });
+  dispatch({
+    type: "clean_up",
+  });
+};
+export const showDriversDirect = () => dispatch => {
+  dispatch({
+    type: "SHOW_DRIVERS",
+  });
+  dispatch({
+    type: "clean_up",
+  });
+};
+export const showAddDriver = (company) => dispatch => {
+  dispatch({
+    type: "SHOW_ADD_DRIVERS",
+    data: company
+  });
+};
+export const showAddCar = (company) => dispatch => {
+  dispatch({
+    type: "SHOW_ADD_CARS",
+    data: company
+  });
+};
+export const showEditDriver = (row, company) => dispatch => {
+  dispatch({
+    type: "SHOW_EDIT_DRIVERS",
+    data: [row, company]
+  });
+};
+export const showEditCar = (row, company) => dispatch => {
+  dispatch({
+    type: "SHOW_EDIT_CARS",
+    data: [row, company]
   });
 };

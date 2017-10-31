@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { drivers, cars, transpStatus, transpWG, transpUserToWg, transpExecutor, clickCurrentOrder, listExecutors, setDriver, setStatus, setWG, setExecutor, saveOrder, transpMyWG, assignCar, doneTrip, closureStatuses, setClosureCode, setTimeTrip, setDistance, setIdletime, setPrice, setSolution } from 'Actions/actionTransp';
+import { drivers, cars, transpStatus, transpWG, transpUserToWg, transpExecutor, clickCurrentOrder, listExecutors, setDriver, setStatus, setWG, setExecutor, saveOrder, transpMyWG, assignCar, doneTrip, closureStatuses,companyToUser, setClosureCode, setTimeTrip, setDistance, setIdletime, setPrice, setSolution } from 'Actions/actionTransp';
 import Modal from 'react-modal';
 import { Button, FormGroup, FormControl, ControlLabel, DropdownButton, MenuItem, Alert } from "react-bootstrap"; // MenuItem,
 import Textarea from 'react-textarea-autosize';
 import Dropdown from 'react-dropdown';
 import DatePicker from 'react-datetime';
 import MaskedInput from 'react-maskedinput';
-import Directories from './Directories';
-
-
-// var MaskedInput = require('react-maskedinput')
-
+import Cars from './Cars';
+import Drivers from './Drivers';
 
 class Gridview extends Component {
     constructor(props) {
@@ -23,6 +20,7 @@ class Gridview extends Component {
         this.props.transpStat();
         this.props.transpUserToWg();
         this.props.closureStatuses();
+        this.props.companyToUser();
 
         this.state = {
             showModal: false,
@@ -32,8 +30,6 @@ class Gridview extends Component {
             showGridCat: '',
             statusAlert: 'success',
             messageAlert: '',
-
-            text: ''
         }
 
         this.close = this.close.bind(this);
@@ -130,6 +126,8 @@ class Gridview extends Component {
     setDriver(driver) {
         var drivers = this.props.transp.carDrivers;
         var cars = this.props.transp.cars;
+
+        console.log('drivers',drivers);
 
         this.props.setDriver(driver, drivers, cars);
         this.setState({
@@ -325,6 +323,10 @@ class Gridview extends Component {
             showModal: true,
         });
     }
+    showDirect(){
+        this.setState({});
+
+    }
     render() {
         const options = {
             sizePerPage: 10,
@@ -370,29 +372,34 @@ class Gridview extends Component {
             dropdataClosureCode = this.props.order.order_closure_statuses.map((name, i) => {
                 return <MenuItem eventKey={i + 1} onSelect={() => this.setClosureCode(name)}>{name}</MenuItem>
             })
-        }
-        if (true) {
+        }   
             return (
+                
                 <div className='gridTransp'>
-                    <BootstrapTable className='col-lg-12 col-md-12'
-                        hover
-                        exportCSV={true}
-                        data={this.props.transp.transp}
-                        pagination={true}
-                        options={options}
-                    >
-                        <TableHeaderColumn dataField='sb_id' isKey={true} filter={{ type: 'TextFilter', defaultValue: '' }} >ID Сбербанка</TableHeaderColumn>
-                        <TableHeaderColumn dataField='status' filter={{ type: 'SelectFilter', options: status }}>Статус</TableHeaderColumn>
-                        <TableHeaderColumn dataField='descr' filter={{ type: 'TextFilter', defaultValue: '' }}>Тема</TableHeaderColumn>
-                        <TableHeaderColumn dataField='wg_name' filter={{ type: 'SelectFilter', options: wg }}>Рабочая группа</TableHeaderColumn>
-                        <TableHeaderColumn dataField='displayname' filter={{ type: 'TextFilter', defaultValue: '' }}>Исполнитель</TableHeaderColumn>
-                        <TableHeaderColumn dataField='date_created' width='19%' filter={{ type: 'DateFilter', defaultValue: '' }} >Дата создания</TableHeaderColumn>
-                        <TableHeaderColumn dataField='date_deadline' width='19%' filter={{ type: 'DateFilter', defaultValue: '' }}>Контрольный срок</TableHeaderColumn>
-                    </BootstrapTable>
-                    
-                    <Modal isOpen={this.state.showModal}
-                        contentLabel="Modal"
-                    >
+                    <div style={{display: this.props.transp.directoties.show}}>
+                        <BootstrapTable className='col-lg-12 col-md-12'
+                            hover
+                            exportCSV={true}
+                            data={this.props.transp.transp}
+                            pagination={true}
+                            options={options}
+                        >
+                            <TableHeaderColumn dataField='sb_id' isKey={true} filter={{ type: 'TextFilter', defaultValue: '' }} >ID Сбербанка</TableHeaderColumn>
+                            <TableHeaderColumn dataField='status' filter={{ type: 'SelectFilter', options: status }}>Статус</TableHeaderColumn>
+                            <TableHeaderColumn dataField='descr' filter={{ type: 'TextFilter', defaultValue: '' }}>Тема</TableHeaderColumn>
+                            <TableHeaderColumn dataField='wg_name' filter={{ type: 'SelectFilter', options: wg }}>Рабочая группа</TableHeaderColumn>
+                            <TableHeaderColumn dataField='displayname' filter={{ type: 'TextFilter', defaultValue: '' }}>Исполнитель</TableHeaderColumn>
+                            <TableHeaderColumn dataField='date_created' width='19%' filter={{ type: 'DateFilter', defaultValue: '' }} >Дата создания</TableHeaderColumn>
+                            <TableHeaderColumn dataField='date_deadline' width='19%' filter={{ type: 'DateFilter', defaultValue: '' }}>Контрольный срок</TableHeaderColumn>
+                        </BootstrapTable>
+                    </div>
+                    <div style={{display: this.props.transp.directoties.showCarsDir}}> 
+                        <Cars />
+                    </div>
+                    <div style={{display: this.props.transp.directoties.showDriversDir}}>
+                        <Drivers />
+                    </div>
+                    <Modal isOpen={this.state.showModal} contentLabel="Modal">
                         <div className='modalHead'>
                             <h4><i className="fa fa-bookmark-o" aria-hidden="true"></i>{' '}{this.props.order.order_ID || 'SD12345678'}</h4>
                             <Button id='btn1' className={this.props.order.headerBtnClose} onClick={this.close}><i className="fa fa-times" aria-hidden="true"></i></Button>
@@ -640,14 +647,9 @@ class Gridview extends Component {
                         </Modal>
                     </Modal>
                 </div>
+                
             )
-        }
-        else{
-            return (
-                <Directories />
-            )
-        }
-
+       
     }
 }
 
@@ -655,6 +657,7 @@ export default connect(
     state => ({
         transp: state,
         order: state.currentOrder
+
     }),
     dispatch => ({
         carDrivers: () => {
@@ -671,6 +674,9 @@ export default connect(
         },
         transpExecutor: (executor) => {
             dispatch(transpExecutor(executor));
+        },
+        companyToUser:() => {
+            dispatch(companyToUser());
         },
         // ******************************************
         clickOrder: (row, drivers, statuses, wg, cars, listExecutors, closure_code, index) => {
