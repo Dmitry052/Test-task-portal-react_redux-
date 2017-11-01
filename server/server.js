@@ -230,6 +230,7 @@ app.post('/transp/saveDriver', (req, res) => {
         sqlConnetction.query(query, (err, result) => {
             res.send(result);
         });
+        console.log(query);
     }
     else {
         var query = `UPDATE transport_drivers SET
@@ -242,6 +243,7 @@ app.post('/transp/saveDriver', (req, res) => {
         sqlConnetction.query(query, (err, result) => {
             res.send(result);
         });
+        console.log(query);
     }
 });
 app.post('/transp/saveCar', (req, res) => {
