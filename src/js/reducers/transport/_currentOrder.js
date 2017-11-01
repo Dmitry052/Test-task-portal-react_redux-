@@ -266,7 +266,7 @@ export default function currentOrder(state = initialState, action) {
                 dataSend();
                 break;
         }
-
+        console.log('action.data',action.data);
         var driverData = driverData(action.data[1], action.data[0].driver_id || false, action.data[4]);
         // Кнопки управления
         // Информация о заказе

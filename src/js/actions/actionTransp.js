@@ -263,3 +263,9 @@ export const setCompanyDriverDirect = (driver) => dispatch => {
     data: driver
   });
 };
+export const saveToDBDriverDirect = (driver) => dispatch => {
+  dispatch({
+    type: "SAVE_DRIVER_DIRECT",
+    data: driver
+  });
+};
