@@ -2,17 +2,13 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { showAddCar, showEditCar, setBrandName, setVehicleNumberCar, setColorCar, setCompanyCar, saveToDBCarDirect,cars } from 'Actions/actionTransp';
+import { showAddCar, showEditCar, selectCar, deleteCars, setBrandName, setVehicleNumberCar, setColorCar, setCompanyCar, saveToDBCarDirect, cars } from 'Actions/actionTransp';
 import Modal from 'react-modal';
 import MaskedInput from 'react-maskedinput';
 import Dropdown from 'react-dropdown';
 import { DropdownButton, MenuItem, Alert } from "react-bootstrap";
 
 class Cars extends Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.props.carsDrivers();
-    // }
     onRowClick(row) {
         this.props.showEditCar(row);
         this.setState({});
@@ -52,7 +48,7 @@ class Cars extends Component {
                 }
             })(),
         }
-        
+
         var check = false;
         for (var key in car) {
             if (car[key] === undefined || car[key] === null || car[key] === '') {
@@ -67,13 +63,29 @@ class Cars extends Component {
             this.props.carsDrivers();
             this.showAddCar();
         }
-        console.log(check,car);
+        console.log(check, car);
         this.setState({});
+    }
+    handleRowSelect(isSelected, rows) {
+        if (isSelected instanceof Object) {
+            console.log('1', isSelected.id, rows);
+        } else {
+            console.log('2', isSelected);
+        }
+    }
+    handleDelSelected() {
+        
     }
     render() {
         const options = {
             sizePerPage: 10,
             onRowClick: this.onRowClick.bind(this),
+
+        };
+        const selectRow = {
+            mode: 'checkbox',
+            onSelect: this.handleRowSelect.bind(this),
+            onSelectAll: this.handleRowSelect.bind(this)
         };
         const wg = {};
         const dropdataCompany = this.props.transp.companyToUser.map((name, i) => {
@@ -82,11 +94,13 @@ class Cars extends Component {
         return (
             <div id="gridCars">
                 <button className='btn-success' onClick={this.showAddCar.bind(this)}>Добавить автомобиль</button>
+                <button className='btn-default'>Удалить выбранные автомобили</button>
                 <BootstrapTable className='col-lg-12 col-md-12'
                     hover
                     data={this.props.transp.cars}
                     pagination={true}
                     options={options}
+                    selectRow={selectRow}
                 >
                     <TableHeaderColumn isKey={true} dataField='vehicle_brand' filter={{ type: 'TextFilter', defaultValue: '' }}>Марка</TableHeaderColumn>
                     <TableHeaderColumn dataField='vehicle_id_number' filter={{ type: 'TextFilter', defaultValue: '' }}>Регистрационный номер</TableHeaderColumn>
@@ -168,5 +182,8 @@ export default connect(
         carsDrivers: () => {
             dispatch(cars());
         },
+        selectCar: (selected) => {
+            dispatch(selectCar(selected));
+        }
     })
 )(Cars);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { showAddDriver, showEditDriver, drivers, carDriversAll, setDriverName, setDriverPhone, setStatusDriverDirect, setCompanyDriverDirect, saveToDBDriverDirect, setVehicleNumber } from 'Actions/actionTransp';
+import { showAddDriver, showEditDriver, drivers, deleteDrivers, selectDriver, carDriversAll, setDriverName, setDriverPhone, setStatusDriverDirect, setCompanyDriverDirect, saveToDBDriverDirect, setVehicleNumber } from 'Actions/actionTransp';
 import Modal from 'react-modal';
 import MaskedInput from 'react-maskedinput';
 import Dropdown from 'react-dropdown';
@@ -102,10 +102,33 @@ class Drivers extends Component {
         }
         this.setState({});
     }
+    handleRowSelect(isSelected, rows) {
+        if (isSelected instanceof Object) {
+            this.props.selectDriver({ id: isSelected.id, status: rows });
+        } else {
+            this.props.selectDriver([isSelected, rows]);
+        }
+    }
+    handleDelSelected() {
+        const selected = this.props.transp.directoties.driver_selected;
+        let trueArr = [];
+        for(var key of selected){
+            key[1] === true? trueArr.push(key[0]): '';
+        }
+        console.log('индексы для удаления',trueArr);
+        // this.props.carDrivers();
+        // this.props.carDriversAll();
+        // this.setState({});
+    }
     render() {
         const options = {
             sizePerPage: 10,
             onRowClick: this.onRowClick.bind(this),
+        };
+        const selectRow = {
+            mode: 'checkbox',
+            onSelect: this.handleRowSelect.bind(this),
+            onSelectAll: this.handleRowSelect.bind(this)
         };
         const dropdataCompany = this.props.transp.companyToUser.map((name, i) => {
             return <MenuItem eventKey={i} onSelect={() => this.setCompany(name.companyname)}>{name.companyname}</MenuItem>
@@ -113,15 +136,16 @@ class Drivers extends Component {
         const dropdataVehicleNumber = this.props.transp.cars.map((num, i) => {
             return <MenuItem eventKey={i} onSelect={() => this.setVehicleNumber(num.vehicle_id_number)}>{num.vehicle_id_number}</MenuItem>
         });
-        console.log(this.props.transp);
         return (
             <div id="gridDrivers">
                 <button className='btn-success' onClick={this.showAddDriver.bind(this)}>Добавить нового водителя</button>
+                <button className='btn-default' onClick={this.handleDelSelected.bind(this)}>Удалить выбранных водителей</button>
                 <BootstrapTable className='col-lg-12 col-md-12'
                     hover
                     data={this.props.transp.carDriversAll}
                     pagination={true}
                     options={options}
+                    selectRow={selectRow}
                 >
                     <TableHeaderColumn isKey={true} dataField='driver_fullname' filter={{ type: 'TextFilter', defaultValue: '' }}>ФИО водителя</TableHeaderColumn>
                     <TableHeaderColumn dataField='driver_phone' filter={{ type: 'TextFilter', defaultValue: '' }}>Телефон</TableHeaderColumn>
@@ -220,6 +244,12 @@ export default connect(
         },
         saveToDBDriverDirect: (driver) => {
             dispatch(saveToDBDriverDirect(driver));
+        },
+        selectDriver: (selected) => {
+            dispatch(selectDriver(selected));
+        },
+        deleteDrivers: (selected) => {
+            dispatch(deleteDrivers(selected));
         }
 
     })

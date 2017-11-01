@@ -1,5 +1,5 @@
 const initialState = {
-    order_view_id:0,
+    order_view_id: 0,
     // Управление, визуализация
     headerBtnClose: '',
     headerBtnTakeToWork: '',
@@ -25,6 +25,7 @@ const initialState = {
     // Поля в заявке
     db_id: '',
     order_ID: '',
+    order_date_deadline: '',
     order_BankContact: '',
     order_bank_contact_phone: '',
     oreder_travel_from: '',
@@ -266,13 +267,14 @@ export default function currentOrder(state = initialState, action) {
                 dataSend();
                 break;
         }
-        console.log('action.data',action.data);
+        console.log('action.data', action.data);
         var driverData = driverData(action.data[1], action.data[0].driver_id || false, action.data[4]);
         // Кнопки управления
         // Информация о заказе
         state.order_view_id = action.data[6];
         state.db_id = action.data[0].id;
         state.order_ID = action.data[0].sb_id;
+        state.order_date_deadline = action.data[0].date_deadline;
         state.order_BankContact = action.data[0].bank_contact;
         state.order_bank_contact_phone = action.data[0].bank_contact_phone;
         state.oreder_travel_from = action.data[0].travel_from;
@@ -359,7 +361,7 @@ export default function currentOrder(state = initialState, action) {
     if (action.type === 'setExecutor') {
         state.order_def_executor = action.data;
     }
-    function fassignCar(){
+    function fassignCar() {
         // Пробрасываем код закрытия
         state.order_def_closure_statuses = state.order_closure_statuses[0];
         // меняем статус

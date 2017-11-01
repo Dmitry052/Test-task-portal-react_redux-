@@ -16,11 +16,15 @@ const initialState = {
     driver_vehicle_id_number: '',
     driver_company: '',
 
+    driver_selected: new Map(),
+
     car_id: '',
     car_vehicle_brand: '',
     car_vehicle_id_number: '',
     car_vehicle_color: '',
-    car_company: ''
+    car_company: '',
+
+    car_selected: new Map()
 }
 
 export default function directoties(state = initialState, action) {
@@ -92,11 +96,11 @@ export default function directoties(state = initialState, action) {
         state.driver_status = '';
         state.driver_vehicle_id_number = '';
         state.driver_company = 'Выберете компанию';
-       
+
         return state;
     }
     if (action.type === "SHOW_EDIT_DRIVERS") {
-        console.log('пришло в редьюсер',action.data);
+        console.log('пришло в редьюсер', action.data);
         state.showAddDriver = !state.showAddDriver;
         state.valBtnAddEdit = "Изменить";
 
@@ -109,15 +113,15 @@ export default function directoties(state = initialState, action) {
 
         return state;
     }
-    if(action.type === "SET_DRIVER_NAME_DIRECT"){
+    if (action.type === "SET_DRIVER_NAME_DIRECT") {
         state.driver_driver_name = action.data;
         return state;
     }
-    if(action.type === "SET_DRIVER_PHONE_DIRECT"){
+    if (action.type === "SET_DRIVER_PHONE_DIRECT") {
         state.driver_driver_phone = action.data;
         return state;
     }
-    if(action.type === "SET_VEHICLE_NUMBER_DRIVER_DIRECT"){
+    if (action.type === "SET_VEHICLE_NUMBER_DRIVER_DIRECT") {
         state.driver_vehicle_id_number = action.data;
         return state;
     }
@@ -127,6 +131,24 @@ export default function directoties(state = initialState, action) {
     }
     if (action.type === "SET_COMPANY_DRIVER_DIRECT") {
         state.driver_company = action.data;
+        return state;
+    }
+    // -------------------------------------
+    if (action.type === "SELECT_DRIVER") {
+        state.driver_selected.set(action.data.id, action.data.status);
+        console.log(state.driver_selected);
+        return state;
+    }
+    if (action.type === "DELETE_SELECT_DRIVER") {
+        state.driver_selected.clear();
+        return state;
+    }
+    if (action.type === "SELECT_CAR") {
+        console.log(state.car_selected);
+        return state;
+    }
+    if (action.type === "DELETE_SELECT_CAR") {
+        state.car_selected.clear();
         return state;
     }
     return state;

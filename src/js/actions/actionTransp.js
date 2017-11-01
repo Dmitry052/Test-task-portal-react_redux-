@@ -314,6 +314,20 @@ export const setVehicleNumber = (num) => dispatch => {
     data: num
   });
 };
+// -------------------------
+export const selectDriver = (selected) => dispatch => {
+  dispatch({
+    type: "SELECT_DRIVER",
+    data: selected
+  });
+};
+export const selectCar = (selected) => dispatch => {
+  dispatch({
+    type: "SELECT_CAR",
+    data: selected
+  });
+};
+// -------------------------
 export const saveToDBDriverDirect = (driver) => dispatch => {
   axios.post(`${apiPrefix}/transp/saveDriver`, driver).then((response) => {
     // console.log('saved successfully');
@@ -322,5 +336,22 @@ export const saveToDBDriverDirect = (driver) => dispatch => {
 export const saveToDBCarDirect = (car) => dispatch => {
   axios.post(`${apiPrefix}/transp/saveCar`, car).then((response) => {
     // console.log('saved successfully');
+  });
+};
+// -----------------------
+export const deleteDrivers = (drivers) => dispatch => {
+  axios.post(`${apiPrefix}/transp/deleteDrivers`, drivers).then((response) => {
+    // console.log('saved successfully');
+  });
+  dispatch({
+    type: "DELETE_SELECT_DRIVER",
+  });
+};
+export const deleteCars = (cars) => dispatch => {
+  axios.post(`${apiPrefix}/transp/deleteCars`, cars).then((response) => {
+    // console.log('saved successfully');
+  });
+  dispatch({
+    type: "DELETE_SELECT_CAR",
   });
 };

@@ -268,6 +268,12 @@ app.post('/transp/saveCar', (req, res) => {
         console.log(query);
     }
 });
+app.post('/transp/deleteDrivers', (req, res) => {
+    console.log(req.body);
+});
+app.post('/transp/deleteCars', (req, res) => {
+    console.log(req.body);
+});
 // Если маршрут не найден
 app.get('*', function (req, res) {
     res.redirect('/404');
