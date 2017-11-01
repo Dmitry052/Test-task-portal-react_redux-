@@ -127,7 +127,7 @@ class Gridview extends Component {
         var drivers = this.props.transp.carDrivers;
         var cars = this.props.transp.cars;
 
-        console.log('drivers',drivers);
+        // console.log('drivers',drivers);
 
         this.props.setDriver(driver, drivers, cars);
         this.setState({

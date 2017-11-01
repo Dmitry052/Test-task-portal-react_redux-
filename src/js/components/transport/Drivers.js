@@ -43,7 +43,7 @@ class Drivers extends Component {
         this.setState({});
     }
     render() {
-        console.log(this.props.transp.companyToUser);
+        // console.log(this.props.transp.companyToUser);
         const options = {
             sizePerPage: 10,
             onRowDoubleClick: this.onRowClick.bind(this),
