@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { drivers, cars, transpStatus, transpWG, transpUserToWg, transpExecutor, clickCurrentOrder, listExecutors, setDriver, setStatus, setWG, setExecutor, saveOrder, transpMyWG, assignCar, doneTrip, closureStatuses,companyToUser, setClosureCode, setTimeTrip, setDistance, setIdletime, setPrice, setSolution } from 'Actions/actionTransp';
+import { drivers, cars,carDriversAll, transpStatus, transpWG, transpUserToWg, transpExecutor, clickCurrentOrder, listExecutors, setDriver, setStatus, setWG, setExecutor, saveOrder, transpMyWG, assignCar, doneTrip, closureStatuses,companyToUser, setClosureCode, setTimeTrip, setDistance, setIdletime, setPrice, setSolution } from 'Actions/actionTransp';
 import Modal from 'react-modal';
 import { Button, FormGroup, FormControl, ControlLabel, DropdownButton, MenuItem, Alert } from "react-bootstrap"; // MenuItem,
 import Textarea from 'react-textarea-autosize';
@@ -21,6 +21,7 @@ class Gridview extends Component {
         this.props.transpUserToWg();
         this.props.closureStatuses();
         this.props.companyToUser();
+        this.props.carDriversAll();
 
         this.state = {
             showModal: false,
@@ -372,7 +373,7 @@ class Gridview extends Component {
             dropdataClosureCode = this.props.order.order_closure_statuses.map((name, i) => {
                 return <MenuItem eventKey={i + 1} onSelect={() => this.setClosureCode(name)}>{name}</MenuItem>
             })
-        }   
+        }   console.log(this.props.transp);
             return (
                 
                 <div className='gridTransp'>
@@ -665,6 +666,9 @@ export default connect(
         },
         carsDrivers: () => {
             dispatch(cars());
+        },
+        carDriversAll:()=>{
+            dispatch(carDriversAll());
         },
         transpStat: () => {
             dispatch(transpStatus());

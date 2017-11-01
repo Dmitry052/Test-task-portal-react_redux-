@@ -670,15 +670,22 @@ td.rdtYear:hover {
 .modalDriver > select {
   width: 100%; }
 
-.modalDriver > div > button {
+.modalDriver > div > button, .modalCar .dropdown > button {
   width: 100%;
   padding: 6px 12px; }
 
-.modalDriver > div > button > span {
+.modalDriver > div > button > span, .modalCar .dropdown > button > span {
   display: inline-block; }
 
-.modalDriver button {
+.modalDriver button, .modalCar .dropdown > button {
   text-align: left; }
+
+.modalCar .dropdown {
+  width: 100%; }
+
+.modalDriver > span > span, .modalCar > span > span {
+  display: inline;
+  color: red; }
 
 .nameService {
   display: inline-block;

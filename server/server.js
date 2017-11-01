@@ -36,23 +36,23 @@ app.use(session({
     })
 }));
 app.use(function (req, res, next) {
-    
-        // Website you wish to allow to connect
-        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-        res.setHeader('Access-Control-Allow-Origin', 'http://www.sfriend.ru:3000');
-        // Request methods you wish to allow
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    
-        // Request headers you wish to allow
-        res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    
-        // Set to true if you need the website to include cookies in the requests sent
-        // to the API (e.g. in case you use sessions)
-        res.setHeader('Access-Control-Allow-Credentials', true);
-    
-        // Pass to next layer of middleware
-        next();
-    });
+
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Origin', 'http://www.sfriend.ru:3000');
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+});
 // префикс виртуального пути
 app.use('/static', express.static(path.join(__dirname, "../public")));
 // Каталог шаблонов
@@ -178,6 +178,9 @@ app.get('/transp/cancelClient', function (req, res) {
 app.get('/transp/carDrivers', function (req, res) {
     sqlConnetction.query(dbUtills.carDrivers + req.session.companyID, (err, result) => { res.send(result); });
 });
+app.get('/transp/carDriversAll', function (req, res) {
+    sqlConnetction.query(dbUtills.carDriversAll + req.session.companyID, (err, result) => { res.send(result); });
+});
 app.get('/transp/cars', function (req, res) {
     sqlConnetction.query(dbUtills.cars, (err, result) => { res.send(result); });
 });
@@ -216,10 +219,51 @@ app.post('/transp/saveOrder', (req, res) => {
                 closure_code=${req.body.closure_code === undefined || req.body.closure_code === '' ? null : req.body.closure_code},
                 solution='${req.body.solution === undefined || req.body.solution === '' ? null : req.body.solution}'
                 where id=${req.body.id}`;
-    // console.log(query);
     sqlConnetction.query(query, (err, result) => {
-        res.send(result); 
+        res.send(result);
     });
+});
+app.post('/transp/saveDriver', (req, res) => {
+    if (req.body.type === 'INSERT') {
+        var query = `INSERT INTO transport_drivers(driver_fullname,driver_phone,status,car_id,company_id) VALUES(
+            ${req.body.driver_fullname},${req.body.driver_phone},${req.body.status},${req.body.car_id},${req.body.company_id})`;
+        sqlConnetction.query(query, (err, result) => {
+            res.send(result);
+        });
+    }
+    else {
+        var query = `UPDATE transport_drivers SET
+            driver_fullname = '${req.body.driver_fullname}',
+            driver_phone = ${req.body.driver_phone},
+            status = ${req.body.status},
+            car_id = ${req.body.car_id},
+            company_id = ${req.body.company_id}
+            WHERE id = ${req.body.id} `;
+        sqlConnetction.query(query, (err, result) => {
+            res.send(result);
+        });
+    }
+});
+app.post('/transp/saveCar', (req, res) => {
+    console.log(req.body);
+    if (req.body.type === 'INSERT') {
+        var query = `INSERT INTO transport_cars(vehicle_brand,vehicle_id_number,vehicle_color,company_id) VALUES(
+            '${req.body.vehicle_brand}','${req.body.vehicle_id_number}','${req.body.vehicle_color}',${req.body.company_id})`
+        sqlConnetction.query(query, (err, result) => {
+            res.send(result);
+        });
+    }
+    else {
+        var query = `UPDATE transport_cars SET
+            vehicle_brand = '${req.body.vehicle_brand}',
+            vehicle_id_number = ${req.body.vehicle_id_number},
+            vehicle_color = ${req.body.vehicle_color},
+            company_id = ${req.body.company_id}
+            WHERE id = ${req.body.id} `;
+        sqlConnetction.query(query, (err, result) => {
+            res.send(result);
+        });
+    }
 });
 // Если маршрут не найден
 app.get('*', function (req, res) {

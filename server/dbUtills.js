@@ -73,11 +73,22 @@ inner join transport_drivers on transport_drivers.company_id = companytowg.compa
 inner join company on transport_drivers.company_id = company.id
 inner join transport_cars on transport_cars.id = transport_drivers.car_id
 left join transport_drivers_status on transport_drivers.status = transport_drivers_status.id
+where transport_drivers.status = 1 and username_id=`,
+
+carDriversAll: `select transport_drivers.id,driver_fullname,driver_phone,companyname,company.id as company_id,vehicle_brand,vehicle_id_number,vehicle_color,transport_drivers_status.status as status
+from workgroups
+inner join usertowg on usertowg.wg_id = workgroups.id
+inner join companytowg on companytowg.wg_id  = workgroups.id
+inner join transport_drivers on transport_drivers.company_id = companytowg.company_id
+
+inner join company on transport_drivers.company_id = company.id
+inner join transport_cars on transport_cars.id = transport_drivers.car_id
+left join transport_drivers_status on transport_drivers.status = transport_drivers_status.id
 where username_id=`,
 
-cars: `SELECT * 
-        FROM transport_cars
-        INNER JOIN company on transport_cars.company_id = company.id`,
+cars: `SELECT transport_cars.id, vehicle_brand,vehicle_id_number,vehicle_color,company_id,companyname 
+FROM transport_cars
+INNER JOIN company on transport_cars.company_id = company.id;`,
 
 transport_statuses: `SELECT * 
                         FROM transport_statuses`,

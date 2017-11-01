@@ -98,6 +98,15 @@ export const closureStatuses = () => dispatch => {
     });
   });
 };
+
+export const carDriversAll = () => dispatch => {
+  axios.get(`${apiPrefix}/transp/carDriversAll`).then((response) => {
+    dispatch({
+      type: "carDriversAll",
+      data: response.data
+    });
+  });
+};
 // -----------------------------------------------------------
 export const clickCurrentOrder = (row, drivers, statuses, wg, cars, listExecutors, closure_code, index) => dispatch => {
   dispatch({
@@ -233,10 +242,9 @@ export const showAddDriver = (company) => dispatch => {
     data: company
   });
 };
-export const showAddCar = (company) => dispatch => {
+export const showAddCar = () => dispatch => {
   dispatch({
     type: "SHOW_ADD_CARS",
-    data: company
   });
 };
 export const showEditDriver = (row, company) => dispatch => {
@@ -251,6 +259,43 @@ export const showEditCar = (row, company) => dispatch => {
     data: [row, company]
   });
 };
+export const setBrandName = (brand) => dispatch => {
+  dispatch({
+    type: "SET_BRAND_NAME",
+    data: brand
+  });
+};
+export const setVehicleNumberCar = (num) => dispatch => {
+  dispatch({
+    type: "SET_VEHICLE_NUMBER",
+    data: num
+  });
+};
+export const setColorCar = (color) => dispatch => {
+  dispatch({
+    type: "SET_COLOR_CAR",
+    data: color
+  });
+};
+export const setCompanyCar = (company) => dispatch => {
+  dispatch({
+    type: "SET_COMPANY_CAR",
+    data: company
+  });
+};
+// -----------------------------------
+export const setDriverName = (name) => dispatch => {
+  dispatch({
+    type: "SET_DRIVER_NAME_DIRECT",
+    data: name
+  });
+};
+export const setDriverPhone = (phone) => dispatch => {
+  dispatch({
+    type: "SET_DRIVER_PHONE_DIRECT",
+    data: phone
+  });
+};
 export const setStatusDriverDirect = (status) => dispatch => {
   dispatch({
     type: "SET_STATUS_DRIVER_DIRECT",
@@ -263,9 +308,19 @@ export const setCompanyDriverDirect = (driver) => dispatch => {
     data: driver
   });
 };
-export const saveToDBDriverDirect = (driver) => dispatch => {
+export const setVehicleNumber = (num) => dispatch => {
   dispatch({
-    type: "SAVE_DRIVER_DIRECT",
-    data: driver
+    type: "SET_VEHICLE_NUMBER_DRIVER_DIRECT",
+    data: num
+  });
+};
+export const saveToDBDriverDirect = (driver) => dispatch => {
+  axios.post(`${apiPrefix}/transp/saveDriver`, driver).then((response) => {
+    // console.log('saved successfully');
+  });
+};
+export const saveToDBCarDirect = (car) => dispatch => {
+  axios.post(`${apiPrefix}/transp/saveCar`, car).then((response) => {
+    // console.log('saved successfully');
   });
 };

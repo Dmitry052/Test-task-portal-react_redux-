@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import transp from './transport/transport';
 import expl from './exploitation/exploitation';
 import carDrivers from './transport/carDrivers';
+import carDriversAll from './transport/carDriversAll';
 import cars from './transport/transport_drivers';
 import transpStatus from './transport/transpStatuses';
 import transpUserToWg from './transport/transpUserToWg';
@@ -46,7 +47,9 @@ const directotiesReducer = combineReducers ({
 const companyToUserReducer = combineReducers ({
     companyToUser
 });
-
+const carDriversAllReducer = combineReducers ({
+    carDriversAll
+});
 export default combineReducers({
     transp,
     expl,
@@ -58,5 +61,6 @@ export default combineReducers({
     currentOrder,
     closureStatuses,
     directoties,
-    companyToUser
+    companyToUser,
+    carDriversAll
 });

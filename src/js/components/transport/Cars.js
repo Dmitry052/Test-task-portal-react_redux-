@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { showAddCar, showEditCar } from 'Actions/actionTransp';
+import { showAddCar, showEditCar, setBrandName, setVehicleNumberCar, setColorCar, setCompanyCar, saveToDBCarDirect,cars } from 'Actions/actionTransp';
 import Modal from 'react-modal';
 import MaskedInput from 'react-maskedinput';
 import Dropdown from 'react-dropdown';
@@ -17,12 +17,64 @@ class Cars extends Component {
         this.props.showAddCar();
         this.setState({});
     }
+    setBrandName() {
+        this.props.setBrandName(this.brandtName.value);
+        this.setState({});
+    }
+    setVehicleNumber() {
+        this.props.setVehicleNumber(this.vehicleNumber.value);
+        this.setState({});
+    }
+    setColorCar() {
+        this.props.setColorCar(this.colorCar.value);
+        this.setState({});
+    }
+    setCompany(company) {
+        this.props.setCompany(company);
+        this.setState({});
+    }
+    saveToDBCar() {
+        const car = {
+            id: this.props.transp.directoties.car_id,
+            type: this.props.transp.directoties.valBtnAddEdit === 'Добавить' ? 'INSERT' : 'UPDATE',
+            vehicle_brand: this.props.transp.directoties.car_vehicle_brand,
+            vehicle_id_number: this.props.transp.directoties.car_vehicle_id_number,
+            vehicle_color: this.props.transp.directoties.car_vehicle_color,
+            company_id: (() => {
+                for (var key in this.props.transp.companyToUser) {
+                    if (this.props.transp.companyToUser[key].companyname === this.props.transp.directoties.car_company) {
+                        return this.props.transp.companyToUser[key].company_id;
+                    }
+                }
+            })(),
+        }
+        
+        var check = false;
+        for (var key in car) {
+            if (car[key] === undefined || car[key] === null || car[key] === '') {
+                check = true;
+                break;
+            }
+        }
+        if (check) {
+            alert("Необходимо заполнить все поля.")
+        } else {
+            this.props.saveToDBCar(car);
+            this.props.carsDrivers();
+            this.showAddCar();
+        }
+        console.log(check,car);
+        this.setState({});
+    }
     render() {
         const options = {
             sizePerPage: 10,
-            onRowDoubleClick: this.onRowClick.bind(this),
+            onRowClick: this.onRowClick.bind(this),
         };
         const wg = {};
+        const dropdataCompany = this.props.transp.companyToUser.map((name, i) => {
+            return <MenuItem eventKey={i} onSelect={() => this.setCompany(name.companyname)}>{name.companyname}</MenuItem>
+        })
         return (
             <div id="gridCars">
                 <button className='btn-success' onClick={this.showAddCar.bind(this)}>Добавить автомобиль</button>
@@ -39,28 +91,43 @@ class Cars extends Component {
                 </BootstrapTable>
                 <Modal isOpen={this.props.transp.directoties.showAddCar}
                     contentLabel="Modal"
-                    style={{ content: { width: '600px', margin: 'auto', 'background-color': '#f5f5f5', height: '400px' } }}
+                    style={{ content: { width: '600px', margin: 'auto', 'background-color': '#f5f5f5', height: '440px' } }}
                 >
-
                     <div className='btnModalCar'>
                         <button className='btn' onClick={this.showAddCar.bind(this)}>Закрыть</button>
-                        <button className='btn btn-primary' onClick={this.showAddCar.bind(this)}>{this.props.transp.directoties.valBtnAddEdit}</button>
+                        <button className='btn btn-primary' onClick={this.saveToDBCar.bind(this)}>{this.props.transp.directoties.valBtnAddEdit}</button>
                     </div>
                     <div className='col-lg-12 col-md-12 col-sm-12 modalCar'>
-                        <span>Марка</span>
-                        <input type='text' value={this.props.transp.directoties.car_vehicle_brand} />
+                        <span>Марка <span>*</span></span>
+                        <input type='text'
+                            value={this.props.transp.directoties.car_vehicle_brand}
+                            ref={(brandName) => { this.brandtName = brandName }}
+                            onChange={this.setBrandName.bind(this)}
+                        />
                     </div >
                     <div className='col-lg-12 col-md-12 col-sm-12 modalCar'>
-                        <span>Регистрационный номер</span>
-                        <input type='text' value={this.props.transp.directoties.car_vehicle_id_number} />
+                        <span>Регистрационный номер <span>*</span></span>
+                        <input type='text'
+                            value={this.props.transp.directoties.car_vehicle_id_number}
+                            ref={(vehicleNumber) => { this.vehicleNumber = vehicleNumber }}
+                            onChange={this.setVehicleNumber.bind(this)}
+                        />
                     </div>
                     <div className='col-lg-12 col-md-12 col-sm-12 modalCar'>
-                        <span>Цвет</span>
-                        <input type='text' value={this.props.transp.directoties.car_vehicle_color} />
+                        <span>Цвет <span>*</span></span>
+                        <input type='text'
+                            value={this.props.transp.directoties.car_vehicle_color}
+                            ref={(colorCar) => { this.colorCar = colorCar }}
+                            onChange={this.setColorCar.bind(this)}
+                        />
                     </div>
                     <div className='col-lg-12 col-md-12 col-sm-12 modalCar'>
-                        <span>Компания</span>
-                        <input type='text' value={this.props.transp.directoties.car_company} />
+                        <span>Компания <span>*</span></span>
+                        <DropdownButton
+                            title={this.props.transp.directoties.car_company || '-'}
+                        >
+                            {dropdataCompany}
+                        </DropdownButton>
                     </div>
                 </Modal>
             </div>
@@ -78,6 +145,24 @@ export default connect(
         },
         showEditCar: (row) => {
             dispatch(showEditCar(row));
-        }
+        },
+        setBrandName: (brand) => {
+            dispatch(setBrandName(brand));
+        },
+        setVehicleNumber: (num) => {
+            dispatch(setVehicleNumberCar(num));
+        },
+        setColorCar: (color) => {
+            dispatch(setColorCar(color));
+        },
+        setCompany: (company) => {
+            dispatch(setCompanyCar(company));
+        },
+        saveToDBCar: (car) => {
+            dispatch(saveToDBCarDirect(car));
+        },
+        carsDrivers: () => {
+            dispatch(cars());
+        },
     })
 )(Cars);
