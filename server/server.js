@@ -247,24 +247,25 @@ app.post('/transp/saveDriver', (req, res) => {
     }
 });
 app.post('/transp/saveCar', (req, res) => {
-    console.log(req.body);
     if (req.body.type === 'INSERT') {
         var query = `INSERT INTO transport_cars(vehicle_brand,vehicle_id_number,vehicle_color,company_id) VALUES(
             '${req.body.vehicle_brand}','${req.body.vehicle_id_number}','${req.body.vehicle_color}',${req.body.company_id})`
         sqlConnetction.query(query, (err, result) => {
             res.send(result);
         });
+        console.log(query);
     }
     else {
         var query = `UPDATE transport_cars SET
             vehicle_brand = '${req.body.vehicle_brand}',
-            vehicle_id_number = ${req.body.vehicle_id_number},
-            vehicle_color = ${req.body.vehicle_color},
+            vehicle_id_number = '${req.body.vehicle_id_number}',
+            vehicle_color = '${req.body.vehicle_color}',
             company_id = ${req.body.company_id}
             WHERE id = ${req.body.id} `;
         sqlConnetction.query(query, (err, result) => {
             res.send(result);
         });
+        console.log(query);
     }
 });
 // Если маршрут не найден

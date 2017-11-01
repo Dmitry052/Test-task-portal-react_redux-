@@ -9,6 +9,10 @@ import Dropdown from 'react-dropdown';
 import { DropdownButton, MenuItem, Alert } from "react-bootstrap";
 
 class Cars extends Component {
+    // constructor(props) {
+    //     super(props);
+    //     this.props.carsDrivers();
+    // }
     onRowClick(row) {
         this.props.showEditCar(row);
         this.setState({});
