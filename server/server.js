@@ -226,7 +226,7 @@ app.post('/transp/saveOrder', (req, res) => {
 app.post('/transp/saveDriver', (req, res) => {
     if (req.body.type === 'INSERT') {
         var query = `INSERT INTO transport_drivers(driver_fullname,driver_phone,status,car_id,company_id) VALUES(
-            ${req.body.driver_fullname},${req.body.driver_phone},${req.body.status},${req.body.car_id},${req.body.company_id})`;
+            '${req.body.driver_fullname}',${req.body.driver_phone},${req.body.status},${req.body.car_id},${req.body.company_id})`;
         sqlConnetction.query(query, (err, result) => {
             res.send(result);
         });
