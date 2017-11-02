@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { transpMyWG, transpToMe, transpDoneTrip, transpDataSend, cancelClient, showDirect, showCarsDirect, showDriversDirect } from 'Actions/actionTransp';
+import { transpMyWG, transpNew, transpToMe,transpCarAppoint, transpDoneTrip, transpDataSend, cancelClient, showDirect, showCarsDirect, showDriversDirect } from 'Actions/actionTransp';
 import { Nav, NavItem, Collapse, Button } from 'react-bootstrap';
 
 
@@ -22,8 +22,10 @@ class LeftMenu extends Component {
             iconFilter1: 'fa fa-users',
             iconFilter2: 'fa fa-user-circle-o',
             iconFilter3: 'fa fa-check-circle',
-            iconFilter4: 'fa fa-check-circle',
+            // iconFilter4: 'fa fa-check-circle',
             iconFilter5: 'fa fa-times-circle',
+            iconFilter6: 'fa fa-yelp',
+            iconFilter7: 'fa fa-taxi',
 
             iconDirectories: '',
             iconDirectory1: 'fa fa-id-card-o',
@@ -33,8 +35,10 @@ class LeftMenu extends Component {
             nameFilter1: 'На мои рабочие группы',
             nameFilter2: 'Назначены мне',
             nameFilter3: 'Завершённые поездки',
-            nameFilter4: 'Данные отправлены',
+            // nameFilter4: 'Данные отправлены',
             nameFilter5: 'Отозваны клиентом',
+            nameFilter6: 'Новые заявки',
+            nameFilter7: 'Машина назначена',
 
 
             nameDirectories: 'Справочники',
@@ -74,8 +78,10 @@ class LeftMenu extends Component {
                 nameFilter1: 'На мои рабочие группы',
                 nameFilter2: 'Назначены мне',
                 nameFilter3: 'Завершённые поездки',
-                nameFilter4: 'Данные отправлены',
+                // nameFilter4: 'Данные отправлены',//убрать
                 nameFilter5: 'Отозваны клиентом',
+                nameFilter6: 'Новые заявки',
+                nameFilter7: 'Машина назначена',
 
                 nameDirectories: 'Справочники',
                 nameDirectory1: 'Водители',
@@ -98,6 +104,8 @@ class LeftMenu extends Component {
                 nameFilter3: '',
                 nameFilter4: '',
                 nameFilter5: '',
+                nameFilter6: '',
+                nameFilter7: '',
 
                 nameDirectories: '',
                 nameDirectory1: '',
@@ -121,9 +129,13 @@ class LeftMenu extends Component {
                         <Nav bsStyle="pills">
                             <NavItem eventKey={1} href="#" onClick={this.props.myWG}><i className={this.state.iconFilter1}></i>{' '}{this.state.nameFilter1}</NavItem>
                             <NavItem eventKey={2} href="#" onClick={this.props.toMe}><i className={this.state.iconFilter2}></i>{' '}{this.state.nameFilter2}</NavItem>
+                            <NavItem eventKey={6} href="#" onClick={this.props.transpNew}><i className={this.state.iconFilter6}></i>{' '}{this.state.nameFilter6}</NavItem>
+                            <NavItem eventKey={7} href="#" onClick={this.props.transpCarAppoint}><i className={this.state.iconFilter7}></i>{' '}{this.state.nameFilter7}</NavItem>
                             <NavItem eventKey={3} href="#" onClick={this.props.doneTrip}><i className={this.state.iconFilter3}></i>{' '}{this.state.nameFilter3}</NavItem>
-                            <NavItem eventKey={4} href="#" onClick={this.props.dataSend}><i className={this.state.iconFilter4}></i>{' '}{this.state.nameFilter4}</NavItem>
+                            {/* <NavItem eventKey={4} href="#" onClick={this.props.dataSend}><i className={this.state.iconFilter4}></i>{' '}{this.state.nameFilter4}</NavItem> */}
                             <NavItem eventKey={5} href="#" onClick={this.props.canclClient}><i className={this.state.iconFilter5}></i>{' '}{this.state.nameFilter5}</NavItem>
+
+
                         </Nav>
                     </Collapse>
                 </div>
@@ -161,9 +173,15 @@ export default connect(
             dispatch(showDirect());
             dispatch(transpMyWG());
         },
+        transpNew: () => {
+            dispatch(transpNew());
+        },
         toMe: () => {
             dispatch(showDirect());
             dispatch(transpToMe());
+        },
+        transpCarAppoint: () => {
+            dispatch(transpCarAppoint());
         },
         doneTrip: () => {
             dispatch(showDirect());
@@ -181,8 +199,9 @@ export default connect(
         showCarsDirect: () => {
             dispatch(showCarsDirect());
         },
-        showDriversDirect: (cars,drivers,company) => {
+        showDriversDirect: (cars, drivers, company) => {
             dispatch(showDriversDirect());
         },
+
     })
 )(LeftMenu);

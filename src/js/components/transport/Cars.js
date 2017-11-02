@@ -101,8 +101,8 @@ class Cars extends Component {
         })
         return (
             <div id="gridCars">
-                <button className='btn-success' onClick={this.showAddCar.bind(this)}>Добавить автомобиль</button>
-                <button id='btnDelCars' className='btn-default' onClick={this.handleDelSelected.bind(this)}>Удалить выбранные автомобили</button>
+                <button className='btn-success' onClick={this.showAddCar.bind(this)}><i class="fa fa-plus" aria-hidden="true"></i></button>
+                <button id='btnDelCars' className='btn-default' onClick={this.handleDelSelected.bind(this)}><i class="fa fa-minus" aria-hidden="true"></i></button>
                 <Alert id="alertBlock" style={{ display: this.props.transp.directoties.car_alert }} bsStyle={'danger'}>
                     <center>{this.props.transp.directoties.car_alert_text}</center>
                 </Alert>

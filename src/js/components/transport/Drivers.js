@@ -138,8 +138,8 @@ class Drivers extends Component {
         });
         return (
             <div id="gridDrivers">
-                <button className='btn-success' onClick={this.showAddDriver.bind(this)}>Добавить нового водителя</button>
-                <button id='btnDelDrivers' className='btn-default' onClick={this.handleDelSelected.bind(this)}>Удалить выбранных водителей</button>
+                <button className='btn-success' onClick={this.showAddDriver.bind(this)}><i class="fa fa-plus" aria-hidden="true"></i></button>
+                <button id='btnDelDrivers' className='btn-default' onClick={this.handleDelSelected.bind(this)}><i class="fa fa-minus" aria-hidden="true"></i></button>
                 <Alert id="alertBlock" style={{ display: this.props.transp.directoties.driver_alert }} bsStyle={'danger'}>
                         <center>{this.props.transp.directoties.driver_alert_text}</center>
                 </Alert>

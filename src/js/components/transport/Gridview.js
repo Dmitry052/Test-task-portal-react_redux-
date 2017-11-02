@@ -111,13 +111,16 @@ class Gridview extends Component {
         this.props.setTimeTrip(e.target.value)
     }
     handleDistance(e) {
-        this.props.setDistance(e.target.value)
+        this.props.setDistance(e.target.value);
+        this.setState({});
     }
     handleIdletime(e) {
         this.props.setIdletime(e.target.value)
+        this.setState({});
     }
     handlePrice(e) {
-        this.props.setPrice(e.target.value)
+        this.props.setPrice(e.target.value);
+        this.setState({});
     }
     handleSolution(e) {
         this.props.setSolution(e.target.value);
@@ -443,7 +446,7 @@ class Gridview extends Component {
                                     </div>
                                     <div className='col-lg-12 col-md-12 col-sm-12'>
                                         <span>Коментарий водителю</span>
-                                        <input disabled={this.props.order.edit_commentary_for_driver} type='text' value={this.props.order.order_commentary_for_driver||''} />
+                                        <input disabled={this.props.order.edit_commentary_for_driver} type='text' value={this.props.order.order_commentary_for_driver || ''} />
                                     </div>
                                     <div className='col-lg-6 col-md-12 col-sm-12'>
                                         <span>Время назначения авто</span>
@@ -502,18 +505,25 @@ class Gridview extends Component {
                                                 size="20"
                                                 onChange={this.handletimeTrip}
                                                 value={this.props.order.order_ride_duration}
-                                                placeholder="ЧЧ:ММ"
+                                                placeholder="--:--"
                                             />
                                         </div>
                                         <div className="col-lg-6 col-md-6 col-sm-12">
                                             <span>Пробег</span>
-                                            <MaskedInput mask="111 Км"
+                                            {/* <MaskedInput mask="111"
                                                 disabled={this.props.order.edit_data_to_sendbank}
                                                 size="20"
                                                 onChange={this.handleDistance}
                                                 value={this.props.order.order_ride_distance}
-                                                placeholder="XXX КМ"
+                                                placeholder="XXX"
+                                            /> */}
+                                            <input type="number"
+                                                disabled={this.props.order.edit_data_to_sendbank}
+                                                onChange={this.handleDistance}
+                                                value={this.props.order.order_ride_distance}
+                                                placeholder="xxxx"
                                             />
+                                            <span>КМ</span>
                                         </div>
                                         <div className="col-lg-6 col-md-6 col-sm-12">
                                             <span>Время простоя</span>
@@ -522,18 +532,26 @@ class Gridview extends Component {
                                                 size="20"
                                                 onChange={this.handleIdletime}
                                                 value={this.props.order.order_ride_idle_time}
-                                                placeholder="ЧЧ:MM"
+                                                placeholder="--:--"
                                             />
                                         </div>
                                         <div className="col-lg-6 col-md-6 col-sm-12">
                                             <span>Цена</span>
-                                            <MaskedInput mask="1111.11"
+                                            {/* <MaskedInput mask="1111"
                                                 disabled={this.props.order.edit_data_to_sendbank}
                                                 size="20"
                                                 onChange={this.handlePrice}
                                                 value={this.props.order.order_ride_price}
-                                                placeholder="XXXX.XX"
+                                                placeholder="XXXX"
+                                            /> */}
+                                            <input type="number"
+                                                disabled={this.props.order.edit_data_to_sendbank}
+                                                onChange={this.handlePrice}
+                                                value={this.props.order.order_ride_price}
+                                                placeholder="xxxx"
                                             />
+                                            <span>₽</span>
+
                                         </div>
                                     </div>
                                 </div>

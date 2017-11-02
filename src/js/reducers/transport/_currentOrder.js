@@ -307,7 +307,7 @@ export default function currentOrder(state = initialState, action) {
         state.order_ride_duration = action.data[0].ride_duration;
         state.order_ride_distance = action.data[0].ride_distance;
         state.order_ride_idle_time = action.data[0].ride_idle_time;
-        state.order_ride_price = action.data[0].ride_price === 'null' ? '0000.00' : action.data[0].ride_price;
+        state.order_ride_price = action.data[0].ride_price === 'null' ? '' : action.data[0].ride_price;
         // Подробная информация о заказе
         state.order_solution = action.data[0].solution === 'null' ? '' : action.data[0].solution;
 
@@ -371,6 +371,8 @@ export default function currentOrder(state = initialState, action) {
         state.order_def_executor = action.data;
     }
     function fassignCar() {
+        // Пробрасываем исполнителя
+        state.order_def_executor = state.order_executers[0]
         // Пробрасываем код закрытия
         state.order_def_closure_statuses = state.order_closure_statuses[0];
         // меняем статус
@@ -398,7 +400,9 @@ export default function currentOrder(state = initialState, action) {
         state.order_ride_duration = action.data;
     }
     if (action.type === 'setDistance') {
+        
         state.order_ride_distance = action.data;
+        console.log('asdsad',state.order_ride_distance);
     }
     if (action.type === 'setIdletime') {
         state.order_ride_idle_time = action.data;

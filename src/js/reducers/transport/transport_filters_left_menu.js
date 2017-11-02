@@ -6,7 +6,11 @@ export default function tranportReduce(state = initialState, action) {
         switch (action.type) {
             case 'transpMyWG':
                 return state = action.data;
+            case 'transpNew':
+                return state = action.data;
             case 'transpToMe':
+                return state = action.data;
+            case 'carAppoint':
                 return state = action.data;
             case 'transpDoneTrip':
                 return state = action.data;
@@ -18,6 +22,6 @@ export default function tranportReduce(state = initialState, action) {
                 return state = [];
         }
     }
-    
+     
     return state
 }

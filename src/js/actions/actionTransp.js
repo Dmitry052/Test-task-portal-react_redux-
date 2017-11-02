@@ -10,6 +10,14 @@ export const transpMyWG = () => dispatch => {
     });
   });
 };
+export const transpNew = () => dispatch => {
+  axios.get(`${apiPrefix}/transp/newOrder`).then((response) => {
+    dispatch({
+      type: "transpNew",
+      data: response.data
+    });
+  });
+};
 export const transpToMe = () => dispatch => {
   axios.get(`${apiPrefix}/transp/toMe`).then((response) => {
     dispatch({
@@ -18,7 +26,14 @@ export const transpToMe = () => dispatch => {
     });
   });
 };
-
+export const transpCarAppoint = () => dispatch => {
+  axios.get(`${apiPrefix}/transp/carAppoint`).then((response) => {
+    dispatch({
+      type: "carAppoint",
+      data: response.data
+    });
+  });
+};
 export const transpDoneTrip = () => dispatch => {
   axios.get(`${apiPrefix}/transp/doneTrip`).then((response) => {
     dispatch({

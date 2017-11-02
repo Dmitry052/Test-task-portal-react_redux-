@@ -179,11 +179,18 @@ body > div.ReactModalPortal > div > div > div.modalBody {
 #root > div > div.transport > div > div > div.react-bs-table.react-bs-table-bordered > div.react-bs-container-header.table-header-wrapper > table > thead > tr > th:nth-child(7) > div > div > select {
   padding: 0 10px; }
 
+#root > div > div.transport > div > div:nth-child(1) > div > div.react-bs-table.react-bs-table-bordered > div.react-bs-container-header.table-header-wrapper > table > thead > tr input,
+#root > div > div.transport > div > div:nth-child(1) > div > div.react-bs-table.react-bs-table-bordered > div.react-bs-container-header.table-header-wrapper > table > thead > tr select {
+  padding: 0 5px;
+  height: 25px;
+  border-radius: 4px;
+  border: 1px solid #ebebe4; }
+
 body > div.ReactModalPortal > div > div {
   height: 90%; }
 
 body > div:nth-child(5) > div > div {
-  height: 540px;
+  height: 555px;
   margin: 0 auto; }
 
 .modalHead {
@@ -255,9 +262,6 @@ body > div:nth-child(5) > div > div {
 #infOrder div input {
   height: 25px; }
 
-#infOrder > div:nth-child(2) > input {
-  text-align: right; }
-
 #infOrder input, textarea {
   width: 100%;
   padding: 0px 5px;
@@ -324,9 +328,6 @@ body > div:nth-child(5) > div > div > div.modalHead > h4 > span {
   border: 1px solid #c6cad3;
   padding: 0 5px; }
 
-#infDrive > div:nth-child(2) > input {
-  text-align: right; }
-
 #bg-nested-dropdown {
   padding: 0 5px;
   background: #ffefef;
@@ -348,6 +349,10 @@ body > div:nth-child(5) > div > div > div.modalHead > h4 > span {
   width: 100%;
   height: 30px; }
 
+#dataTrip > div:nth-child(3) > input,
+#dataTrip > div:nth-child(1) > input {
+  text-align: center; }
+
 #tripBlock > div:nth-child(1) > div:nth-child(2) {
   margin-top: 8px; }
 
@@ -365,8 +370,15 @@ body > div:nth-child(5) > div > div > div.modalHead > h4 > span {
   border-radius: 4px;
   border: 1px solid #c6cad3; }
 
+#dataTrip > div:nth-child(2) > input,
 #dataTrip > div:nth-child(4) > input {
+  width: 85%;
   text-align: right; }
+
+#dataTrip > div:nth-child(2) > span:nth-child(3),
+#dataTrip > div:nth-child(4) > span:nth-child(3) {
+  display: inline-block;
+  margin-left: 1px; }
 
 #tripBlock {
   padding: 0 0; }
@@ -730,6 +742,24 @@ div.btnModalCar {
 #btnDelDrivers, #btnDelCars {
   background-color: #ec971f;
   border-color: #d58512; }
+
+#gridCars > div.react-bs-table-container.col-lg-12.col-md-12 > div.react-bs-table.react-bs-table-bordered > div.react-bs-container-header.table-header-wrapper > table > thead > tr input,
+#gridCars > div.react-bs-table-container.col-lg-12.col-md-12 > div.react-bs-table.react-bs-table-bordered > div.react-bs-container-header.table-header-wrapper > table > thead > tr select,
+#gridDrivers > div.react-bs-table-container.col-lg-12.col-md-12 > div.react-bs-table.react-bs-table-bordered > div.react-bs-container-header.table-header-wrapper > table > thead > tr input {
+  padding: 0 5px;
+  height: 25px;
+  border-radius: 4px;
+  border: 1px solid #ebebe4; }
+
+#gridDrivers > button.btn-success > i,
+#btnDelDrivers > i,
+#gridCars > button.btn-success > i,
+#btnDelCars > i {
+  padding: 5px 5px; }
+
+#btnDelDrivers, #btnDelCars {
+  background: #ff0000;
+  margin-left: 5px !important; }
 
 .nameService {
   display: inline-block;

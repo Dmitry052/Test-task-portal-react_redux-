@@ -1,6 +1,7 @@
 // Родительский Reducer
 import { combineReducers } from 'redux';
-import transp from './transport/transport';
+import transp from './transport/transport_filters_left_menu';
+
 import expl from './exploitation/exploitation';
 import carDrivers from './transport/carDrivers';
 import carDriversAll from './transport/carDriversAll';

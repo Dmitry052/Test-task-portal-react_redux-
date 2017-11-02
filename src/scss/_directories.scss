@@ -100,3 +100,24 @@ div.btnModalCar{
     background-color: #ec971f;
     border-color: #d58512;
 }
+#gridCars > div.react-bs-table-container.col-lg-12.col-md-12 > div.react-bs-table.react-bs-table-bordered > div.react-bs-container-header.table-header-wrapper > table > thead > tr input,
+#gridCars > div.react-bs-table-container.col-lg-12.col-md-12 > div.react-bs-table.react-bs-table-bordered > div.react-bs-container-header.table-header-wrapper > table > thead > tr select,
+#gridDrivers > div.react-bs-table-container.col-lg-12.col-md-12 > div.react-bs-table.react-bs-table-bordered > div.react-bs-container-header.table-header-wrapper > table > thead > tr input{
+    padding: 0 5px;
+    height: 25px;
+    border-radius: 4px;
+    border: 1px solid #ebebe4;
+}
+#gridDrivers > button.btn-success > i,
+#btnDelDrivers > i,
+#gridCars > button.btn-success > i,
+#btnDelCars > i {
+    padding: 5px 5px;
+}
+#btnDelDrivers,#btnDelCars{
+    background: #ff0000;
+    margin-left: 5px !important;
+}
+
+
+
