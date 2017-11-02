@@ -652,17 +652,28 @@ td.rdtYear:hover {
   border-radius: 4px;
   border: 1px solid #c6cad3; }
 
-.btnModalDriver button:nth-child(1), .btnModalCar button:nth-child(1) {
+div.btnModalDriver > span,
+div.btnModalCar > span {
+  color: #fff;
+  display: inline-block;
+  margin: 2px 15px; }
+
+div.btnModalDriver > button,
+div.btnModalCar > button {
   float: right;
-  padding: 0 0;
   background: #455464;
   color: #fff;
-  font-size: 1.5em;
-  padding-right: 5px; }
+  padding: 7px 7px; }
 
-body > div:nth-child(4) > div > div > div.btnModalDriver > button:nth-child(1)
-.btnModalDriver, .btnModalCar {
-  margin-bottom: 4px; }
+div.btnModalDriver > span,
+div.btnModalCar > {
+  color: #fff; }
+
+#footerDriver > button,
+#footerCar > button {
+  float: right;
+  margin-right: 15px;
+  margin-top: 20px; }
 
 body > div:nth-child(3) > div > div,
 body > div:nth-child(4) > div > div {
@@ -670,7 +681,8 @@ body > div:nth-child(4) > div > div {
 
 div.btnModalDriver,
 div.btnModalCar {
-  background: #455464; }
+  background: #455464;
+  height: 30px; }
 
 .modalDriver, .modalCar {
   background-color: #f5f5f5;

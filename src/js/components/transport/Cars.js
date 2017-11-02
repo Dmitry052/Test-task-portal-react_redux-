@@ -123,8 +123,8 @@ class Cars extends Component {
                     style={{ content: { width: '600px', margin: 'auto', 'background-color': '#f5f5f5', height: '440px' } }}
                 >
                     <div className='btnModalCar'>
+                        <span>{this.props.transp.directoties.car_header}</span>
                         <button className='btn' onClick={this.showAddCar.bind(this)}><i className="fa fa-times" aria-hidden="true" /></button>
-                        <button className='btn btn-primary' onClick={this.saveToDBCar.bind(this)}>{this.props.transp.directoties.valBtnAddEdit}</button>
                     </div>
                     <div className='col-lg-12 col-md-12 col-sm-12 modalCar'>
                         <span>Марка <span>*</span></span>
@@ -157,6 +157,9 @@ class Cars extends Component {
                         >
                             {dropdataCompany}
                         </DropdownButton>
+                    </div>
+                    <div id="footerCar">
+                        <button className='btn btn-primary' onClick={this.saveToDBCar.bind(this)}>{this.props.transp.directoties.valBtnAddEdit}</button>
                     </div>
                 </Modal>
             </div>

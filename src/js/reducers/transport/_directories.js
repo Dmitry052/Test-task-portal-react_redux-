@@ -9,6 +9,7 @@ const initialState = {
     driver_edit_rules: false,
     car_edit_rules: false,
 
+    driver_header: '',
     driver_id: '-',
     driver_driver_name: '',
     driver_driver_phone: '',
@@ -24,6 +25,7 @@ const initialState = {
     car_alert: 'none',
     car_alert_text: '',
 
+    car_header: '',
     car_id: '',
     car_vehicle_brand: '',
     car_vehicle_id_number: '',
@@ -49,6 +51,7 @@ export default function directoties(state = initialState, action) {
     if (action.type === "SHOW_ADD_CARS") {
         state.showAddCar = !state.showAddCar;
         state.valBtnAddEdit = "Добавить";
+        state.car_header = "Добавление нового автомобиля";
 
         state.car_id = '-';
         state.car_vehicle_brand = '';
@@ -60,7 +63,9 @@ export default function directoties(state = initialState, action) {
     }
     if (action.type === "SHOW_EDIT_CARS") {
         state.showAddCar = !state.showAddCar;
-        state.valBtnAddEdit = "Изменить";
+        state.valBtnAddEdit = "Сохранить";
+        state.car_header = "Изменение данных по автомобилю"
+        
 
         state.car_id = action.data[0].id || null;
         state.car_vehicle_brand = action.data[0].vehicle_brand;
@@ -96,6 +101,7 @@ export default function directoties(state = initialState, action) {
     if (action.type === "SHOW_ADD_DRIVERS") {
         state.showAddDriver = !state.showAddDriver;
         state.valBtnAddEdit = "Добавить";
+        state.driver_header = "Добавление нового водителя";
 
         state.driver_driver_name = '';
         state.driver_driver_phone = '';
@@ -108,7 +114,8 @@ export default function directoties(state = initialState, action) {
     if (action.type === "SHOW_EDIT_DRIVERS") {
         console.log('пришло в редьюсер', action.data);
         state.showAddDriver = !state.showAddDriver;
-        state.valBtnAddEdit = "Изменить";
+        state.valBtnAddEdit = "Сохранить";
+        state.driver_header = "Изменение данных по водителю";
 
         state.driver_id = action.data[0].id || null;
         state.driver_driver_name = action.data[0].driver_fullname;

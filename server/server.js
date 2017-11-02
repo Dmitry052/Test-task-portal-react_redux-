@@ -94,7 +94,7 @@ app.post('/', (req, res) => {
                             var query = 'SELECT company_id,users.id,service_type FROM users INNER JOIN company ON users.company_id=company.id WHERE authid = ?';
                             sqlConnetction.query(query, ['local:' + uname], function (err, result) {
                                 var st = result[0];
-                                console.log(st);
+                                // console.log(st);
                                 req.session.serviceType = st.service_type;
                                 req.session.companyID = st.company_id;
                                 req.session.userID = st.id;
@@ -162,7 +162,6 @@ app.post('/transp/myWG', function (req, res) {
     sqlConnetction.query(dbUtills.myWG + req.session.serviceType, (err, result) => { res.send(result) });
 });
 app.get('/transp/toMe', function (req, res) {
-    console.log(dbUtills.toMeTransp + req.session.userID);
     sqlConnetction.query(dbUtills.toMeTransp + req.session.userID, (err, result) => { res.send(result); });
 });
 app.get('/transp/doneTrip', function (req, res) {
@@ -230,7 +229,6 @@ app.post('/transp/saveDriver', (req, res) => {
         sqlConnetction.query(query, (err, result) => {
             res.send(result);
         });
-        console.log(query);
     }
     else {
         var query = `UPDATE transport_drivers SET
@@ -243,7 +241,6 @@ app.post('/transp/saveDriver', (req, res) => {
         sqlConnetction.query(query, (err, result) => {
             res.send(result);
         });
-        console.log(query);
     }
 });
 app.post('/transp/saveCar', (req, res) => {
@@ -253,7 +250,6 @@ app.post('/transp/saveCar', (req, res) => {
         sqlConnetction.query(query, (err, result) => {
             res.send(result);
         });
-        console.log(query);
     }
     else {
         var query = `UPDATE transport_cars SET
@@ -265,7 +261,6 @@ app.post('/transp/saveCar', (req, res) => {
         sqlConnetction.query(query, (err, result) => {
             res.send(result);
         });
-        console.log(query);
     }
 });
 app.post('/transp/deleteDrivers', (req, res) => {
@@ -284,7 +279,6 @@ app.post('/transp/deleteDrivers', (req, res) => {
 app.post('/transp/deleteCars', (req, res) => {
     for (var i = 0; i < req.body.length; i++) {
         var query = `DELETE FROM transport_cars WHERE id = ${req.body[i]}`;
-        console.log(query);
         var result = sqlConnetction.query(query, (err, result) => {});
     }
     res.send();
