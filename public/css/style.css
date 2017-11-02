@@ -157,7 +157,8 @@ body > div.ReactModalPortal > div > div > div.modalBody {
 .gridTransp {
   margin-top: 5px;
   position: absolute;
-  display: inline-block; }
+  display: inline-block;
+  cursor: pointer; }
 
 .dropdown button {
   padding: 0 0;
@@ -652,7 +653,24 @@ td.rdtYear:hover {
   border: 1px solid #c6cad3; }
 
 .btnModalDriver button:nth-child(1), .btnModalCar button:nth-child(1) {
-  float: right; }
+  float: right;
+  padding: 0 0;
+  background: #455464;
+  color: #fff;
+  font-size: 1.5em;
+  padding-right: 5px; }
+
+body > div:nth-child(4) > div > div > div.btnModalDriver > button:nth-child(1)
+.btnModalDriver, .btnModalCar {
+  margin-bottom: 4px; }
+
+body > div:nth-child(3) > div > div,
+body > div:nth-child(4) > div > div {
+  padding: 0 0 !important; }
+
+div.btnModalDriver,
+div.btnModalCar {
+  background: #455464; }
 
 .modalDriver, .modalCar {
   background-color: #f5f5f5;

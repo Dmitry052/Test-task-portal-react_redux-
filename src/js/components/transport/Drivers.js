@@ -161,7 +161,7 @@ class Drivers extends Component {
                     style={{ content: { width: '600px', margin: 'auto', 'background-color': '#f5f5f5', height: '510px' } }}
                 >
                     <div className='btnModalDriver'>
-                        <button className='btn' onClick={this.showAddDriver.bind(this)}>Закрыть</button>
+                        <button className='btn' onClick={this.showAddDriver.bind(this)}><i className="fa fa-times" aria-hidden="true" /></button>
                         <button className='btn btn-primary' onClick={this.saveToDBDriverDirect.bind(this)}>{this.props.transp.directoties.valBtnAddEdit}</button>
                     </div>
                     <div className='col-lg-12 col-md-12 col-sm-12 modalDriver'>

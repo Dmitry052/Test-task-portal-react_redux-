@@ -123,7 +123,7 @@ class Cars extends Component {
                     style={{ content: { width: '600px', margin: 'auto', 'background-color': '#f5f5f5', height: '440px' } }}
                 >
                     <div className='btnModalCar'>
-                        <button className='btn' onClick={this.showAddCar.bind(this)}>Закрыть</button>
+                        <button className='btn' onClick={this.showAddCar.bind(this)}><i className="fa fa-times" aria-hidden="true" /></button>
                         <button className='btn btn-primary' onClick={this.saveToDBCar.bind(this)}>{this.props.transp.directoties.valBtnAddEdit}</button>
                     </div>
                     <div className='col-lg-12 col-md-12 col-sm-12 modalCar'>
