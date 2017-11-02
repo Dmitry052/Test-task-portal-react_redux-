@@ -17,6 +17,12 @@ const initialState = {
     driver_company: '',
 
     driver_selected: new Map(),
+    car_selected: new Map(),
+
+    driver_alert: 'none',
+    driver_alert_text: '',
+    car_alert: 'none',
+    car_alert_text: '',
 
     car_id: '',
     car_vehicle_brand: '',
@@ -24,7 +30,7 @@ const initialState = {
     car_vehicle_color: '',
     car_company: '',
 
-    car_selected: new Map()
+
 }
 
 export default function directoties(state = initialState, action) {
@@ -135,8 +141,8 @@ export default function directoties(state = initialState, action) {
     }
     // -------------------------------------
     if (action.type === "SELECT_DRIVER") {
+        state.driver_alert = 'none';
         state.driver_selected.set(action.data.id, action.data.status);
-        console.log(state.driver_selected);
         return state;
     }
     if (action.type === "DELETE_SELECT_DRIVER") {
@@ -144,12 +150,26 @@ export default function directoties(state = initialState, action) {
         return state;
     }
     if (action.type === "SELECT_CAR") {
-        console.log(state.car_selected);
+        state.car_selected.set(action.data.id, action.data.status);
+        state.car_alert = 'none';
         return state;
     }
     if (action.type === "DELETE_SELECT_CAR") {
         state.car_selected.clear();
         return state;
     }
+    // -------------------------------------
+    if (action.type === "DRIVER_ALERT") {
+        state.driver_alert = '';
+        state.driver_alert_text = action.data;
+        return state;
+    }
+    if (action.type === "CAR_ALERT") {
+        state.car_alert = '';
+        state.car_alert_text = action.data;
+        return state;
+    }
     return state;
 }
+
+

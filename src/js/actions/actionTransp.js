@@ -343,15 +343,16 @@ export const deleteDrivers = (drivers) => dispatch => {
   axios.post(`${apiPrefix}/transp/deleteDrivers`, drivers).then((response) => {
     // console.log('saved successfully');
   });
-  dispatch({
-    type: "DELETE_SELECT_DRIVER",
-  });
+
 };
 export const deleteCars = (cars) => dispatch => {
   axios.post(`${apiPrefix}/transp/deleteCars`, cars).then((response) => {
-    // console.log('saved successfully');
-  });
-  dispatch({
-    type: "DELETE_SELECT_CAR",
+    console.log("от сервера получил",response.data);
+    if (response.data !== true) {
+      dispatch({
+        type: "CAR_ALERT",
+        data: response.data.data
+      });
+    }
   });
 };

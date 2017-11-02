@@ -11,6 +11,7 @@ const initialState = {
     onoffbtnDoneTrip: false,
     opacitybtnDoneTrip: 1,
     // disabled input
+    edit_commentary_for_driver:false,
     edit_id_to_stops: false,
     edit_time_start: false,
     edit_time_end: true,
@@ -31,6 +32,7 @@ const initialState = {
     oreder_travel_from: '',
     oreder_travel_to: '',
     order_ride_stops: '',
+    order_commentary_for_driver: '',
     order_ride_start_time: '',
     order_ride_start_time_toDB: null,
     order_ride_end_time: '',
@@ -123,6 +125,7 @@ export default function currentOrder(state = initialState, action) {
         state.onoffbtnDoneTrip = false;
         state.opacitybtnDoneTrip = 1;
 
+        state.edit_commentary_for_driver = true;
         state.edit_id_to_stops = true;
         state.edit_time_start = true;
         state.edit_time_end = true;
@@ -145,6 +148,7 @@ export default function currentOrder(state = initialState, action) {
         state.onoffbtnDoneTrip = false;
         state.opacitybtnDoneTrip = 1;
 
+        state.edit_commentary_for_driver = true;
         state.edit_id_to_stops = true;
         state.edit_time_start = true;
         state.edit_time_end = false;
@@ -167,6 +171,7 @@ export default function currentOrder(state = initialState, action) {
         state.onoffbtnDoneTrip = false;
         state.opacitybtnDoneTrip = 1;
 
+        state.edit_commentary_for_driver = true;
         state.edit_id_to_stops = true;
         state.edit_time_start = true;
         state.edit_time_end = true;
@@ -189,6 +194,7 @@ export default function currentOrder(state = initialState, action) {
         state.onoffbtnDoneTrip = true;
         state.opacitybtnDoneTrip = 0.2;
 
+        state.edit_commentary_for_driver = true;
         state.edit_id_to_stops = true;
         state.edit_time_start = true;
         state.edit_time_end = true;
@@ -211,6 +217,7 @@ export default function currentOrder(state = initialState, action) {
         state.onoffbtnDoneTrip = true;
         state.opacitybtnDoneTrip = 0.2;
 
+        state.edit_commentary_for_driver = true;
         state.edit_id_to_stops = true;
         state.edit_time_start = true;
         state.edit_time_end = true;
@@ -233,6 +240,7 @@ export default function currentOrder(state = initialState, action) {
         state.onoffbtnDoneTrip = false;
         state.opacitybtnDoneTrip = 1;
 
+        state.edit_commentary_for_driver = true;
         state.edit_id_to_stops = true;
         state.edit_time_start = true;
         state.edit_time_end = true;
@@ -279,6 +287,7 @@ export default function currentOrder(state = initialState, action) {
         state.order_bank_contact_phone = action.data[0].bank_contact_phone;
         state.oreder_travel_from = action.data[0].travel_from;
         state.oreder_travel_to = action.data[0].travel_to;
+        state.order_commentary_for_driver = action.data[0].commentary_for_driver;
         state.order_ride_stops = action.data[0].ride_stops;
         state.order_ride_start_time = normalizeTime(action.data[0].ride_start_time);
         state.order_ride_start_time_toDB = action.data[0].ride_start_time;

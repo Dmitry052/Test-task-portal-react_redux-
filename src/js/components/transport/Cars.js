@@ -68,13 +68,21 @@ class Cars extends Component {
     }
     handleRowSelect(isSelected, rows) {
         if (isSelected instanceof Object) {
-            console.log('1', isSelected.id, rows);
+            this.props.selectCar({ id: isSelected.id, status: rows });
         } else {
-            console.log('2', isSelected);
+            this.props.selectCar([isSelected, rows]);
         }
     }
     handleDelSelected() {
-        
+        const selected = this.props.transp.directoties.car_selected;
+        let trueArr = [];
+        for (var key of selected) {
+            key[1] === true ? trueArr.push(key[0]) : '';
+        }
+        console.log(trueArr);
+        this.props.deleteCars(trueArr);
+        this.props.carsDrivers();
+        this.setState({});
     }
     render() {
         const options = {
@@ -94,7 +102,10 @@ class Cars extends Component {
         return (
             <div id="gridCars">
                 <button className='btn-success' onClick={this.showAddCar.bind(this)}>Добавить автомобиль</button>
-                <button className='btn-default'>Удалить выбранные автомобили</button>
+                <button id='btnDelCars' className='btn-default' onClick={this.handleDelSelected.bind(this)}>Удалить выбранные автомобили</button>
+                <Alert id="alertBlock" style={{ display: this.props.transp.directoties.car_alert }} bsStyle={'danger'}>
+                    <center>{this.props.transp.directoties.car_alert_text}</center>
+                </Alert>
                 <BootstrapTable className='col-lg-12 col-md-12'
                     hover
                     data={this.props.transp.cars}
@@ -184,6 +195,9 @@ export default connect(
         },
         selectCar: (selected) => {
             dispatch(selectCar(selected));
+        },
+        deleteCars: (cars) => {
+            dispatch(deleteCars(cars));
         }
     })
 )(Cars);

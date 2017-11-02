@@ -269,10 +269,25 @@ app.post('/transp/saveCar', (req, res) => {
     }
 });
 app.post('/transp/deleteDrivers', (req, res) => {
-    console.log(req.body);
+    for (var i = 0; i < req.body.length; i++) {
+        var query = `DELETE FROM transport_drivers WHERE id = ${req.body[i]}`;
+        sqlConnetction.query(query, (err, result) => {
+            if (result) {
+                // res.send(true);
+            }
+            else {
+                // res.send('');  описать ошибку
+            }
+        });
+    }
 });
 app.post('/transp/deleteCars', (req, res) => {
-    console.log(req.body);
+    for (var i = 0; i < req.body.length; i++) {
+        var query = `DELETE FROM transport_cars WHERE id = ${req.body[i]}`;
+        console.log(query);
+        var result = sqlConnetction.query(query, (err, result) => {});
+    }
+    res.send();
 });
 // Если маршрут не найден
 app.get('*', function (req, res) {

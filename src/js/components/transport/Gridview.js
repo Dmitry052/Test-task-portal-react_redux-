@@ -441,6 +441,10 @@ class Gridview extends Component {
                                         <span>Промежуточные пункты</span>
                                         <Textarea disabled={this.props.order.edit_id_to_stops} minRows={4} defaultValue={this.props.order.order_ride_stops || ''}></Textarea>
                                     </div>
+                                    <div className='col-lg-12 col-md-12 col-sm-12'>
+                                        <span>Коментарий водителю</span>
+                                        <input disabled={this.props.order.edit_commentary_for_driver} type='text' value={this.props.order.order_commentary_for_driver||''} />
+                                    </div>
                                     <div className='col-lg-6 col-md-12 col-sm-12'>
                                         <span>Время назначения авто</span>
                                         <input disabled={this.props.order.edit_time_start} type='text' value={this.props.order.order_ride_start_time || ''} />

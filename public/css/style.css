@@ -182,7 +182,7 @@ body > div.ReactModalPortal > div > div {
   height: 90%; }
 
 body > div:nth-child(5) > div > div {
-  height: 530px;
+  height: 540px;
   margin: 0 auto; }
 
 .modalHead {
@@ -274,8 +274,8 @@ body > div:nth-child(5) > div > div {
   padding: 0 0;
   height: 30px; }
 
-#infOrder > div:nth-child(7) > span {
-  width: 84.6%; }
+#infOrder > div:nth-child(8) > span {
+  width: 85%; }
 
 body > div:nth-child(5) > div > div > div.modalHead > h4 > span {
   padding: 0 0; }
@@ -295,7 +295,7 @@ body > div:nth-child(5) > div > div > div.modalHead > h4 > span {
 
 #infOrder > div:nth-child(7),
 #infOrder > div:nth-child(8) {
-  margin-top: 9px; }
+  margin-top: 0px; }
 
 #tripBlock > div > div:nth-child(1),
 #tripBlock > div > div:nth-child(2) {
@@ -696,6 +696,10 @@ td.rdtYear:hover {
 .modalDriver > span > span, .modalCar > span > span {
   display: inline;
   color: red; }
+
+#btnDelDrivers, #btnDelCars {
+  background-color: #ec971f;
+  border-color: #d58512; }
 
 .nameService {
   display: inline-block;

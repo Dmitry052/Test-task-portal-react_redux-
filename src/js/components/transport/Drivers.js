@@ -112,13 +112,13 @@ class Drivers extends Component {
     handleDelSelected() {
         const selected = this.props.transp.directoties.driver_selected;
         let trueArr = [];
-        for(var key of selected){
-            key[1] === true? trueArr.push(key[0]): '';
+        for (var key of selected) {
+            key[1] === true ? trueArr.push(key[0]) : '';
         }
-        console.log('индексы для удаления',trueArr);
-        // this.props.carDrivers();
-        // this.props.carDriversAll();
-        // this.setState({});
+        this.props.deleteDrivers(trueArr);
+        this.props.carDrivers();
+        this.props.carDriversAll();
+        this.setState({});
     }
     render() {
         const options = {
@@ -139,7 +139,10 @@ class Drivers extends Component {
         return (
             <div id="gridDrivers">
                 <button className='btn-success' onClick={this.showAddDriver.bind(this)}>Добавить нового водителя</button>
-                <button className='btn-default' onClick={this.handleDelSelected.bind(this)}>Удалить выбранных водителей</button>
+                <button id='btnDelDrivers' className='btn-default' onClick={this.handleDelSelected.bind(this)}>Удалить выбранных водителей</button>
+                <Alert id="alertBlock" style={{ display: this.props.transp.directoties.driver_alert }} bsStyle={'danger'}>
+                        <center>{this.props.transp.directoties.driver_alert_text}</center>
+                </Alert>
                 <BootstrapTable className='col-lg-12 col-md-12'
                     hover
                     data={this.props.transp.carDriversAll}
