@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { drivers, cars, carDriversAll, transpStatus, transpWG, transpUserToWg, transpExecutor, clickCurrentOrder, listExecutors, setDriver, setStatus, setWG, setExecutor, saveOrder, transpMyWG, assignCar, doneTrip, closureStatuses, companyToUser, setClosureCode, setTimeTrip, setDistance, setIdletime, setPrice, setSolution } from 'Actions/actionTransp';
+import { drivers, cars, carsStatus, carDriversAll, transpStatus, transpDriversStatus, transpWG, transpUserToWg, transpExecutor, clickCurrentOrder, listExecutors, setDriver, setStatus, setWG, setExecutor, saveOrder, transpMyWG, assignCar, doneTrip, closureStatuses, companyToUser, setClosureCode, setTimeTrip, setDistance, setIdletime, setPrice, setSolution } from 'Actions/actionTransp';
 import Modal from 'react-modal';
 import { Button, FormGroup, FormControl, ControlLabel, DropdownButton, MenuItem, Alert } from "react-bootstrap"; // MenuItem,
 import Textarea from 'react-textarea-autosize';
@@ -22,6 +22,8 @@ class Gridview extends Component {
         this.props.closureStatuses();
         this.props.companyToUser();
         this.props.carDriversAll();
+        this.props.transpDriversStatus();
+        this.props.carsStatus();
 
         this.state = {
             showModal: false,
@@ -203,7 +205,7 @@ class Gridview extends Component {
             this.setState({
                 showAlert: 'block',
                 statusAlert: 'danger',
-                messageAlert: 'Данные о Время простоя не заполнены',
+                messageAlert: 'Данные о времени простоя не заполнены',
             })
         }
         else if (this.props.order.order_ride_price === null || this.props.order.order_ride_price === 'null') {
@@ -691,8 +693,14 @@ export default connect(
         carDriversAll: () => {
             dispatch(carDriversAll());
         },
+        carsStatus: () =>{
+            dispatch(carsStatus());
+        },
         transpStat: () => {
             dispatch(transpStatus());
+        },
+        transpDriversStatus: () => {
+            dispatch(transpDriversStatus());
         },
         transpUserToWg: () => {
             dispatch(transpUserToWg());

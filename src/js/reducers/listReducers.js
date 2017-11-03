@@ -13,6 +13,8 @@ import currentOrder from './transport/_currentOrder';
 import directoties from './transport/_directories';
 import closureStatuses from './transport/closure_statuses';
 import companyToUser from './transport/companyToUser';
+import transport_drivers_status from './transport/transport_drivers_status';
+import transport_cars_status from'./transport/transport_cars_status';
 
 
 const transpReducer = combineReducers ({
@@ -51,6 +53,12 @@ const companyToUserReducer = combineReducers ({
 const carDriversAllReducer = combineReducers ({
     carDriversAll
 });
+const transport_drivers_statusReducer = combineReducers ({
+    transport_drivers_status
+});
+const transport_cars_statusReducer = combineReducers ({
+    transport_cars_status
+});
 export default combineReducers({
     transp,
     expl,
@@ -63,5 +71,7 @@ export default combineReducers({
     closureStatuses,
     directoties,
     companyToUser,
-    carDriversAll
+    carDriversAll,
+    transport_drivers_status,
+    transport_cars_status
 });

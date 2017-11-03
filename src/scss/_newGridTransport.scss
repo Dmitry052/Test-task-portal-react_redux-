@@ -147,6 +147,10 @@ body > div:nth-child(5) > div > div{
 body > div:nth-child(5) > div > div > div.modalHead > h4 > span {
     padding: 0 0;
 }
+#infOrder > div:nth-child(9) > div > input:disabled{
+    cursor: default;
+    background: #ebebe4 !important;
+}
 // datapicker
 #infOrder > div:nth-child(8) > div > input{
     padding: 0px 5px;

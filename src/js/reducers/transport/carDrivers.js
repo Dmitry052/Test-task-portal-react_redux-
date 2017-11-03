@@ -8,6 +8,5 @@ export default function carDrivers(state = initialState, action) {
                 break;
         }
     }
-
     return state;
 }

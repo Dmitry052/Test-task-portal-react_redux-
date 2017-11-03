@@ -101,7 +101,7 @@ export default function currentOrder(state = initialState, action) {
             var day = (date.getDate() < 10 ? "0" : "") + date.getDate();
             var month = ((date.getMonth() + 1) < 10 ? "0" : "") + (date.getMonth() + 1);
             var year = date.getFullYear();
-            var formated_date = day + "." + month + "." + year + " " + hours + ":" + min;
+            var formated_date = day + "-" + month + "-" + year + " " + hours + ":" + min;
         }
         return formated_date;
     }
@@ -400,9 +400,7 @@ export default function currentOrder(state = initialState, action) {
         state.order_ride_duration = action.data;
     }
     if (action.type === 'setDistance') {
-        
         state.order_ride_distance = action.data;
-        console.log('asdsad',state.order_ride_distance);
     }
     if (action.type === 'setIdletime') {
         state.order_ride_idle_time = action.data;

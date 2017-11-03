@@ -2,13 +2,18 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { showAddCar, showEditCar, selectCar, deleteCars, setBrandName, setVehicleNumberCar, setColorCar, setCompanyCar, saveToDBCarDirect, cars } from 'Actions/actionTransp';
+import { showAddCar, showEditCar, selectCar, deleteCars, setBrandName, setVehicleNumberCar, setColorCar, setStatusCarDirect, setCompanyCar, saveToDBCarDirect, cars } from 'Actions/actionTransp';
 import Modal from 'react-modal';
 import MaskedInput from 'react-maskedinput';
 import Dropdown from 'react-dropdown';
 import { DropdownButton, MenuItem, Alert } from "react-bootstrap";
 
 class Cars extends Component {
+    constructor(props) {
+        super(props);
+
+
+    }
     onRowClick(row) {
         this.props.showEditCar(row);
         this.setState({});
@@ -29,9 +34,18 @@ class Cars extends Component {
         this.props.setColorCar(this.colorCar.value);
         this.setState({});
     }
+    setStatus(status) {
+        this.props.setStatusCarDirect(status);
+        this.setState({});
+    }
     setCompany(company) {
         this.props.setCompany(company);
         this.setState({});
+    }
+    setShowCars() {
+        this.props.setShowCars();
+        this.setState({});
+        console.log(this.props.transp.directoties.show_cars_all);
     }
     saveToDBCar() {
         const car = {
@@ -40,6 +54,13 @@ class Cars extends Component {
             vehicle_brand: this.props.transp.directoties.car_vehicle_brand,
             vehicle_id_number: this.props.transp.directoties.car_vehicle_id_number,
             vehicle_color: this.props.transp.directoties.car_vehicle_color,
+            status: (() => {
+                for (var key in this.props.transp.transport_cars_status) {
+                    if (this.props.transp.transport_cars_status[key].status === this.props.transp.directoties.car_status) {
+                        return this.props.transp.transport_cars_status[key].id;
+                    }
+                }
+            })(),
             company_id: (() => {
                 for (var key in this.props.transp.companyToUser) {
                     if (this.props.transp.companyToUser[key].companyname === this.props.transp.directoties.car_company) {
@@ -84,6 +105,7 @@ class Cars extends Component {
         this.props.carsDrivers();
         this.setState({});
     }
+
     render() {
         const options = {
             sizePerPage: 10,
@@ -99,16 +121,23 @@ class Cars extends Component {
         const dropdataCompany = this.props.transp.companyToUser.map((name, i) => {
             return <MenuItem eventKey={i} onSelect={() => this.setCompany(name.companyname)}>{name.companyname}</MenuItem>
         })
+        const onlyWorckingCars = [];
+        for (var key in this.props.transp.cars) {
+            if (this.props.transp.cars[key].num_status === 1) {
+                onlyWorckingCars.push(this.props.transp.cars[key]);
+            }
+        }
         return (
             <div id="gridCars">
                 <button className='btn-success' onClick={this.showAddCar.bind(this)}><i class="fa fa-plus" aria-hidden="true"></i></button>
+                <button className='btn-success' onClick={this.setShowCars.bind(this)} title="Показать все автомобили"><i class="fa fa-braille" aria-hidden="true"></i></button>
                 <button id='btnDelCars' className='btn-default' onClick={this.handleDelSelected.bind(this)}><i class="fa fa-minus" aria-hidden="true"></i></button>
                 <Alert id="alertBlock" style={{ display: this.props.transp.directoties.car_alert }} bsStyle={'danger'}>
                     <center>{this.props.transp.directoties.car_alert_text}</center>
                 </Alert>
                 <BootstrapTable className='col-lg-12 col-md-12'
                     hover
-                    data={this.props.transp.cars}
+                    data={this.props.transp.directoties.show_cars_all === false ? onlyWorckingCars : this.props.transp.cars}
                     pagination={true}
                     options={options}
                     selectRow={selectRow}
@@ -117,10 +146,11 @@ class Cars extends Component {
                     <TableHeaderColumn dataField='vehicle_id_number' filter={{ type: 'TextFilter', defaultValue: '' }}>Регистрационный номер</TableHeaderColumn>
                     <TableHeaderColumn dataField={'vehicle_color' === 1 ? 'sdfds' : 'vehicle_color'} filter={{ type: 'TextFilter', defaultValue: '' }}>Цвет</TableHeaderColumn>
                     <TableHeaderColumn dataField='companyname' filter={{ type: 'SelectFilter', options: wg }}>Компания</TableHeaderColumn>
+                    <TableHeaderColumn dataField='status' filter={{ type: 'TextFilter', defaultValue: '' }}>Компания</TableHeaderColumn>
                 </BootstrapTable>
                 <Modal isOpen={this.props.transp.directoties.showAddCar}
                     contentLabel="Modal"
-                    style={{ content: { width: '600px', margin: 'auto', 'background-color': '#f5f5f5', height: '440px' } }}
+                    style={{ content: { width: '600px', margin: 'auto', 'background-color': '#f5f5f5', height: '490px' } }}
                 >
                     <div className='btnModalCar'>
                         <span>{this.props.transp.directoties.car_header}</span>
@@ -151,6 +181,16 @@ class Cars extends Component {
                         />
                     </div>
                     <div className='col-lg-12 col-md-12 col-sm-12 modalCar'>
+                        <span>Статус <span>*</span></span>
+                        <DropdownButton
+                            title={this.props.transp.directoties.car_status || '-'}
+                        >
+                            {this.props.transp.transport_cars_status.map((status, i) => {
+                                return <MenuItem eventKey={i} onSelect={() => this.setStatus(status.status)}>{status.status}</MenuItem>
+                            })}
+                        </DropdownButton>
+                    </div>
+                    <div className='col-lg-12 col-md-12 col-sm-12 modalCar'>
                         <span>Компания <span>*</span></span>
                         <DropdownButton
                             title={this.props.transp.directoties.car_company || '-'}
@@ -178,6 +218,10 @@ export default connect(
         showEditCar: (row) => {
             dispatch(showEditCar(row));
         },
+
+        setShowCars: () => {
+            dispatch({ type: 'SHOW_ALL_CARS' })
+        },
         setBrandName: (brand) => {
             dispatch(setBrandName(brand));
         },
@@ -186,6 +230,9 @@ export default connect(
         },
         setColorCar: (color) => {
             dispatch(setColorCar(color));
+        },
+        setStatusCarDirect: (status) => {
+            dispatch(setStatusCarDirect(status));
         },
         setCompany: (company) => {
             dispatch(setCompanyCar(company));

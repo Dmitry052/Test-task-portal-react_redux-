@@ -78,11 +78,27 @@ export const cars = () => dispatch => {
     });
   });
 };
-
+export const carsStatus = () => dispatch => {
+  axios.get(`${apiPrefix}/transp/cars-status`).then((response) => {
+    dispatch({
+      type: "transport_cars_status",
+      data: response.data
+    });
+  });
+};
 export const transpStatus = () => dispatch => {
   axios.get(`${apiPrefix}/transp/transport_statuses`).then((response) => {
     dispatch({
       type: "transport_statuses",
+      data: response.data
+    });
+  });
+};
+
+export const transpDriversStatus = () => dispatch => {
+  axios.get(`${apiPrefix}/transp/transport-drivers-status`).then((response) => {
+    dispatch({
+      type: "transport-drivers-status",
       data: response.data
     });
   });
@@ -290,6 +306,12 @@ export const setColorCar = (color) => dispatch => {
   dispatch({
     type: "SET_COLOR_CAR",
     data: color
+  });
+};
+export const setStatusCarDirect = (status) => dispatch => {
+  dispatch({
+    type: "SET_STATUS_CAR",
+    data: status
   });
 };
 export const setCompanyCar = (company) => dispatch => {

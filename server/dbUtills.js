@@ -86,7 +86,8 @@ INNER JOIN workgroups ON workgroups.id = requests.workgroup_id
 LEFT JOIN users on users.id = requests.assignee
 WHERE service_type=2 and requests.status=8`,               
 
-carDrivers: `select transport_drivers.id,driver_fullname,driver_phone,companyname,company.id as company_id,vehicle_brand,vehicle_id_number,vehicle_color,transport_drivers_status.status as status
+carDrivers: `select transport_drivers.id,driver_fullname,driver_phone,companyname,company.id as company_id,
+vehicle_brand,vehicle_id_number,vehicle_color,transport_drivers_status.status as status,transport_drivers.status as num_status
 from workgroups
 inner join usertowg on usertowg.wg_id = workgroups.id
 inner join companytowg on companytowg.wg_id  = workgroups.id
@@ -97,7 +98,9 @@ inner join transport_cars on transport_cars.id = transport_drivers.car_id
 left join transport_drivers_status on transport_drivers.status = transport_drivers_status.id
 where transport_drivers.status = 1 and username_id=`,
 
-carDriversAll: `select transport_drivers.id,driver_fullname,driver_phone,companyname,company.id as company_id,vehicle_brand,vehicle_id_number,vehicle_color,transport_drivers_status.status as status
+carDriversAll: `select transport_drivers.id,driver_fullname,driver_phone,companyname,
+company.id as company_id,vehicle_brand,vehicle_id_number,vehicle_color,transport_drivers_status.status as status,
+transport_drivers.status as code_status
 from workgroups
 inner join usertowg on usertowg.wg_id = workgroups.id
 inner join companytowg on companytowg.wg_id  = workgroups.id
@@ -108,15 +111,20 @@ inner join transport_cars on transport_cars.id = transport_drivers.car_id
 left join transport_drivers_status on transport_drivers.status = transport_drivers_status.id
 where username_id=`,
 
-cars: `SELECT transport_cars.id, vehicle_brand,vehicle_id_number,vehicle_color,company_id,companyname 
+cars: `SELECT transport_cars.id, vehicle_brand,vehicle_id_number,vehicle_color,company_id,companyname,
+transport_cars_status.status,transport_cars.status as num_status  
 FROM transport_cars
-INNER JOIN company on transport_cars.company_id = company.id;`,
+INNER JOIN company on transport_cars.company_id = company.id
+inner join transport_cars_status on transport_cars_status.id = transport_cars.status`,
+ 
+carsStatus: `SELECT * FROM transport_cars_status`,
 
 transport_statuses: `SELECT * 
                         FROM transport_statuses`,
 
 transport_wg: `SELECT * 
                 FROM workgroups`,
+transport_drivers_status: `SELECT * FROM transport_drivers_status;`,
 
 usersToWg: `SELECT workgroups.id,wg_name from usertowg 
             INNER JOIN users ON users.id = usertowg.username_id 

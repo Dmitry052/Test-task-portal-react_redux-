@@ -9,6 +9,7 @@ const initialState = {
     driver_edit_rules: false,
     car_edit_rules: false,
 
+    show_drivers_all: false,
     driver_header: '',
     driver_id: '-',
     driver_driver_name: '',
@@ -25,12 +26,16 @@ const initialState = {
     car_alert: 'none',
     car_alert_text: '',
 
+    show_cars_all: false,
+    cars_working: [],
     car_header: '',
     car_id: '',
     car_vehicle_brand: '',
     car_vehicle_id_number: '',
     car_vehicle_color: '',
+    car_status: '',
     car_company: '',
+
 
 
 }
@@ -46,6 +51,14 @@ export default function directoties(state = initialState, action) {
         state.show = 'none';
         state.showCarsDir = '';
         state.showDriversDir = 'none';
+        return state;
+    }
+    if (action.type === "SHOW_ALL_DRIVERS") {
+        state.show_drivers_all = !state.show_drivers_all;
+        return state;
+    }
+    if (action.type === "SHOW_ALL_CARS") {
+        state.show_cars_all = !state.show_cars_all;
         return state;
     }
     if (action.type === "SHOW_ADD_CARS") {
@@ -65,12 +78,13 @@ export default function directoties(state = initialState, action) {
         state.showAddCar = !state.showAddCar;
         state.valBtnAddEdit = "Сохранить";
         state.car_header = "Изменение данных по автомобилю"
-        
+
 
         state.car_id = action.data[0].id || null;
         state.car_vehicle_brand = action.data[0].vehicle_brand;
         state.car_vehicle_id_number = action.data[0].vehicle_id_number;
         state.car_vehicle_color = action.data[0].vehicle_color;
+        state.car_status = action.data[0].status;
         state.car_company = action.data[0].companyname;
 
         return state;
@@ -85,6 +99,10 @@ export default function directoties(state = initialState, action) {
     }
     if (action.type === "SET_COLOR_CAR") {
         state.car_vehicle_color = action.data;
+        return state;
+    }
+    if (action.type === "SET_STATUS_CAR") {
+        state.car_status = action.data;
         return state;
     }
     if (action.type === "SET_COMPANY_CAR") {

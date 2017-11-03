@@ -54,6 +54,10 @@ class Drivers extends Component {
         this.props.setCompanyDriverDirect(company);
         this.setState({});
     }
+    setShowDrivers() {
+        this.props.setShowDrivers();
+        this.setState({});
+    }
     saveToDBDriverDirect() {
         const driver = {
             type: this.props.transp.directoties.valBtnAddEdit === 'Добавить' ? 'INSERT' : 'UPDATE',
@@ -61,12 +65,10 @@ class Drivers extends Component {
             driver_fullname: this.props.transp.directoties.driver_driver_name || null,
             driver_phone: this.props.transp.directoties.driver_driver_phone || null,
             status: (() => {
-                if (this.props.transp.directoties.driver_status === 'Работает') {
-                    return 1;
-                } else if (this.props.transp.directoties.driver_status === 'Отпуск') {
-                    return 2;
-                } else {
-                    return null;
+                for (var key in this.props.transp.transport_drivers_status) {
+                    if (this.props.transp.transport_drivers_status[key].status === this.props.transp.directoties.driver_status) {
+                        return this.props.transp.transport_drivers_status[key].id;
+                    }
                 }
             })(),
             car_id: (() => {
@@ -136,25 +138,27 @@ class Drivers extends Component {
         const dropdataVehicleNumber = this.props.transp.cars.map((num, i) => {
             return <MenuItem eventKey={i} onSelect={() => this.setVehicleNumber(num.vehicle_id_number)}>{num.vehicle_id_number}</MenuItem>
         });
+        console.log(this.props.transp.carDrivers);
         return (
             <div id="gridDrivers">
                 <button className='btn-success' onClick={this.showAddDriver.bind(this)}><i class="fa fa-plus" aria-hidden="true"></i></button>
+                <button className='btn-success' onClick={this.setShowDrivers.bind(this)} title="Показать всех водителей"><i class="fa fa-braille" aria-hidden="true"></i></button>
                 <button id='btnDelDrivers' className='btn-default' onClick={this.handleDelSelected.bind(this)}><i class="fa fa-minus" aria-hidden="true"></i></button>
                 <Alert id="alertBlock" style={{ display: this.props.transp.directoties.driver_alert }} bsStyle={'danger'}>
-                        <center>{this.props.transp.directoties.driver_alert_text}</center>
+                    <center>{this.props.transp.directoties.driver_alert_text}</center>
                 </Alert>
                 <BootstrapTable className='col-lg-12 col-md-12'
                     hover
-                    data={this.props.transp.carDriversAll}
+                    data={this.props.transp.directoties.show_drivers_all === true ? this.props.transp.carDriversAll : this.props.transp.carDrivers}
                     pagination={true}
                     options={options}
                     selectRow={selectRow}
                 >
                     <TableHeaderColumn isKey={true} dataField='driver_fullname' filter={{ type: 'TextFilter', defaultValue: '' }}>ФИО водителя</TableHeaderColumn>
                     <TableHeaderColumn dataField='driver_phone' filter={{ type: 'TextFilter', defaultValue: '' }}>Телефон</TableHeaderColumn>
-                    <TableHeaderColumn dataField='status' filter={{ type: 'TextFilter', defaultValue: '' }}>Статус</TableHeaderColumn>
                     <TableHeaderColumn dataField='vehicle_id_number' filter={{ type: 'TextFilter', defaultValue: '' }}>Регистрационный номер</TableHeaderColumn>
                     <TableHeaderColumn dataField='companyname' filter={{ type: 'TextFilter', defaultValue: '' }}>Компания</TableHeaderColumn>
+                    <TableHeaderColumn dataField='status' filter={{ type: 'TextFilter', defaultValue: '' }}>Статус</TableHeaderColumn>
                 </BootstrapTable>
                 <Modal isOpen={this.props.transp.directoties.showAddDriver}
                     contentLabel="Modal"
@@ -185,8 +189,9 @@ class Drivers extends Component {
                     <div className='col-lg-12 col-md-12 col-sm-12 modalDriver'>
                         <span>Статус <span>*</span></span>
                         <DropdownButton title={this.props.transp.directoties.driver_status || '-'}>
-                            <MenuItem eventKey={'work'} onSelect={() => this.setStatus('Работает')}>Работает</MenuItem>
-                            <MenuItem eventKey={'dismissed'} onSelect={() => this.setStatus('Отпуск')}>Отпуск</MenuItem>
+                            {this.props.transp.transport_drivers_status.map((status, i) => {
+                                return <MenuItem eventKey={i} onSelect={() => this.setStatus(status.status)}>{status.status}</MenuItem>
+                            })}
                         </DropdownButton>
                     </div>
                     <div className='col-lg-12 col-md-12 col-sm-12 modalDriver'>
@@ -247,6 +252,9 @@ export default connect(
         },
         setVehicleNumber: (num) => {
             dispatch(setVehicleNumber(num));
+        },
+        setShowDrivers: () => {
+            dispatch({ type: 'SHOW_ALL_DRIVERS' })
         },
         saveToDBDriverDirect: (driver) => {
             dispatch(saveToDBDriverDirect(driver));
