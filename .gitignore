@@ -3,3 +3,4 @@
 /node_modules/
 /.vscode/
 /public/js/bundle.js
+/public/css/style.css
