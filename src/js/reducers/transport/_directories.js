@@ -71,6 +71,7 @@ export default function directoties(state = initialState, action) {
         state.car_vehicle_id_number = '';
         state.car_vehicle_color = '';
         state.car_company = '';
+        state.car_status = '';
 
         return state;
     }

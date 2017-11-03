@@ -5,6 +5,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { showAddCar, showEditCar, selectCar, deleteCars, setBrandName, setVehicleNumberCar, setColorCar, setStatusCarDirect, setCompanyCar, saveToDBCarDirect, cars } from 'Actions/actionTransp';
 import Modal from 'react-modal';
 import MaskedInput from 'react-maskedinput';
+import Mask from 'react-text-mask';
 import Dropdown from 'react-dropdown';
 import { DropdownButton, MenuItem, Alert } from "react-bootstrap";
 
@@ -26,8 +27,8 @@ class Cars extends Component {
         this.props.setBrandName(this.brandtName.value);
         this.setState({});
     }
-    setVehicleNumber() {
-        this.props.setVehicleNumber(this.vehicleNumber.value);
+    setVehicleNumber(e) {
+        this.props.setVehicleNumber(e.target.value);
         this.setState({});
     }
     setColorCar() {
@@ -126,7 +127,7 @@ class Cars extends Component {
                 onlyWorckingCars.push(this.props.transp.cars[key]);
             }
         }
-        console.log(this.props.transp.directoties.show_cars_all,onlyWorckingCars,this.props.transp.cars);
+        console.log(this.props.transp.directoties.show_cars_all, onlyWorckingCars, this.props.transp.cars);
         return (
             <div id="gridCars">
                 <button className='btn-success' onClick={this.showAddCar.bind(this)} title="Добавить новый автомобиль"><i class="fa fa-plus" aria-hidden="true"></i></button>
@@ -166,10 +167,10 @@ class Cars extends Component {
                     </div >
                     <div className='col-lg-12 col-md-12 col-sm-12 modalCar'>
                         <span>Регистрационный номер <span>*</span></span>
-                        <input type='text'
+                        <Mask mask={[/[а-яА-Яa-zA-z]/, /\d/, /\d/, /\d/, /[а-яА-Яa-zA-z]/, /[а-яА-Яa-zA-z]/, /\d/, /\d/, /\d/]}
                             value={this.props.transp.directoties.car_vehicle_id_number}
-                            ref={(vehicleNumber) => { this.vehicleNumber = vehicleNumber }}
                             onChange={this.setVehicleNumber.bind(this)}
+                            placeholder='A777AA152'
                         />
                     </div>
                     <div className='col-lg-12 col-md-12 col-sm-12 modalCar'>
