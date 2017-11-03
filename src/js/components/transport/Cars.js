@@ -45,7 +45,6 @@ class Cars extends Component {
     setShowCars() {
         this.props.setShowCars();
         this.setState({});
-        console.log(this.props.transp.directoties.show_cars_all);
     }
     saveToDBCar() {
         const car = {
@@ -127,11 +126,12 @@ class Cars extends Component {
                 onlyWorckingCars.push(this.props.transp.cars[key]);
             }
         }
+        console.log(this.props.transp.directoties.show_cars_all,onlyWorckingCars,this.props.transp.cars);
         return (
             <div id="gridCars">
-                <button className='btn-success' onClick={this.showAddCar.bind(this)}><i class="fa fa-plus" aria-hidden="true"></i></button>
+                <button className='btn-success' onClick={this.showAddCar.bind(this)} title="Добавить новый автомобиль"><i class="fa fa-plus" aria-hidden="true"></i></button>
                 <button className='btn-success' onClick={this.setShowCars.bind(this)} title="Показать все автомобили"><i class="fa fa-braille" aria-hidden="true"></i></button>
-                <button id='btnDelCars' className='btn-default' onClick={this.handleDelSelected.bind(this)}><i class="fa fa-minus" aria-hidden="true"></i></button>
+                <button id='btnDelCars' className='btn-default' onClick={this.handleDelSelected.bind(this)} title="Удалить"><i class="fa fa-minus" aria-hidden="true"></i></button>
                 <Alert id="alertBlock" style={{ display: this.props.transp.directoties.car_alert }} bsStyle={'danger'}>
                     <center>{this.props.transp.directoties.car_alert_text}</center>
                 </Alert>

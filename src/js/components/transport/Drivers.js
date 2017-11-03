@@ -141,9 +141,9 @@ class Drivers extends Component {
         console.log(this.props.transp.carDrivers);
         return (
             <div id="gridDrivers">
-                <button className='btn-success' onClick={this.showAddDriver.bind(this)}><i class="fa fa-plus" aria-hidden="true"></i></button>
+                <button className='btn-success' onClick={this.showAddDriver.bind(this)} title="Добавить нового водителя"><i class="fa fa-plus" aria-hidden="true"></i></button>
                 <button className='btn-success' onClick={this.setShowDrivers.bind(this)} title="Показать всех водителей"><i class="fa fa-braille" aria-hidden="true"></i></button>
-                <button id='btnDelDrivers' className='btn-default' onClick={this.handleDelSelected.bind(this)}><i class="fa fa-minus" aria-hidden="true"></i></button>
+                <button id='btnDelDrivers' className='btn-default' onClick={this.handleDelSelected.bind(this)} title="Удалить"><i class="fa fa-minus" aria-hidden="true"></i></button>
                 <Alert id="alertBlock" style={{ display: this.props.transp.directoties.driver_alert }} bsStyle={'danger'}>
                     <center>{this.props.transp.directoties.driver_alert_text}</center>
                 </Alert>

@@ -447,8 +447,8 @@ class Gridview extends Component {
                                         <Textarea disabled={this.props.order.edit_id_to_stops} minRows={4} defaultValue={this.props.order.order_ride_stops || ''}></Textarea>
                                     </div>
                                     <div className='col-lg-12 col-md-12 col-sm-12'>
-                                        <span>Коментарий водителю</span>
-                                        <input disabled={this.props.order.edit_commentary_for_driver} type='text' value={this.props.order.order_commentary_for_driver || ''} />
+                                        <span>Комментарии водителю</span>
+                                        <Textarea disabled={this.props.order.edit_commentary_for_driver} minRows={3} type='text' value={this.props.order.order_commentary_for_driver || ''} />
                                     </div>
                                     <div className='col-lg-6 col-md-12 col-sm-12'>
                                         <span>Время назначения авто</span>
@@ -500,7 +500,7 @@ class Gridview extends Component {
                                         <h4>Данные о поездке для отправки в банк</h4>
                                     </div>
                                     <div id="dataTrip" className="panel-body">
-                                        <div className="col-lg-6 col-md-6 col-sm-12">
+                                        <div className="col-lg-6 col-md-12 col-sm-12">
                                             <span>Длительность поездки</span>
                                             <MaskedInput mask="11:11"
                                                 disabled={this.props.order.edit_data_to_sendbank}
@@ -510,7 +510,7 @@ class Gridview extends Component {
                                                 placeholder="--:--"
                                             />
                                         </div>
-                                        <div className="col-lg-6 col-md-6 col-sm-12">
+                                        <div className="col-lg-6 col-md-12 col-sm-12">
                                             <span>Пробег</span>
                                             {/* <MaskedInput mask="111"
                                                 disabled={this.props.order.edit_data_to_sendbank}
@@ -527,7 +527,7 @@ class Gridview extends Component {
                                             />
                                             <span>КМ</span>
                                         </div>
-                                        <div className="col-lg-6 col-md-6 col-sm-12">
+                                        <div className="col-lg-6 col-md-12 col-sm-12">
                                             <span>Время простоя</span>
                                             <MaskedInput mask="11:11"
                                                 disabled={this.props.order.edit_data_to_sendbank}
@@ -537,7 +537,7 @@ class Gridview extends Component {
                                                 placeholder="--:--"
                                             />
                                         </div>
-                                        <div className="col-lg-6 col-md-6 col-sm-12">
+                                        <div className="col-lg-6 col-md-12 col-sm-12">
                                             <span>Цена</span>
                                             {/* <MaskedInput mask="1111"
                                                 disabled={this.props.order.edit_data_to_sendbank}

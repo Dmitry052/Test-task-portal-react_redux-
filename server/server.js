@@ -238,6 +238,7 @@ app.post('/transp/saveDriver', (req, res) => {
     if (req.body.type === 'INSERT') {
         var query = `INSERT INTO transport_drivers(driver_fullname,driver_phone,status,car_id,company_id) VALUES(
             '${req.body.driver_fullname}',${req.body.driver_phone},${req.body.status},${req.body.car_id},${req.body.company_id})`;
+
         sqlConnetction.query(query, (err, result) => {
             res.send(result);
         });
@@ -256,10 +257,9 @@ app.post('/transp/saveDriver', (req, res) => {
     }
 });
 app.post('/transp/saveCar', (req, res) => {
-    console.log(req.body);
     if (req.body.type === 'INSERT') {
-        var query = `INSERT INTO transport_cars(vehicle_brand,vehicle_id_number,vehicle_color,company_id) VALUES(
-            '${req.body.vehicle_brand}','${req.body.vehicle_id_number}','${req.body.vehicle_color}',${req.body.company_id})`
+        var query = `INSERT INTO transport_cars(vehicle_brand,vehicle_id_number,vehicle_color,status,company_id) VALUES(
+            '${req.body.vehicle_brand}','${req.body.vehicle_id_number}','${req.body.vehicle_color}',${req.body.status},${req.body.company_id})`;
         sqlConnetction.query(query, (err, result) => {
             res.send(result);
         });
@@ -293,7 +293,7 @@ app.post('/transp/deleteDrivers', (req, res) => {
 app.post('/transp/deleteCars', (req, res) => {
     for (var i = 0; i < req.body.length; i++) {
         var query = `DELETE FROM transport_cars WHERE id = ${req.body[i]}`;
-        var result = sqlConnetction.query(query, (err, result) => {});
+        var result = sqlConnetction.query(query, (err, result) => { });
     }
     res.send();
 });
