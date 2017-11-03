@@ -2,7 +2,10 @@
 import { combineReducers } from 'redux';
 import transp from './transport/transport_filters_left_menu';
 
+
 import expl from './exploitation/exploitation';
+
+import left_menu from './transport/left_menu';
 import carDrivers from './transport/carDrivers';
 import carDriversAll from './transport/carDriversAll';
 import cars from './transport/transport_drivers';
@@ -16,7 +19,9 @@ import companyToUser from './transport/companyToUser';
 import transport_drivers_status from './transport/transport_drivers_status';
 import transport_cars_status from'./transport/transport_cars_status';
 
-
+const left_menuReducer = combineReducers ({
+    left_menu
+});
 const transpReducer = combineReducers ({
     transp
 });
@@ -73,5 +78,6 @@ export default combineReducers({
     companyToUser,
     carDriversAll,
     transport_drivers_status,
-    transport_cars_status
+    transport_cars_status,
+    left_menu
 });

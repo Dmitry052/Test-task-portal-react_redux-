@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { transpMyWG, transpNew, transpToMe,transpCarAppoint, transpDoneTrip, transpDataSend, cancelClient, showDirect, showCarsDirect, showDriversDirect } from 'Actions/actionTransp';
+import { transpMyWG, transpNew, transpToMe, transpCarAppoint, transpDoneTrip, transpDataSend, cancelClient, showDirect, showCarsDirect, showDriversDirect } from 'Actions/actionTransp';
 import { Nav, NavItem, Collapse, Button } from 'react-bootstrap';
 
 
@@ -117,25 +117,28 @@ class LeftMenu extends Component {
     handleChecked() {
         // заглушка
     }
-
+    handleFunction(func, num) {
+        this.props.activeFilter(num);
+        func();
+        this.setState({});
+    }
     render() {
         // Ширина меню
         const width = { width: this.state.width };
+        console.log(this.props.transp);
         return (
             <div className="leftMenu" style={width}>
                 <div className="menuFilters">
                     <Button onClick={this.toggleFilters}><i className={this.state.iconFilters}></i>{' '}{this.state.nameFilters}</Button>
                     <Collapse in={this.state.collapseFilters}>
                         <Nav bsStyle="pills">
-                            <NavItem eventKey={1} href="#" onClick={this.props.myWG}><i className={this.state.iconFilter1}></i>{' '}{this.state.nameFilter1}</NavItem>
-                            <NavItem eventKey={2} href="#" onClick={this.props.toMe}><i className={this.state.iconFilter2}></i>{' '}{this.state.nameFilter2}</NavItem>
-                            <NavItem eventKey={6} href="#" onClick={this.props.transpNew}><i className={this.state.iconFilter6}></i>{' '}{this.state.nameFilter6}</NavItem>
-                            <NavItem eventKey={7} href="#" onClick={this.props.transpCarAppoint}><i className={this.state.iconFilter7}></i>{' '}{this.state.nameFilter7}</NavItem>
-                            <NavItem eventKey={3} href="#" onClick={this.props.doneTrip}><i className={this.state.iconFilter3}></i>{' '}{this.state.nameFilter3}</NavItem>
+                            <NavItem eventKey={1} href="#" className={this.props.transp.left_menu.filter1} onClick={this.handleFunction.bind(this, this.props.myWG, 0)}><i className={this.state.iconFilter1}></i>{' '}{this.state.nameFilter1}</NavItem>
+                            <NavItem eventKey={2} href="#" className={this.props.transp.left_menu.filter2} onClick={this.handleFunction.bind(this, this.props.toMe, 1)}><i className={this.state.iconFilter2}></i>{' '}{this.state.nameFilter2}</NavItem>
+                            <NavItem eventKey={6} href="#" className={this.props.transp.left_menu.filter6} onClick={this.handleFunction.bind(this, this.props.transpNew, 5)}><i className={this.state.iconFilter6}></i>{' '}{this.state.nameFilter6}</NavItem>
+                            <NavItem eventKey={7} href="#" className={this.props.transp.left_menu.filter7} onClick={this.handleFunction.bind(this, this.props.transpCarAppoint, 6)}><i className={this.state.iconFilter7}></i>{' '}{this.state.nameFilter7}</NavItem>
+                            <NavItem eventKey={3} href="#" className={this.props.transp.left_menu.filter3} onClick={this.handleFunction.bind(this, this.props.doneTrip, 2)}><i className={this.state.iconFilter3}></i>{' '}{this.state.nameFilter3}</NavItem>
                             {/* <NavItem eventKey={4} href="#" onClick={this.props.dataSend}><i className={this.state.iconFilter4}></i>{' '}{this.state.nameFilter4}</NavItem> */}
-                            <NavItem eventKey={5} href="#" onClick={this.props.canclClient}><i className={this.state.iconFilter5}></i>{' '}{this.state.nameFilter5}</NavItem>
-
-
+                            <NavItem eventKey={5} href="#" className={this.props.transp.left_menu.filter5} onClick={this.handleFunction.bind(this, this.props.canclClient, 4)}><i className={this.state.iconFilter5}></i>{' '}{this.state.nameFilter5}</NavItem>
                         </Nav>
                     </Collapse>
                 </div>
@@ -143,8 +146,8 @@ class LeftMenu extends Component {
                     <Button onClick={this.toggleDirectories}><i className={this.state.iconDirectories}></i>{' '}{this.state.nameDirectories}</Button>
                     <Collapse in={this.state.collapseDirectories}>
                         <Nav bsStyle="pills">
-                            <NavItem eventKey={1} href="#" onClick={this.props.showDriversDirect}><i className={this.state.iconDirectory1}></i>{' '}{this.state.nameDirectory1}</NavItem>
-                            <NavItem eventKey={2} href="#" onClick={this.props.showCarsDirect}><i className={this.state.iconDirectory2}></i>{' '}{this.state.nameDirectory2}</NavItem>
+                            <NavItem eventKey={1} href="#" className={this.props.transp.left_menu.filter8} onClick={this.handleFunction.bind(this, this.props.showDriversDirect, 7)}><i className={this.state.iconDirectory1}></i>{' '}{this.state.nameDirectory1}</NavItem>
+                            <NavItem eventKey={2} href="#" className={this.props.transp.left_menu.filter9} onClick={this.handleFunction.bind(this, this.props.showCarsDirect, 8)}><i className={this.state.iconDirectory2}></i>{' '}{this.state.nameDirectory2}</NavItem>
                         </Nav>
                     </Collapse>
                 </div>
@@ -169,6 +172,9 @@ export default connect(
         transp: state
     }),
     dispatch => ({
+        activeFilter: (num) => {
+            dispatch({ type: 'FILETER_ACTIVE', data: num })
+        },
         myWG: () => {
             dispatch(showDirect());
             dispatch(transpMyWG());
