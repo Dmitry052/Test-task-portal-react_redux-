@@ -8,6 +8,11 @@ export const transpMyWG = () => dispatch => {
       type: "transpMyWG",
       data: response.data
     });
+  }).catch(function (error) {
+    alert("Нет ответа от сервера");
+    dispatch({
+      type: "ERROR_CONNECT",
+    });
   });
 };
 export const transpNew = () => dispatch => {
@@ -15,6 +20,11 @@ export const transpNew = () => dispatch => {
     dispatch({
       type: "transpNew",
       data: response.data
+    });
+  }).catch(function (error) {
+    alert("Нет ответа от сервера");
+    dispatch({
+      type: "ERROR_CONNECT",
     });
   });
 };
@@ -24,6 +34,11 @@ export const transpToMe = () => dispatch => {
       type: "transpToMe",
       data: response.data
     });
+  }).catch(function (error) {
+    alert("Нет ответа от сервера");
+    dispatch({
+      type: "ERROR_CONNECT",
+    });
   });
 };
 export const transpCarAppoint = () => dispatch => {
@@ -32,6 +47,11 @@ export const transpCarAppoint = () => dispatch => {
       type: "carAppoint",
       data: response.data
     });
+  }).catch(function (error) {
+    alert("Нет ответа от сервера");
+    dispatch({
+      type: "ERROR_CONNECT",
+    });
   });
 };
 export const transpDoneTrip = () => dispatch => {
@@ -39,6 +59,11 @@ export const transpDoneTrip = () => dispatch => {
     dispatch({
       type: "transpDoneTrip",
       data: response.data
+    });
+  }).catch(function (error) {
+    alert("Нет ответа от сервера");
+    dispatch({
+      type: "ERROR_CONNECT",
     });
   });
 };
@@ -49,6 +74,11 @@ export const transpDataSend = () => dispatch => {
       type: "transpDataSend",
       data: response.data
     });
+  }).catch(function (error) {
+    alert("Нет ответа от сервера");
+    dispatch({
+      type: "ERROR_CONNECT",
+    });
   });
 };
 
@@ -57,6 +87,11 @@ export const cancelClient = () => dispatch => {
     dispatch({
       type: "cancelClient",
       data: response.data
+    });
+  }).catch(function (error) {
+    alert("Нет ответа от сервера");
+    dispatch({
+      type: "ERROR_CONNECT",
     });
   });
 };
@@ -67,7 +102,7 @@ export const drivers = () => dispatch => {
       type: "carDrivers",
       data: response.data
     });
-  });
+  })
 };
 
 export const cars = () => dispatch => {
@@ -228,6 +263,11 @@ export const setSolution = (text) => dispatch => {
 export const saveOrder = (orderData) => dispatch => {
   axios.post(`${apiPrefix}/transp/saveOrder`, orderData).then((response) => {
     // console.log('saved successfully');
+  }).catch(function (error) {
+    alert("Нет ответа от сервера");
+    dispatch({
+      type: "ERROR_CONNECT",
+    });
   });
 };
 
@@ -368,17 +408,32 @@ export const selectCar = (selected) => dispatch => {
 export const saveToDBDriverDirect = (driver) => dispatch => {
   axios.post(`${apiPrefix}/transp/saveDriver`, driver).then((response) => {
     // console.log('saved successfully');
+  }).catch(function (error) {
+    alert("Нет ответа от сервера");
+    dispatch({
+      type: "ERROR_CONNECT",
+    });
   });
 };
 export const saveToDBCarDirect = (car) => dispatch => {
   axios.post(`${apiPrefix}/transp/saveCar`, car).then((response) => {
     // console.log('saved successfully');
+  }).catch(function (error) {
+    alert("Нет ответа от сервера");
+    dispatch({
+      type: "ERROR_CONNECT",
+    });
   });
 };
 // -----------------------
 export const deleteDrivers = (drivers) => dispatch => {
   axios.post(`${apiPrefix}/transp/deleteDrivers`, drivers).then((response) => {
     // console.log('saved successfully');
+  }).catch(function (error) {
+    alert("Нет ответа от сервера");
+    dispatch({
+      type: "ERROR_CONNECT",
+    });
   });
 
 };

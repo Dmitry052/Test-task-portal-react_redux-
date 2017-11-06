@@ -20,6 +20,9 @@ export default function tranportReduce(state = initialState, action) {
                 return state = action.data;
             case 'clean_up':
                 return state = [];
+            case 'ERROR_CONNECT':
+                return state = [];
+            
         }
     }
      

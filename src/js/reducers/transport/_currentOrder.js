@@ -11,7 +11,7 @@ const initialState = {
     onoffbtnDoneTrip: false,
     opacitybtnDoneTrip: 1,
     // disabled input
-    edit_commentary_for_driver:false,
+    edit_commentary_for_driver: false,
     edit_id_to_stops: false,
     edit_time_start: false,
     edit_time_end: true,
