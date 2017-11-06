@@ -275,7 +275,6 @@ export default function currentOrder(state = initialState, action) {
                 dataSend();
                 break;
         }
-        console.log('action.data', action.data);
         var driverData = driverData(action.data[1], action.data[0].driver_id || false, action.data[4]);
         // Кнопки управления
         // Информация о заказе
@@ -391,7 +390,6 @@ export default function currentOrder(state = initialState, action) {
         state.order_ride_end_time = normalizeTime(state.order_ride_end_time_toDB);
         // state.order_status_val_def = action.data;
         state.order_status_val_def = state.order_statuses[2];
-
     }
     if (action.type === 'closureCode') {
         state.order_def_closure_statuses = action.data;

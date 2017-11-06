@@ -2,7 +2,7 @@
     "apiPrefix": "http://www.sfriend.ru:3000",
     "serverPort": "3000",
     "db":{
-        "hosts":"http://www.sfriend.ru:3000",
+        "hosts":"www.sfriend.ru",
         "user":"portal_db",
         "port": 3306,
         "password":"SqesR12",

@@ -84,7 +84,6 @@ class Cars extends Component {
             this.props.carsDrivers();
             this.showAddCar();
         }
-        console.log(check, car);
         this.setState({});
     }
     handleRowSelect(isSelected, rows) {
@@ -100,7 +99,6 @@ class Cars extends Component {
         for (var key of selected) {
             key[1] === true ? trueArr.push(key[0]) : '';
         }
-        console.log(trueArr);
         this.props.deleteCars(trueArr);
         this.props.carsDrivers();
         this.setState({});
@@ -127,12 +125,11 @@ class Cars extends Component {
                 onlyWorckingCars.push(this.props.transp.cars[key]);
             }
         }
-        console.log(this.props.transp.directoties.show_cars_all, onlyWorckingCars, this.props.transp.cars);
         return (
             <div id="gridCars">
-                <button className='btn-success' onClick={this.showAddCar.bind(this)} title="Добавить новый автомобиль"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                <button className='btn-success' onClick={this.setShowCars.bind(this)} title="Показать все автомобили"><i class="fa fa-braille" aria-hidden="true"></i></button>
-                <button id='btnDelCars' className='btn-default' onClick={this.handleDelSelected.bind(this)} title="Удалить"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                <button className='btn-success' onClick={this.showAddCar.bind(this)} title="Добавить новый автомобиль"><i className="fa fa-plus" aria-hidden="true"></i></button>
+                <button className='btn-success' onClick={this.setShowCars.bind(this)} title="Показать все автомобили"><i className="fa fa-braille" aria-hidden="true"></i></button>
+                <button id='btnDelCars' className='btn-default' onClick={this.handleDelSelected.bind(this)} title="Удалить"><i className="fa fa-minus" aria-hidden="true"></i></button>
                 <Alert id="alertBlock" style={{ display: this.props.transp.directoties.car_alert }} bsStyle={'danger'}>
                     <center>{this.props.transp.directoties.car_alert_text}</center>
                 </Alert>

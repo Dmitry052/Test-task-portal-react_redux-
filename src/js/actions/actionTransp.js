@@ -238,7 +238,7 @@ export const assignCar = () => dispatch => {
   });
 };
 
-export const doneTrip = (status) => dispatch => {
+export const doneTripStatus = (status) => dispatch => {
   dispatch({
     type: "doneTrip",
     data: status
@@ -384,7 +384,6 @@ export const deleteDrivers = (drivers) => dispatch => {
 };
 export const deleteCars = (cars) => dispatch => {
   axios.post(`${apiPrefix}/transp/deleteCars`, cars).then((response) => {
-    console.log("от сервера получил",response.data);
     if (response.data !== true) {
       dispatch({
         type: "CAR_ALERT",

@@ -125,7 +125,6 @@ class LeftMenu extends Component {
     render() {
         // Ширина меню
         const width = { width: this.state.width };
-        console.log(this.props.transp);
         return (
             <div className="leftMenu" style={width}>
                 <div className="menuFilters">
@@ -180,6 +179,7 @@ export default connect(
             dispatch(transpMyWG());
         },
         transpNew: () => {
+            dispatch(showDirect());
             dispatch(transpNew());
         },
         toMe: () => {
@@ -187,6 +187,7 @@ export default connect(
             dispatch(transpToMe());
         },
         transpCarAppoint: () => {
+            dispatch(showDirect());
             dispatch(transpCarAppoint());
         },
         doneTrip: () => {

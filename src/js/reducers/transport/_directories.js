@@ -131,7 +131,6 @@ export default function directoties(state = initialState, action) {
         return state;
     }
     if (action.type === "SHOW_EDIT_DRIVERS") {
-        console.log('пришло в редьюсер', action.data);
         state.showAddDriver = !state.showAddDriver;
         state.valBtnAddEdit = "Сохранить";
         state.driver_header = "Изменение данных по водителю";

@@ -138,12 +138,11 @@ class Drivers extends Component {
         const dropdataVehicleNumber = this.props.transp.cars.map((num, i) => {
             return <MenuItem eventKey={i} onSelect={() => this.setVehicleNumber(num.vehicle_id_number)}>{num.vehicle_id_number}</MenuItem>
         });
-        console.log(this.props.transp.carDrivers);
         return (
             <div id="gridDrivers">
-                <button className='btn-success' onClick={this.showAddDriver.bind(this)} title="Добавить нового водителя"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                <button className='btn-success' onClick={this.setShowDrivers.bind(this)} title="Показать всех водителей"><i class="fa fa-braille" aria-hidden="true"></i></button>
-                <button id='btnDelDrivers' className='btn-default' onClick={this.handleDelSelected.bind(this)} title="Удалить"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                <button className='btn-success' onClick={this.showAddDriver.bind(this)} title="Добавить нового водителя"><i className="fa fa-plus" aria-hidden="true"></i></button>
+                <button className='btn-success' onClick={this.setShowDrivers.bind(this)} title="Показать всех водителей"><i className="fa fa-braille" aria-hidden="true"></i></button>
+                <button id='btnDelDrivers' className='btn-default' onClick={this.handleDelSelected.bind(this)} title="Удалить"><i className="fa fa-minus" aria-hidden="true"></i></button>
                 <Alert id="alertBlock" style={{ display: this.props.transp.directoties.driver_alert }} bsStyle={'danger'}>
                     <center>{this.props.transp.directoties.driver_alert_text}</center>
                 </Alert>

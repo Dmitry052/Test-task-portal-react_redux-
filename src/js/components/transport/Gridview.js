@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { drivers, cars, carsStatus, carDriversAll, transpStatus, transpDriversStatus, transpWG, transpUserToWg, transpExecutor, clickCurrentOrder, listExecutors, setDriver, setStatus, setWG, setExecutor, saveOrder, transpMyWG, assignCar, doneTrip, closureStatuses, companyToUser, setClosureCode, setTimeTrip, setDistance, setIdletime, setPrice, setSolution } from 'Actions/actionTransp';
+import { drivers, cars, carsStatus, carDriversAll, transpStatus, transpDriversStatus, transpWG, transpUserToWg, transpExecutor, clickCurrentOrder, listExecutors, setDriver, setStatus, setWG, setExecutor, saveOrder, transpMyWG, assignCar, doneTripStatus, closureStatuses, companyToUser, setClosureCode, setTimeTrip, setDistance, setIdletime, setPrice, setSolution, transpToMe,transpNew, transpCarAppoint, transpDoneTrip, cancelClient } from 'Actions/actionTransp';
 import Modal from 'react-modal';
 import { Button, FormGroup, FormControl, ControlLabel, DropdownButton, MenuItem, Alert } from "react-bootstrap"; // MenuItem,
 import Textarea from 'react-textarea-autosize';
@@ -230,7 +230,7 @@ class Gridview extends Component {
             })
         }
         else {
-            this.props.doneTrip(this.props.transp.transpStatus[2].status);
+            this.props.doneTripStatus(this.props.transp.transpStatus[2].status);
             this.setState({
                 showAlert: 'none',
                 statusAlert: 'danger',
@@ -246,6 +246,7 @@ class Gridview extends Component {
 
         var order = {
             id: this.props.order.db_id,
+            sb_id: this.props.order.order_ID,
             status: (() => {
                 for (var key in this.props.transp.transpStatus) {
                     if (this.props.transp.transpStatus[key].status === this.props.order.order_status_val_def) {
@@ -297,11 +298,37 @@ class Gridview extends Component {
             })(),
         }
         this.props.saveOrder(order);
-        this.props.myWG();
+        this.refreshState.call(this);
         this.setState({
             showAlert: 'none',
         });
         this.close();
+    }
+    refreshState() {
+        for (var key in this.props.transp.left_menu) {
+            if (this.props.transp.left_menu[key] === 'active') {
+                switch (key) {
+                    case 'filter1':
+                        this.props.myWG();
+                        return;
+                    case 'filter2':
+                        this.props.toMe();
+                        return;
+                    case 'filter6':
+                        this.props.transpNew();
+                        return;
+                    case 'filter7':
+                        this.props.transpCarAppoint()
+                        return;
+                    case 'filter3':
+                        this.props.doneTrip();
+                        return;
+                    case 'filter5':
+                        this.props.canclClient();
+                        return;
+                }
+            }
+        }
     }
     // клик по заявки в гриде
     onRowClick(row) {
@@ -693,7 +720,7 @@ export default connect(
         carDriversAll: () => {
             dispatch(carDriversAll());
         },
-        carsStatus: () =>{
+        carsStatus: () => {
             dispatch(carsStatus());
         },
         transpStat: () => {
@@ -752,8 +779,8 @@ export default connect(
         assignCar: () => {
             dispatch(assignCar());
         },
-        doneTrip: (status) => {
-            dispatch(doneTrip(status));
+        doneTripStatus: (status) => {
+            dispatch(doneTripStatus(status));
         },
         closureStatuses: () => {
             dispatch(closureStatuses());
@@ -762,6 +789,24 @@ export default connect(
         myWG: () => {
             dispatch(transpMyWG());
         },
+        toMe: () => {
+            dispatch(transpToMe());
+        },
+        transpNew: () => {
+            dispatch(transpNew());
+        },
+        transpCarAppoint: () => {
+            dispatch(transpCarAppoint());
+        },
+        doneTrip: () => {
+            dispatch(transpDoneTrip());
+        },
+        canclClient: () => {
+            dispatch(cancelClient());
+        },
 
     })
 )(Gridview);
+
+
+

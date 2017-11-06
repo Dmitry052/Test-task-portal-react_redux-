@@ -1,5 +1,6 @@
 var express = require('express');
 var session = require('express-session');
+var logs = require('./log');
 var MySQLStore = require('express-mysql-session')(session);
 var mysql = require('mysql');
 var dbUtills = require('./dbUtills');
@@ -8,6 +9,7 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var bkfd2Password = require("pbkdf2-password");
 var hasher = bkfd2Password();
+
 
 var app = express();
 
@@ -231,6 +233,7 @@ app.post('/transp/saveOrder', (req, res) => {
                 solution='${req.body.solution === undefined || req.body.solution === '' ? null : req.body.solution}'
                 where id=${req.body.id}`;
     sqlConnetction.query(query, (err, result) => {
+        logs.record('Пользователь:' + ' ' + req.session.authUser + ' ' + 'внёс изменения в' + ' ' + req.body.sb_id);
         res.send(result);
     });
 });
@@ -238,8 +241,8 @@ app.post('/transp/saveDriver', (req, res) => {
     if (req.body.type === 'INSERT') {
         var query = `INSERT INTO transport_drivers(driver_fullname,driver_phone,status,car_id,company_id) VALUES(
             '${req.body.driver_fullname}',${req.body.driver_phone},${req.body.status},${req.body.car_id},${req.body.company_id})`;
-
         sqlConnetction.query(query, (err, result) => {
+            logs.record('Пользователь:' + ' ' + req.session.authUser + ' ' + 'создал нового водителя' + ' ' + req.body.driver_fullname);
             res.send(result);
         });
     }
@@ -252,6 +255,7 @@ app.post('/transp/saveDriver', (req, res) => {
             company_id = ${req.body.company_id}
             WHERE id = ${req.body.id} `;
         sqlConnetction.query(query, (err, result) => {
+            logs.record('Пользователь:' + ' ' + req.session.authUser + ' ' + 'изменил данные по водителю' + ' ' + req.body.driver_fullname);
             res.send(result);
         });
     }
@@ -261,6 +265,7 @@ app.post('/transp/saveCar', (req, res) => {
         var query = `INSERT INTO transport_cars(vehicle_brand,vehicle_id_number,vehicle_color,status,company_id) VALUES(
             '${req.body.vehicle_brand}','${req.body.vehicle_id_number}','${req.body.vehicle_color}',${req.body.status},${req.body.company_id})`;
         sqlConnetction.query(query, (err, result) => {
+            logs.record('Пользователь:' + ' ' + req.session.authUser + ' ' + 'добавил в справочник авто ' + ' ' + req.body.vehicle_id_number);
             res.send(result);
         });
     }
@@ -273,6 +278,7 @@ app.post('/transp/saveCar', (req, res) => {
             company_id = ${req.body.company_id}
             WHERE id = ${req.body.id} `;
         sqlConnetction.query(query, (err, result) => {
+            logs.record('Пользователь:' + ' ' + req.session.authUser + ' ' + 'изменил данные по авто ' + ' ' + req.body.vehicle_id_number);
             res.send(result);
         });
     }
@@ -283,6 +289,7 @@ app.post('/transp/deleteDrivers', (req, res) => {
         sqlConnetction.query(query, (err, result) => {
             if (result) {
                 // res.send(true);
+                logs.record('Пользователь:' + ' ' + req.session.authUser + ' ' + 'удалил авто с id ' + ' ' + req.body[i]);
             }
             else {
                 // res.send('');  описать ошибку
