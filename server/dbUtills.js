@@ -102,12 +102,12 @@ carDriversAll: `select transport_drivers.id,driver_fullname,driver_phone,company
 company.id as company_id,vehicle_brand,vehicle_id_number,vehicle_color,transport_drivers_status.status as status,
 transport_drivers.status as code_status
 from workgroups
-inner join usertowg on usertowg.wg_id = workgroups.id
-inner join companytowg on companytowg.wg_id  = workgroups.id
-inner join transport_drivers on transport_drivers.company_id = companytowg.company_id
+left join usertowg on usertowg.wg_id = workgroups.id
+left join companytowg on companytowg.wg_id  = workgroups.id
+left join transport_drivers on transport_drivers.company_id = companytowg.company_id
 
-inner join company on transport_drivers.company_id = company.id
-inner join transport_cars on transport_cars.id = transport_drivers.car_id
+left join company on transport_drivers.company_id = company.id
+left join transport_cars on transport_cars.id = transport_drivers.car_id
 left join transport_drivers_status on transport_drivers.status = transport_drivers_status.id
 where username_id=`,
 

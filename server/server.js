@@ -251,7 +251,7 @@ app.post('/transp/saveDriver', (req, res) => {
             driver_fullname = '${req.body.driver_fullname}',
             driver_phone = ${req.body.driver_phone},
             status = ${req.body.status},
-            car_id = ${req.body.car_id},
+            car_id = ${req.body.car_id === undefined || req.body.car_id === null ? null : req.body.car_id},
             company_id = ${req.body.company_id}
             WHERE id = ${req.body.id} `;
         sqlConnetction.query(query, (err, result) => {

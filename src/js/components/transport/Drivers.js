@@ -88,10 +88,10 @@ class Drivers extends Component {
         }
         var check = false;
         for (var key in driver) {
-            if (driver[key] === undefined || driver[key] === null) {
+            if ((driver[key] === undefined || driver[key] === null) && key !== 'car_id') {
                 check = true;
                 break;
-            }
+            } 
         }
         if (check) {
             alert("Необходимо заполнить все поля.")
@@ -143,7 +143,6 @@ class Drivers extends Component {
             }
             return <MenuItem eventKey={i} onSelect={() => this.setVehicleNumber(num.vehicle_id_number)}>{num.vehicle_id_number}</MenuItem>
         });
-        console.log(this.props.transp);
         return (
             <div id="gridDrivers">
                 <button className='btn-success' onClick={this.showAddDriver.bind(this)} title="Добавить нового водителя"><i className="fa fa-plus" aria-hidden="true"></i></button>
@@ -204,7 +203,8 @@ class Drivers extends Component {
                         <DropdownButton
                             title={this.props.transp.directoties.driver_vehicle_id_number || '-'}
                             placeholder="Е777KX"
-                        >
+                        >   
+                            <MenuItem eventKey={'#0'} onSelect={() => this.setVehicleNumber('---')}>{'---'}</MenuItem>
                             {dropdataVehicleNumber}
                         </DropdownButton>
                     </div>
