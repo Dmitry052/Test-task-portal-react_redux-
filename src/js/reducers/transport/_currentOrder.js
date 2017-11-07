@@ -1,4 +1,5 @@
 const initialState = {
+    copyState: {},
     order_view_id: 0,
     // Управление, визуализация
     headerBtnClose: '',
@@ -62,7 +63,6 @@ const initialState = {
 
     order_closure_statuses: '',
     order_def_closure_statuses: ''
-
 
 };
 
@@ -313,6 +313,7 @@ export default function currentOrder(state = initialState, action) {
         state.order_descr = action.data[0].full_descr;
         state.order_closure_statuses = action.data[5].map((num, index, arr) => { return num.closure_code_name });
         state.order_def_closure_statuses = setDefClosureCode(action.data[5], action.data[0].closure_code) === "" ? 'Выберете код закрытия' : setDefClosureCode(action.data[5], action.data[0].closure_code);
+
     }
     if (action.type === 'listExecutors') {
         state.order_executers = action.data.map((num, index, arr) => { return num.displayname });;

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { drivers, cars, carsStatus, carDriversAll, transpStatus, transpDriversStatus, transpWG, transpUserToWg, transpExecutor, clickCurrentOrder, listExecutors, setDriver, setStatus, setWG, setExecutor, saveOrder, transpMyWG, assignCar, doneTripStatus, closureStatuses, companyToUser, setClosureCode, setTimeTrip, setDistance, setIdletime, setPrice, setSolution, transpToMe,transpNew, transpCarAppoint, transpDoneTrip, cancelClient } from 'Actions/actionTransp';
+import { drivers, cars, carsStatus, carDriversAll, transpStatus, transpDriversStatus, transpWG, transpUserToWg, transpExecutor, clickCurrentOrder, listExecutors, setDriver, setStatus, setWG, setExecutor, saveOrder, transpMyWG, assignCar, doneTripStatus, closureStatuses, companyToUser, setClosureCode, setTimeTrip, setDistance, setIdletime, setPrice, setSolution, transpToMe, transpNew, transpCarAppoint, transpDoneTrip, cancelClient } from 'Actions/actionTransp';
+import { showHistory, getHistory } from 'Actions/actionTransp_History';
 import Modal from 'react-modal';
 import { Button, FormGroup, FormControl, ControlLabel, DropdownButton, MenuItem, Alert } from "react-bootstrap"; // MenuItem,
 import Textarea from 'react-textarea-autosize';
@@ -10,6 +11,8 @@ import DatePicker from 'react-datetime';
 import MaskedInput from 'react-maskedinput';
 import Cars from './Cars';
 import Drivers from './Drivers';
+
+import History from './History';
 
 class Gridview extends Component {
     constructor(props) {
@@ -33,6 +36,7 @@ class Gridview extends Component {
             showGridCat: '',
             statusAlert: 'success',
             messageAlert: '',
+            originOrder: ''
         }
 
         this.close = this.close.bind(this);
@@ -78,6 +82,11 @@ class Gridview extends Component {
         this.setState({
             showInfoModal: !this.state.showInfoModal,
         })
+    }
+    showHistory() {
+
+        this.props.showHistory();
+        this.setState({});
     }
     handlePrev() {
         var index = this.props.order.order_view_id - 1;
@@ -243,60 +252,64 @@ class Gridview extends Component {
     saveToDB() {
         var revoked = this.props.transp.transpStatus[3].status;
         var refusing = this.props.transp.transpStatus[4].status;
-
+        // console.log(this.state.originOrder);
         var order = {
             id: this.props.order.db_id,
             sb_id: this.props.order.order_ID,
             status: (() => {
                 for (var key in this.props.transp.transpStatus) {
                     if (this.props.transp.transpStatus[key].status === this.props.order.order_status_val_def) {
-                        return this.props.transp.transpStatus[key].id;
+                        return { new: this.props.transp.transpStatus[key].id, old: this.state.originOrder.id_status };
                     }
                 }
             })(),
             driver_id: (() => {
                 for (var key in this.props.transp.carDrivers) {
                     if (this.props.transp.carDrivers[key].driver_fullname === this.props.order.defaultDriver) {
-                        return this.props.transp.carDrivers[key].id;
+                        return { new: this.props.transp.carDrivers[key].id, old: this.state.originOrder.driver_id };
                     }
                 }
+                return { new: null, old: null }
             })(),
             workgroup_id: (() => {
                 for (var key in this.props.transp.transpUserToWg) {
                     if (this.props.transp.transpUserToWg[key].wg_name === this.props.order.order_wg_val_def) {
-                        return this.props.transp.transpUserToWg[key].id;
+                        return { new: this.props.transp.transpUserToWg[key].id, old: this.state.originOrder.workgroup_id };
                     }
                 }
             })(),
             assignee: (() => {
                 for (var key in this.props.transp.transpExecutor) {
                     if (this.props.transp.transpExecutor[key].displayname === this.props.order.order_def_executor) {
-                        return this.props.transp.transpExecutor[key].username_id;
+                        return { new: this.props.transp.transpExecutor[key].username_id, old: this.state.originOrder.assignee };
                     }
                 }
+                return { new: null, old: null }
             })(),
-            ride_start_time: this.props.order.order_ride_start_time_toDB,
+            ride_start_time: { new: this.props.order.order_ride_start_time_toDB, old: this.state.originOrder.ride_start_time },
             ride_end_time: (() => {
                 if (this.props.order.order_status_val_def === revoked || this.props.order.order_status_val_def === refusing) {
-                    return Math.floor(Date.now() / 1000);
+                    return { new: Math.floor(Date.now() / 1000), old: this.state.originOrder.ride_end_time };
                 }
                 else {
-                    return this.props.order.order_ride_end_time_toDB;
+                    return { new: this.props.order.order_ride_end_time_toDB, old: this.state.originOrder.ride_end_time };
                 }
             })(),
-            ride_duration: this.props.order.order_ride_duration,
-            ride_distance: this.props.order.order_ride_distance,
-            ride_idle_time: this.props.order.order_ride_idle_time,
-            ride_price: this.props.order.order_ride_price,
-            solution: this.props.order.order_solution,
+            ride_duration: { new: this.props.order.order_ride_duration, old: this.state.originOrder.ride_duration },
+            ride_distance: { new: this.props.order.order_ride_distance, old: this.state.originOrder.ride_distance },
+            ride_idle_time: { new: this.props.order.order_ride_idle_time, old: this.state.originOrder.ride_idle_time },
+            ride_price: { new: this.props.order.order_ride_price, old: this.state.originOrder.ride_price },
+            solution: { new: this.props.order.order_solution, old: this.state.originOrder.solution },
             closure_code: (() => {
                 for (var key in this.props.transp.closureStatuses) {
                     if (this.props.transp.closureStatuses[key].closure_code_name === this.props.order.order_def_closure_statuses) {
-                        return this.props.transp.closureStatuses[key].id;
+                        return { new: this.props.transp.closureStatuses[key].id, old: this.state.originOrder.closure_code };
                     }
                 }
+                return { new: null, old: null }
             })(),
         }
+        console.log(order);
         this.props.saveOrder(order);
         this.refreshState.call(this);
         this.setState({
@@ -351,15 +364,17 @@ class Gridview extends Component {
         var closure_code = this.props.transp.closureStatuses;
 
         this.props.clickOrder(row, drivers, statuses, wg, cars, listExecutors, closure_code, index);
+        this.props.getHistory(this.props.order.db_id);
 
         this.setState({
             showModal: true,
+            originOrder: row
         });
     }
     showDirect() {
         this.setState({});
-
     }
+
     render() {
         const options = {
             sizePerPage: 10,
@@ -421,8 +436,8 @@ class Gridview extends Component {
                         <TableHeaderColumn dataField='descr' filter={{ type: 'TextFilter', defaultValue: '' }}>Тема</TableHeaderColumn>
                         <TableHeaderColumn dataField='wg_name' filter={{ type: 'SelectFilter', options: wg }}>Рабочая группа</TableHeaderColumn>
                         <TableHeaderColumn dataField='displayname' filter={{ type: 'TextFilter', defaultValue: '' }}>Исполнитель</TableHeaderColumn>
-                        <TableHeaderColumn dataField='date_created' width='19%' filter={{ type: 'DateFilter', defaultValue: '' }} >Дата создания</TableHeaderColumn>
-                        <TableHeaderColumn dataField='date_deadline' width='19%' filter={{ type: 'DateFilter', defaultValue: '' }}>Дата поездки</TableHeaderColumn>
+                        <TableHeaderColumn dataField='date_created' width='19%' filter={{ type: 'TextFilter', defaultValue: '' }} >Дата создания</TableHeaderColumn>
+                        <TableHeaderColumn dataField='date_deadline' width='19%' filter={{ type: 'TextFilter', defaultValue: '' }}>Дата поездки</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
                 <div style={{ display: this.props.transp.directoties.showCarsDir }}>
@@ -579,7 +594,7 @@ class Gridview extends Component {
                                                 value={this.props.order.order_ride_price}
                                                 placeholder="xxxx"
                                             />
-                                            <span>₽</span>
+                                            <span>р.</span>
 
                                         </div>
                                     </div>
@@ -677,11 +692,13 @@ class Gridview extends Component {
                         <Button id="down" onClick={this.handleNext} disabled={this.props.order.doun}>
                             <i className="fa fa-chevron-down" aria-hidden="true"></i>
                         </Button>
+
                         <Button id='btn5' className={this.props.order.headerBtnSave} bsStyle="primary" onClick={this.saveToDB}>Сохранить</Button>
                         {/* <Button id='btn2' className={this.props.order.headerBtnTakeToWork} onClick={this.takeToWork} bsStyle="warning">Взять в работу</Button> */}
                         <Button id='btn3' className={this.props.order.headerBtnAssignCar} bsStyle="success" onClick={this.assignCar}>Назначить авто и закрыть</Button>
                         <Button id='btn4' disabled={this.props.order.onoffbtnDoneTrip} style={{ opacity: this.props.order.opacitybtnDoneTrip }} className={this.props.order.headerBtnDoneTrip} bsStyle="warning" onClick={this.doneTrip}>Завершить поездку и сохранить</Button>
                         {/* <Button id='btn6' className={this.props.order.headerBtnSendToBank} bsStyle="default">Передать данные о поездке в банк</Button> */}
+                        <Button id='btn7' bsStyle="default" onClick={this.showHistory.bind(this)}>История</Button>
                     </div>
                     <Modal isOpen={this.state.showInfoModal} contentLabel="Modal">
                         <div id="fullDescr" className="panel panel-default col-lg-12 col-md-12 col-sm-12">
@@ -696,6 +713,14 @@ class Gridview extends Component {
                             </div>
                         </div>
                     </Modal>
+
+                    <Modal isOpen={this.props.history.showHistoryModal} contentLabel="Modal">
+                        <div className="history">
+                            <h4>История по {this.props.order.order_ID}</h4>
+                            <button className='btn' onClick={this.showHistory.bind(this)}><i className="fa fa-times" aria-hidden="true" /></button>
+                        </div>
+                        <History />
+                    </Modal>
                 </Modal>
             </div>
 
@@ -707,7 +732,8 @@ class Gridview extends Component {
 export default connect(
     state => ({
         transp: state,
-        order: state.currentOrder
+        order: state.currentOrder,
+        history: state.history
 
     }),
     dispatch => ({
@@ -804,7 +830,13 @@ export default connect(
         canclClient: () => {
             dispatch(cancelClient());
         },
-
+        // *******************************
+        showHistory: () => {
+            dispatch(showHistory());
+        },
+        getHistory: (sb_id) => {
+            dispatch(getHistory(sb_id));
+        }
     })
 )(Gridview);
 

@@ -216,22 +216,60 @@ app.get('/transp/companyToUser', function (req, res) {
 app.get('/transp/closureStatuses', function (req, res) {
     sqlConnetction.query(dbUtills.closureStatuses, (err, result) => { res.send(result); });
 });
+// --ИСТОРИЯ--------
+app.get('/transp/getHistory', function (req, res) {
+    console.log('прилетел ид',req.query.sb_id);
+    var query = `SELECT * FROM audit_requests where db_id = ${req.query.sb_id} ORDER BY date_edit DESC LIMIT 1`;
+    console.log('запрос',query);
+    sqlConnetction.query(query, (err, result) => { res.send(result); });
+    // res.send(`Принял от ${req.query.sb_id}`);
+});
+// -----------------
 app.post('/transp/saveOrder', (req, res) => {
+    var now = new Date();
     var query = `UPDATE requests 
-                SET status=${req.body.status},
-                driver_id=${req.body.driver_id === undefined ? null : req.body.driver_id},
-                workgroup_id=${req.body.workgroup_id === undefined ? null : req.body.workgroup_id},
-                assignee=${req.body.assignee === undefined ? null : req.body.assignee},
-                ride_start_time=${req.body.ride_start_time === undefined || req.body.ride_start_time === null ? null : req.body.ride_start_time},
-                ride_end_time=${req.body.ride_end_time === undefined || req.body.ride_end_time === '' ? null : req.body.ride_end_time},
-                ride_duration='${req.body.ride_duration === undefined || req.body.ride_duration === '' ? null : req.body.ride_duration}',
-                ride_distance='${req.body.ride_distance === undefined || req.body.ride_distance === '' ? null : req.body.ride_distance}',
-                ride_idle_time='${req.body.ride_idle_time === undefined || req.body.ride_idle_time === '' ? null : req.body.ride_idle_time}',
-                ride_price='${req.body.ride_price === undefined || req.body.ride_price === '' ? null : req.body.ride_price}',
-                ride_price='${req.body.ride_price === undefined || req.body.ride_price === '' ? null : req.body.ride_price}',
-                closure_code=${req.body.closure_code === undefined || req.body.closure_code === '' ? null : req.body.closure_code},
-                solution='${req.body.solution === undefined || req.body.solution === '' ? null : req.body.solution}'
+                SET status=${req.body.status.new},
+                driver_id=${req.body.driver_id.new === undefined ? null : req.body.driver_id.new},
+                workgroup_id=${req.body.workgroup_id.new === undefined ? null : req.body.workgroup_id.new},
+                assignee=${req.body.assignee.new === undefined ? null : req.body.assignee.new},
+                ride_start_time=${req.body.ride_start_time.new === undefined || req.body.ride_start_time.new === null ? null : req.body.ride_start_time.new},
+                ride_end_time=${req.body.ride_end_time.new === undefined || req.body.ride_end_time.new === '' ? null : req.body.ride_end_time.new},
+                ride_duration='${req.body.ride_duration.new === undefined || req.body.ride_duration.new === '' ? null : req.body.ride_duration.new}',
+                ride_distance='${req.body.ride_distance.new === undefined || req.body.ride_distance.new === '' ? null : req.body.ride_distance.new}',
+                ride_idle_time='${req.body.ride_idle_time.new === undefined || req.body.ride_idle_time.new === '' ? null : req.body.ride_idle_time.new}',
+                ride_price='${req.body.ride_price.new === undefined || req.body.ride_price.new === '' ? null : req.body.ride_price.new}',
+                closure_code=${req.body.closure_code.new === undefined || req.body.closure_code.new === '' ? null : req.body.closure_code.new},
+                solution='${req.body.solution.new === undefined || req.body.solution.new === '' ? null : req.body.solution.new}'
                 where id=${req.body.id}`;
+    // Проверка на записи без изменений
+    for (var key in req.body) {
+        if (req.body[key].old !== req.body[key].new) {
+            var audit = `INSERT INTO audit_requests
+            (
+                db_id,sb_id,old_status,new_status,old_driver_id,new_driver_id,old_workgroup_id,new_workgroup_id,old_assignee,new_assignee,
+                old_ride_start_time,new_ride_start_time,old_ride_end_time,new_ride_end_time,old_ride_duration,new_ride_duration,
+                old_ride_distance,new_ride_distance,old_ride_idle_time,new_ride_idle_time,old_ride_price,new_ride_price,old_solution,
+                new_solution,old_closure_code,new_closure_code,date_edit
+            )
+            VALUES
+            (
+                ${req.body.id},'${req.body.sb_id}',
+                ${req.body.status.old},${req.body.status.new},${req.body.driver_id.old},${req.body.driver_id.new},
+                ${req.body.workgroup_id.old},${req.body.workgroup_id.new},${req.body.assignee.old},${req.body.assignee.new},
+                ${req.body.ride_start_time.old},${req.body.ride_start_time.new},${req.body.ride_end_time.old},${req.body.ride_end_time.new},
+                '${req.body.ride_duration.old}','${req.body.ride_duration.new}','${req.body.ride_distance.old}','${req.body.ride_distance.new}' ,
+                '${req.body.ride_idle_time.old}','${req.body.ride_idle_time.new}','${req.body.ride_price.old}','${req.body.ride_price.new}',
+                '${req.body.solution.old === undefined || req.body.solution.old === '' ? null : req.body.solution.old}',
+                '${req.body.solution.new === undefined || req.body.solution.new === '' ? null : req.body.solution.new}',
+                ${req.body.closure_code.old === undefined || req.body.closure_code.old === '' ? null : req.body.closure_code.old},
+                ${req.body.closure_code.new === undefined || req.body.closure_code.new === '' ? null : req.body.closure_code.new},
+                ${Math.floor(now.getTime() / 1000)}
+            )`;
+            sqlConnetction.query(audit, (err, result) => {});
+            console.log(audit);
+            break;
+        }
+    }
     sqlConnetction.query(query, (err, result) => {
         logs.record('Пользователь:' + ' ' + req.session.authUser + ' ' + 'внёс изменения в' + ' ' + req.body.sb_id);
         res.send(result);

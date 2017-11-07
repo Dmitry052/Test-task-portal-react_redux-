@@ -228,6 +228,10 @@ body > div:nth-child(5) > div > div {
   background-color: #ec971f;
   border-color: #d58512; }
 
+#btn7 {
+  float: right;
+  margin-right: 10px; }
+
 #up, #down {
   margin-left: 5px;
   background: #fff;
@@ -287,7 +291,8 @@ body > div:nth-child(5) > div > div > div.modalHead > h4 > span {
 
 #infOrder > div:nth-child(9) > div > input:disabled {
   cursor: default;
-  background: #ebebe4 !important; }
+  background: #ebebe4 !important;
+  font-size: 14px; }
 
 #infOrder > div:nth-child(8) > div > input {
   padding: 0px 5px;
@@ -762,6 +767,27 @@ div.btnModalCar {
 #gridDrivers > button:nth-child(2),
 #gridCars > button:nth-child(2) {
   margin-left: 5px; }
+
+body > div:nth-child(8) > div > div {
+  padding: 0 0 !important; }
+
+.history {
+  background: #455464;
+  height: 30px; }
+
+.history > h4 {
+  margin: 0 0;
+  display: inline-block;
+  color: #fff;
+  padding: 4px 10px; }
+
+.history > button {
+  padding: 0 0;
+  background: #000;
+  color: #fff;
+  float: right;
+  width: 30px;
+  height: 30px; }
 
 .nameService {
   display: inline-block;

@@ -43,7 +43,7 @@ class Header extends Component {
                     </Button>
                 </Form>
 
-                <Form inline id="globalSearch">
+                {/* <Form inline id="globalSearch">
                     <FormGroup controlId="globalSearchQuery" >
                     <FormControl
                         type="text"
@@ -57,7 +57,7 @@ class Header extends Component {
                 <Button type="submit" bsStyle="default">
                     искать
                     </Button>
-                </Form>
+                </Form> */}
             </div >
          );
     }

@@ -1,0 +1,21 @@
+body > div:nth-child(8) > div > div{
+    padding: 0 0 !important;
+}
+.history{
+    background: #455464;
+    height: 30px;
+}
+.history > h4{
+    margin: 0 0;
+    display: inline-block;
+    color: #fff;
+    padding: 4px 10px;
+}
+.history > button {
+    padding: 0 0;
+    background: #000;
+    color: #fff;
+    float: right;
+    width: 30px;
+    height: 30px;
+}

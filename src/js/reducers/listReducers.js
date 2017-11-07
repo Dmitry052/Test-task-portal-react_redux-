@@ -18,6 +18,7 @@ import closureStatuses from './transport/closure_statuses';
 import companyToUser from './transport/companyToUser';
 import transport_drivers_status from './transport/transport_drivers_status';
 import transport_cars_status from'./transport/transport_cars_status';
+import history from './transport/_currentHIstory';
 
 const left_menuReducer = combineReducers ({
     left_menu
@@ -64,6 +65,9 @@ const transport_drivers_statusReducer = combineReducers ({
 const transport_cars_statusReducer = combineReducers ({
     transport_cars_status
 });
+const historyReducer = combineReducers ({
+    history
+});
 export default combineReducers({
     transp,
     expl,
@@ -79,5 +83,6 @@ export default combineReducers({
     carDriversAll,
     transport_drivers_status,
     transport_cars_status,
-    left_menu
+    left_menu,
+    history
 });
