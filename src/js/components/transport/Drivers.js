@@ -136,8 +136,14 @@ class Drivers extends Component {
             return <MenuItem eventKey={i} onSelect={() => this.setCompany(name.companyname)}>{name.companyname}</MenuItem>
         });
         const dropdataVehicleNumber = this.props.transp.cars.map((num, i) => {
+            for (var key in this.props.transp.carDriversAll) {
+                if (this.props.transp.carDriversAll[key].vehicle_id_number === num.vehicle_id_number) {
+                    return <MenuItem disabled eventKey={i} onSelect={() => this.setVehicleNumber(num.vehicle_id_number)}>{num.vehicle_id_number}</MenuItem>
+                }
+            }
             return <MenuItem eventKey={i} onSelect={() => this.setVehicleNumber(num.vehicle_id_number)}>{num.vehicle_id_number}</MenuItem>
         });
+        console.log(this.props.transp);
         return (
             <div id="gridDrivers">
                 <button className='btn-success' onClick={this.showAddDriver.bind(this)} title="Добавить нового водителя"><i className="fa fa-plus" aria-hidden="true"></i></button>
