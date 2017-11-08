@@ -81,6 +81,8 @@ class History extends Component {
                                             break;
                                         
                                     }
+                                    if(item[key] === 'null'){item[key] = '';}
+                                    if(item[key2] === 'null'){item[key] = '';}
                                     data.push({ field: s[1], old: item[key], new: item[key2], user: item.displayname, time: item.date_edit})
                                 }
                                 break;
