@@ -91,34 +91,7 @@ class History extends Component {
             });
         }
         return (
-            <div>
-                {/* <table className="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Поле</th>
-                            <th>Старое значение</th>
-                            <th>Новое значение</th>
-                            <th>Сотрудник</th>
-                            <th>Время</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            data.map((item, i) => {
-                                return (
-                                    <tr>
-                                        <td>{item.field}</td>
-                                        <td>{item.old}</td>
-                                        <td>{item.new}</td>
-                                        <td>{item.user}</td>
-                                        <td>{item.time}</td>
-                                    </tr>
-                                )
-
-                            })
-                        }
-                    </tbody>
-                </table> */}
+            <div class="dataHistory">
                 <BootstrapTable className='col-lg-12 col-md-12'
                         hover
                        
