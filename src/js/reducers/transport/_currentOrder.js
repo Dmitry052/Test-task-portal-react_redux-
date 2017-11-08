@@ -1,6 +1,7 @@
 const initialState = {
     up: false,
     down: false,
+    filtersGrid: '30px',
     order_view_id: 0,
     // Управление, визуализация
     headerBtnClose: '',
@@ -252,6 +253,14 @@ export default function currentOrder(state = initialState, action) {
         state.edit_solutions = true;
         state.edit_closure_code = true;
         state.edit_description = true;
+    }
+    if (action.type === 'FILTERS_GRID') {
+        if (state.filtersGrid === '30px') {
+            state.filtersGrid = '60px';
+        }
+        else {
+            state.filtersGrid = '30px';
+        }
     }
     if (action.type === 'currentOrder') {
         // console.log(action.data);

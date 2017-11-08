@@ -42,6 +42,18 @@ body > div.ReactModalPortal > div > div > div.modalBody {
     border-radius: 4px;
     border: 1px solid #ebebe4;
 }
+// Плавность фильтров грида
+#root > div > div.transport > div > div:nth-child(1) > div > div.react-bs-table.react-bs-table-bordered > div.react-bs-container-header.table-header-wrapper{
+    transition-property: height !important;
+    transition: 1s !important;
+}
+#exportEXCEL,#filterGrid{
+    background: #3fb618;
+    padding: 2px 10px;
+    border: 0;
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
 // Параметры модального окна
 body > div.ReactModalPortal > div > div {
     height: 90%;

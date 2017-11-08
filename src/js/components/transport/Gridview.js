@@ -11,7 +11,7 @@ import DatePicker from 'react-datetime';
 import MaskedInput from 'react-maskedinput';
 import Cars from './Cars';
 import Drivers from './Drivers';
-
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import History from './History';
 
 class Gridview extends Component {
@@ -105,7 +105,7 @@ class Gridview extends Component {
         var index = this.props.order.order_view_id + 1;
         if (index < this.props.transp.transp.length) {
             if (this.props.order.up === true) { this.props.up(); }
-               this.onRowClick(this.props.transp.transp[index]);
+            this.onRowClick(this.props.transp.transp[index]);
             this.setState({ showAlert: 'none' });
         }
         else {
@@ -362,7 +362,10 @@ class Gridview extends Component {
     showDirect() {
         this.setState({});
     }
-
+    filterGrid() {
+        this.props.filterGrid();
+        this.setState({});
+    }
     render() {
         const options = {
             sizePerPage: 10,
@@ -409,14 +412,48 @@ class Gridview extends Component {
                 return <MenuItem eventKey={i + 1} onSelect={() => this.setClosureCode(name)}>{name}</MenuItem>
             })
         }
+
         return (
             <div className='gridTransp'>
+
                 <div style={{ display: this.props.transp.directoties.show }}>
+                    <ReactHTMLTableToExcel
+                        id="exportEXCEL"
+                        className="btn btn-default"
+                        table="tableEXCEL"
+                        filename="export"
+                        sheet="sheet"
+                        buttonText="Экспорт в excel" />
+                    <table id="tableEXCEL" style={{ display: 'none' }}>
+                        <tr>
+                            <th>ID Сбербанка</th>
+                            <th>Статус</th>
+                            <th>Рабочая группа</th>
+                            <th>Исполнитель</th>
+                            <th>Дата создания</th>
+                            <th>Дата поездки</th>
+                        </tr>
+                        {
+                            this.props.transp.transp.map((order, i) => {
+                                return (
+                                    <tr>
+                                        <td>{order.status}</td>
+                                        <td>{order.descr}</td>
+                                        <td>{order.wg_name}</td>
+                                        <td>{order.displayname}</td>
+                                        <td>{order.date_created}</td>
+                                        <td>{order.date_deadline}</td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </table>
+                    <Button id="filterGrid" onClick={this.filterGrid.bind(this)}>Фильры</Button>
                     <BootstrapTable className='col-lg-12 col-md-12'
                         hover
-                        exportCSV={true}
                         data={this.props.transp.transp}
                         pagination={true}
+                        headerStyle={{ height: this.props.order.filtersGrid }}
                         options={options}
                     >
                         <TableHeaderColumn dataField='sb_id' isKey={true} filter={{ type: 'TextFilter', defaultValue: '' }} >ID Сбербанка</TableHeaderColumn>
@@ -725,6 +762,9 @@ export default connect(
 
     }),
     dispatch => ({
+        filterGrid: () => {
+            dispatch({ type: 'FILTERS_GRID' });
+        },
         carDrivers: () => {
             dispatch(drivers());
         },
