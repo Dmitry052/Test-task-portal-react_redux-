@@ -1,5 +1,5 @@
 const initialState = {
-    filter1: '',
+    filter1: 'active',
     filter2: '',
     filter3: '',
     filter4: '',

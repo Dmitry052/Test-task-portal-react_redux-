@@ -145,5 +145,36 @@ from users
 left join usertowg on users.id = usertowg.username_id
 left join companytowg on companytowg.wg_id = usertowg.wg_id
 left join company on company.id = companytowg.company_id
-where users.id = `
+where users.id = `,
+
+getHistory: `SELECT user_id,db_id,sb_id,
+(select status  from transport_statuses where id = old_status)as old_status,
+(select status  from transport_statuses where id = new_status)as new_status,
+(select driver_fullname  from transport_drivers where id = old_driver_id)as old_driver_id,
+(select driver_fullname  from transport_drivers where id = new_driver_id)as new_driver_id,
+(select wg_name  from workgroups where id = old_workgroup_id)as old_workgroup_id,
+(select wg_name  from workgroups where id = new_workgroup_id)as new_workgroup_id,
+(select displayname  from users where id = old_assignee)as old_assignee,
+(select displayname  from users where id = new_assignee)as new_assignee,
+FROM_UNIXTIME(old_ride_start_time,"%d.%m.%Y %h:%i")old_ride_start_time,
+FROM_UNIXTIME(new_ride_start_time,"%d.%m.%Y %h:%i")new_ride_start_time,
+FROM_UNIXTIME(old_ride_end_time,"%d.%m.%Y %h:%i")old_ride_end_time,
+FROM_UNIXTIME(new_ride_end_time,"%d.%m.%Y %h:%i")new_ride_end_time,
+old_ride_duration,
+new_ride_duration,
+old_ride_distance,
+new_ride_distance,
+FROM_UNIXTIME(old_ride_idle_time,"%d.%m.%Y %h:%i")old_ride_idle_time,
+FROM_UNIXTIME(new_ride_idle_time,"%d.%m.%Y %h:%i")new_ride_idle_time,
+old_ride_price,
+new_ride_price,
+old_solution,
+new_solution,
+(select closure_code_name  from closure_statuses where id = old_closure_code)as old_closure_code,
+(select closure_code_name  from closure_statuses where id = new_closure_code)as new_closure_code,
+FROM_UNIXTIME(date_edit,"%d.%m.%Y %h:%i:%s") as date_edit,
+displayname
+FROM audit_requests
+left join users on audit_requests.user_id = users.id
+where db_id =`
 } 

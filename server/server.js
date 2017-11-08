@@ -218,11 +218,9 @@ app.get('/transp/closureStatuses', function (req, res) {
 });
 // --ИСТОРИЯ--------
 app.get('/transp/getHistory', function (req, res) {
-    console.log('прилетел ид',req.query.sb_id);
-    var query = `SELECT * FROM audit_requests where db_id = ${req.query.sb_id} ORDER BY date_edit DESC LIMIT 1`;
-    console.log('запрос',query);
+    var query = `${dbUtills.getHistory} ${req.query.sb_id} ORDER BY date_edit DESC`;
+    console.log(query);
     sqlConnetction.query(query, (err, result) => { res.send(result); });
-    // res.send(`Принял от ${req.query.sb_id}`);
 });
 // -----------------
 app.post('/transp/saveOrder', (req, res) => {
@@ -246,14 +244,14 @@ app.post('/transp/saveOrder', (req, res) => {
         if (req.body[key].old !== req.body[key].new) {
             var audit = `INSERT INTO audit_requests
             (
-                db_id,sb_id,old_status,new_status,old_driver_id,new_driver_id,old_workgroup_id,new_workgroup_id,old_assignee,new_assignee,
+                user_id,db_id,sb_id,old_status,new_status,old_driver_id,new_driver_id,old_workgroup_id,new_workgroup_id,old_assignee,new_assignee,
                 old_ride_start_time,new_ride_start_time,old_ride_end_time,new_ride_end_time,old_ride_duration,new_ride_duration,
                 old_ride_distance,new_ride_distance,old_ride_idle_time,new_ride_idle_time,old_ride_price,new_ride_price,old_solution,
                 new_solution,old_closure_code,new_closure_code,date_edit
             )
             VALUES
             (
-                ${req.body.id},'${req.body.sb_id}',
+                ${req.session.userID},${req.body.id},'${req.body.sb_id}',
                 ${req.body.status.old},${req.body.status.new},${req.body.driver_id.old},${req.body.driver_id.new},
                 ${req.body.workgroup_id.old},${req.body.workgroup_id.new},${req.body.assignee.old},${req.body.assignee.new},
                 ${req.body.ride_start_time.old},${req.body.ride_start_time.new},${req.body.ride_end_time.old},${req.body.ride_end_time.new},

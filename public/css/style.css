@@ -789,6 +789,22 @@ body > div:nth-child(8) > div > div {
   width: 30px;
   height: 30px; }
 
+body > div:nth-child(8) > div > div > div:nth-child(2) > table > thead > tr > th:nth-child(1) {
+  width: 17%; }
+
+body > div:nth-child(8) > div > div > div:nth-child(2) > table > thead > tr > th:nth-child(5) {
+  width: 15%; }
+
+body > div:nth-child(8) > div > div > div:nth-child(2) > table > thead > tr > th:nth-child(2),
+body > div:nth-child(8) > div > div > div:nth-child(2) > table > thead > tr > th:nth-child(3) {
+  width: 28%; }
+
+body > div:nth-child(8) > div > div > div:nth-child(2) > div > div.react-bs-table.react-bs-table-bordered {
+  border-radius: 0 !important; }
+
+body > div:nth-child(8) > div > div > div:nth-child(2) > div {
+  padding: 0 0; }
+
 .nameService {
   display: inline-block;
   vertical-align: top; }

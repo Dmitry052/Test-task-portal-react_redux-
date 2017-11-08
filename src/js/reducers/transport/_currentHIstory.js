@@ -1,6 +1,6 @@
 const initialState = {
     showHistoryModal: false,
-    dataHistory: ''
+    dataHistory: '',
 }
 
 export default function currentOrderHistory(state = initialState, action) {
