@@ -448,6 +448,9 @@ body > div:nth-child(5) > div > div > div > div.panel-heading {
 body > div:nth-child(5) > div > div > div > div.panel-heading > h4 {
   padding: 4px 15px; }
 
+body > div:nth-child(7) > div > div {
+  padding: 0 !important; }
+
 .exploitation {
   display: inline; }
 
@@ -802,7 +805,8 @@ body > div:nth-child(8) > div > div > div:nth-child(2) > table > thead > tr > th
 body > div:nth-child(8) > div > div > div:nth-child(2) > div > div.react-bs-table.react-bs-table-bordered {
   border-radius: 0 !important; }
 
-body > div:nth-child(8) > div > div > div:nth-child(2) > div {
+body > div:nth-child(8) > div > div > div:nth-child(2) > div,
+body > div:nth-child(9) > div > div {
   padding: 0 0 !important; }
 
 .nameService {
