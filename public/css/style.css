@@ -458,7 +458,8 @@ body > div:nth-child(5) > div > div > div > div.panel-heading > h4 {
   padding: 4px 15px; }
 
 body > div:nth-child(7) > div > div {
-  padding: 0 !important; }
+  padding: 0 !important;
+  border: 0 !important; }
 
 .exploitation {
   display: inline; }
@@ -696,7 +697,7 @@ div.btnModalCar > button {
   float: right;
   background: #455464;
   color: #fff;
-  padding: 7px 7px; }
+  padding: 6px 7px; }
 
 div.btnModalDriver > span,
 div.btnModalCar > {
