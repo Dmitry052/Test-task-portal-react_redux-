@@ -91,30 +91,26 @@ class Gridview extends Component {
     handlePrev() {
         var index = this.props.order.order_view_id - 1;
         if (index >= 0) {
+            if (this.props.order.down === true) { this.props.down(); }
             this.setState({ showAlert: 'none' });
             this.onRowClick(this.props.transp.transp[index]);
         }
         else {
-            this.setState({
-                showAlert: 'block',
-                statusAlert: 'Warning',
-                messageAlert: 'Данное обращение является первым в списке',
-            });
+            this.props.up();
+            this.setState({});
         }
 
     }
     handleNext() {
         var index = this.props.order.order_view_id + 1;
         if (index < this.props.transp.transp.length) {
-            this.onRowClick(this.props.transp.transp[index]);
+            if (this.props.order.up === true) { this.props.up(); }
+               this.onRowClick(this.props.transp.transp[index]);
             this.setState({ showAlert: 'none' });
         }
         else {
-            this.setState({
-                showAlert: 'block',
-                statusAlert: 'Warning',
-                messageAlert: 'Данное обращение является последним в списке',
-            });
+            this.props.down();
+            this.setState({});
         }
         this.setState({});
     }
@@ -217,7 +213,7 @@ class Gridview extends Component {
                 messageAlert: 'Данные о времени простоя не заполнены',
             })
         }
-        else if (this.props.order.order_ride_price === null || this.props.order.order_ride_price === 'null') {
+        else if (this.props.order.order_ride_price === null || this.props.order.order_ride_price === 'null' || this.props.order.order_ride_price === '') {
             this.setState({
                 showAlert: 'block',
                 statusAlert: 'danger',
@@ -239,13 +235,13 @@ class Gridview extends Component {
             })
         }
         else {
-            this.props.doneTripStatus(this.props.transp.transpStatus[2].status);
+            // this.props.doneTripStatus(this.props.transp.transpStatus[2].status);
             this.setState({
                 showAlert: 'none',
                 statusAlert: 'danger',
                 messageAlert: '',
             });
-            this.saveToDB();
+            // this.saveToDB();
         }
 
     }
@@ -309,7 +305,6 @@ class Gridview extends Component {
                 return { new: null, old: null }
             })(),
         }
-        console.log(order);
         this.props.saveOrder(order);
         this.refreshState.call(this);
         this.setState({
@@ -689,7 +684,7 @@ class Gridview extends Component {
                         <Button id="up" onClick={this.handlePrev} disabled={this.props.order.up}>
                             <i className="fa fa-chevron-up" aria-hidden="true"></i>
                         </Button>
-                        <Button id="down" onClick={this.handleNext} disabled={this.props.order.doun}>
+                        <Button id="down" onClick={this.handleNext} disabled={this.props.order.down}>
                             <i className="fa fa-chevron-down" aria-hidden="true"></i>
                         </Button>
 
@@ -810,6 +805,12 @@ export default connect(
         },
         closureStatuses: () => {
             dispatch(closureStatuses());
+        },
+        up: () => {
+            dispatch({ type: 'UP' });
+        },
+        down: () => {
+            dispatch({ type: 'DOWN' });
         },
         // ******************************
         myWG: () => {

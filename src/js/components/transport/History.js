@@ -124,11 +124,11 @@ class History extends Component {
                        
                         data={data}
                     >
-                        <TableHeaderColumn dataField='field' isKey={true} >ID Сбербанка</TableHeaderColumn>
-                        <TableHeaderColumn dataField='old' >Статус</TableHeaderColumn>
-                        <TableHeaderColumn dataField='new' >Тема</TableHeaderColumn>
-                        <TableHeaderColumn dataField='user' >Рабочая группа</TableHeaderColumn>
-                        <TableHeaderColumn dataField='time' dataSort={ true }>Исполнитель</TableHeaderColumn>
+                        <TableHeaderColumn dataField='field' isKey={true} >Поле</TableHeaderColumn>
+                        <TableHeaderColumn dataField='old' >Старое значение</TableHeaderColumn>
+                        <TableHeaderColumn dataField='new' >Новое значение</TableHeaderColumn>
+                        <TableHeaderColumn dataField='user' >Сотрудник</TableHeaderColumn>
+                        <TableHeaderColumn dataField='time' dataSort={ true }>Время</TableHeaderColumn>
                         
                     </BootstrapTable>
             </div>

@@ -1,5 +1,6 @@
 const initialState = {
-    copyState: {},
+    up: false,
+    down: false,
     order_view_id: 0,
     // Управление, визуализация
     headerBtnClose: '',
@@ -314,6 +315,8 @@ export default function currentOrder(state = initialState, action) {
         state.order_closure_statuses = action.data[5].map((num, index, arr) => { return num.closure_code_name });
         state.order_def_closure_statuses = setDefClosureCode(action.data[5], action.data[0].closure_code) === "" ? 'Выберете код закрытия' : setDefClosureCode(action.data[5], action.data[0].closure_code);
 
+        state.up = false;
+        state.down = false;
     }
     if (action.type === 'listExecutors') {
         state.order_executers = action.data.map((num, index, arr) => { return num.displayname });;
@@ -409,6 +412,12 @@ export default function currentOrder(state = initialState, action) {
     }
     if (action.type === 'setSolution') {
         state.order_solution = action.data;
+    }
+    if (action.type === 'UP') {
+        state.up = !state.up;
+    }
+    if (action.type === 'DOWN') {
+        state.down = !state.down;
     }
     return state;
 }
