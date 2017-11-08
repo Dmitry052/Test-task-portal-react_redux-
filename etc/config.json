@@ -3,9 +3,9 @@
     "serverPort": "3000",
     "db":{
         "hosts":"http://localhost:3000",
-        "user":"root",
+        "user":"portal_db",
         "port": 3306,
-        "password":"root",
+        "password":"SqesR12",
         "database":"portal_yii2"
     }
 }
