@@ -26,8 +26,8 @@ class History extends Component {
                                 s[1] = s.slice(1, s.length).join('_');
                             }
                             if (s[0] === 'new' && s[1] === j[1]) {
-                                if (item[key] !== item[key2] && item[key] !== '' && item[key2] !== '') {
-                                    switch(s[1]){
+                                if (item[key] !== item[key2]) {
+                                    switch (s[1]) {
                                         case 'status':
                                             s[1] = 'Статус';
                                             break;
@@ -73,17 +73,10 @@ class History extends Component {
                                         case 'closure_code':
                                             s[1] = 'Код закрытия';
                                             break;
-                                        case '':
-                                            s[1] = '';
-                                            break;
-                                        case '':
-                                            s[1] = '';
-                                            break;
-                                        
                                     }
-                                    if(item[key] === 'null'){item[key] = '';}
-                                    if(item[key2] === 'null'){item[key] = '';}
-                                    data.push({ field: s[1], old: item[key], new: item[key2], user: item.displayname, time: item.date_edit})
+                                    if (item[key] === 'null') { item[key] = ''; }
+                                    if (item[key2] === 'null') { item[key] = ''; }
+                                    data.push({ field: s[1], old: item[key], new: item[key2], user: item.displayname, time: item.date_edit });
                                 }
                                 break;
                             }
@@ -91,21 +84,20 @@ class History extends Component {
                     }
                 }
             });
+            console.log(data);
         }
         return (
-            <div class="dataHistory">
+            <div className="dataHistory">
                 <BootstrapTable className='col-lg-12 col-md-12'
-                        hover
-                       
-                        data={data}
-                    >
-                        <TableHeaderColumn dataField='field' isKey={true} >Поле</TableHeaderColumn>
-                        <TableHeaderColumn dataField='old' >Старое значение</TableHeaderColumn>
-                        <TableHeaderColumn dataField='new' >Новое значение</TableHeaderColumn>
-                        <TableHeaderColumn dataField='user' >Сотрудник</TableHeaderColumn>
-                        <TableHeaderColumn dataField='time' dataSort={ true }>Время</TableHeaderColumn>
-                        
-                    </BootstrapTable>
+                    hover
+                    data={data}
+                >
+                    <TableHeaderColumn dataField='field' isKey={true} >Поле</TableHeaderColumn>
+                    <TableHeaderColumn dataField='old' >Старое значение</TableHeaderColumn>
+                    <TableHeaderColumn dataField='new' >Новое значение</TableHeaderColumn>
+                    <TableHeaderColumn dataField='user' >Сотрудник</TableHeaderColumn>
+                    <TableHeaderColumn dataField='time' dataSort={true}>Время</TableHeaderColumn>
+                </BootstrapTable>
             </div>
         )
     }
