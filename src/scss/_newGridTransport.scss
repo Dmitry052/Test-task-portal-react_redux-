@@ -45,7 +45,7 @@ body > div.ReactModalPortal > div > div > div.modalBody {
 // Плавность фильтров грида
 #root > div > div.transport > div > div:nth-child(1) > div > div.react-bs-table.react-bs-table-bordered > div.react-bs-container-header.table-header-wrapper{
     transition-property: height !important;
-    transition: 1s !important;
+    transition: 0.1s !important;
 }
 #exportEXCEL,#filterGrid{
     background: #3fb618;
