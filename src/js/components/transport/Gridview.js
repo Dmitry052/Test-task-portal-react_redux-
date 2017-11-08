@@ -206,13 +206,6 @@ class Gridview extends Component {
                 messageAlert: 'Данные о пробеге не заполнены',
             })
         }
-        else if (this.props.order.order_ride_idle_time === null || this.props.order.order_ride_idle_time === 'null') {
-            this.setState({
-                showAlert: 'block',
-                statusAlert: 'danger',
-                messageAlert: 'Данные о времени простоя не заполнены',
-            })
-        }
         else if (this.props.order.order_ride_price === null || this.props.order.order_ride_price === 'null' || this.props.order.order_ride_price === '') {
             this.setState({
                 showAlert: 'block',
@@ -235,13 +228,13 @@ class Gridview extends Component {
             })
         }
         else {
-            // this.props.doneTripStatus(this.props.transp.transpStatus[2].status);
+            this.props.doneTripStatus(this.props.transp.transpStatus[2].status);
             this.setState({
                 showAlert: 'none',
                 statusAlert: 'danger',
                 messageAlert: '',
             });
-            // this.saveToDB();
+            this.saveToDB();
         }
 
     }
