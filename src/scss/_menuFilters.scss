@@ -22,11 +22,14 @@
     text-align: left;
     border: none; 
     background-color: #2b5a84;
+    color: #fff;
 }
 .leftMenu button:focus,.leftMenu button:active,.leftMenu button:hover{
     background-color: #2b5a84;
     border: none; 
   
 }
-
+.leftMenu li > a:hover{
+    border-radius: 0;
+}
 

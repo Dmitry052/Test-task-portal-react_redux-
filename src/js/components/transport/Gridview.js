@@ -366,6 +366,19 @@ class Gridview extends Component {
         this.props.filterGrid();
         this.setState({});
     }
+    rowClassNameFormat(row, rowIdx) {
+        // console.log('date_deadline', row.unix_date_deadline);
+        // console.log('ride_start_time', row.ride_start_time);
+        // console.log('status', row.status === 'Назначено в группу');
+        var now = Math.floor(new Date() / 1000);
+        if ((row.ride_start_time === 0 || row.ride_start_time === null) && row.status === 'Назначено в группу') {
+            var time = row.unix_date_deadline - now;
+            if (time >= 14400) { return 'success'; }
+            else if( time < 144400 && time >= 3600){return 'warning';}
+            else if( time < 3600){return 'danger';}
+        }
+        return '';
+    }
     render() {
         const options = {
             sizePerPage: 10,
@@ -423,7 +436,7 @@ class Gridview extends Component {
                         table="tableEXCEL"
                         filename="export"
                         sheet="sheet"
-                        buttonText="Экспорт в excel" />
+                        buttonText="Экспорт в Excel" />
                     <table id="tableEXCEL" style={{ display: 'none' }}>
                         <tr>
                             <th>ID Сбербанка</th>
@@ -454,6 +467,7 @@ class Gridview extends Component {
                         data={this.props.transp.transp}
                         pagination={true}
                         headerStyle={{ height: this.props.order.filtersGrid }}
+                        trClassName={this.rowClassNameFormat.bind(this)}
                         options={options}
                     >
                         <TableHeaderColumn dataField='sb_id' isKey={true} filter={{ type: 'TextFilter', defaultValue: '' }} >ID Сбербанка</TableHeaderColumn>
