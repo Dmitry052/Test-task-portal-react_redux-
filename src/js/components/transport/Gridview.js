@@ -614,8 +614,8 @@ class Gridview extends Component {
                                                 disabled={this.props.order.edit_data_to_sendbank}
                                                 size="20"
                                                 onChange={this.handleIdletime}
-                                                value={this.props.order.order_ride_idle_time}
-                                                placeholder="--:--"
+                                                value={this.props.order.order_ride_idle_time || '00:00'}
+                                                placeholder="ЧЧ:ММ"
                                             />
                                         </div>
                                         <div className="col-lg-6 col-md-12 col-sm-12">
