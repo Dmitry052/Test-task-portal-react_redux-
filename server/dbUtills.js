@@ -18,7 +18,7 @@ left join transport_statuses on transport_statuses.id = requests.status
 INNER JOIN company ON requests.company_id = company.id
 INNER JOIN workgroups ON workgroups.id = requests.workgroup_id
 LEFT JOIN users on users.id = requests.assignee
-WHERE service_type=`,
+WHERE requests.status <=5 and service_type=`,
 
 newOrder: `select sb_id, transport_statuses.status as status, requests.status as id_status,users.displayname,descr,full_descr,closure_code,
 FROM_UNIXTIME(date_created,"%d.%m.%Y %h:%i")as date_created,FROM_UNIXTIME(date_deadline,"%d.%m.%Y %h:%i")as date_deadline,date_deadline as unix_date_deadline,

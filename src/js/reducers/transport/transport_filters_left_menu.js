@@ -23,6 +23,7 @@ export default function tranportReduce(state = initialState, action) {
             case 'ERROR_CONNECT':
                 return state = [];
             
+            
         }
     }
      

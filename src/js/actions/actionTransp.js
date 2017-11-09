@@ -3,11 +3,22 @@ import { apiPrefix } from './../../../etc/config.json';
 
 // Фильтры
 export const transpMyWG = () => dispatch => {
-  axios.post(`${apiPrefix}/transp/myWG`).then((response) => {
+  axios({
+    method:'post',
+    url: `${apiPrefix}/transp/myWG`,
+    onDownloadProgress: function (progressEvent) {
+      console.log("onDownloadProgress - LOADER_MODAL");
+      dispatch({type: "LOADER_MODAL", data: true});
+    },
+  }).then((response) => {
+    console.log("then - LOADER_MODAL");
+    dispatch({type: "LOADER_MODAL", data: false});
     dispatch({
       type: "transpMyWG",
       data: response.data
     });
+    
+
   }).catch(function (error) {
     alert("Нет ответа от сервера");
     dispatch({

@@ -13,6 +13,7 @@ import Cars from './Cars';
 import Drivers from './Drivers';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import History from './History';
+import ReactInterval from 'react-interval';
 
 class Gridview extends Component {
     constructor(props) {
@@ -62,14 +63,12 @@ class Gridview extends Component {
         this.saveToDB = this.saveToDB.bind(this);
         this.takeToWork = this.takeToWork.bind(this);
         this.assignCar = this.assignCar.bind(this);
-        this.doneTrip = this.doneTrip.bind(this);
 
+        setInterval(function () {
+            // console.log(this.props.transp);
+        }, 1000);
+    }
 
-    }
-    // Экспорт в csv
-    csvFormatter(cell, row) {
-        return `${row.id}: ${cell}`;
-    }
     // Закрытие окна заявки
     close() {
         this.setState({
@@ -366,19 +365,17 @@ class Gridview extends Component {
         this.props.filterGrid();
         this.setState({});
     }
-    rowClassNameFormat(row, rowIdx) {
-        // console.log('date_deadline', row.unix_date_deadline);
-        // console.log('ride_start_time', row.ride_start_time);
-        // console.log('status', row.status === 'Назначено в группу');
+    setColorLine(row, rowIdx) {
         var now = Math.floor(new Date() / 1000);
         if ((row.ride_start_time === 0 || row.ride_start_time === null) && row.status === 'Назначено в группу') {
             var time = row.unix_date_deadline - now;
             if (time >= 14400) { return 'success'; }
-            else if( time < 144400 && time >= 3600){return 'warning';}
-            else if( time < 3600){return 'danger';}
+            else if (time < 144400 && time >= 3600) { return 'warning'; }
+            else if (time < 3600) { return 'danger'; }
         }
         return '';
     }
+
     render() {
         const options = {
             sizePerPage: 10,
@@ -428,7 +425,6 @@ class Gridview extends Component {
 
         return (
             <div className='gridTransp'>
-
                 <div style={{ display: this.props.transp.directoties.show }}>
                     <ReactHTMLTableToExcel
                         id="exportEXCEL"
@@ -467,10 +463,10 @@ class Gridview extends Component {
                         data={this.props.transp.transp}
                         pagination={true}
                         headerStyle={{ height: this.props.order.filtersGrid }}
-                        trClassName={this.rowClassNameFormat.bind(this)}
+                        trClassName={this.setColorLine.bind(this)}
                         options={options}
                     >
-                        <TableHeaderColumn dataField='sb_id' isKey={true} filter={{ type: 'TextFilter', defaultValue: '' }} >ID Сбербанка</TableHeaderColumn>
+                        <TableHeaderColumn dataField='sb_id' ref={(inp_sb_id) => { this.inp_sb_id = inp_sb_id }} isKey={true} filter={{ type: 'TextFilter', defaultValue: '' }} >ID Сбербанка</TableHeaderColumn>
                         <TableHeaderColumn dataField='status' filter={{ type: 'SelectFilter', options: status }}>Статус</TableHeaderColumn>
                         <TableHeaderColumn dataField='descr' filter={{ type: 'TextFilter', defaultValue: '' }}>Тема</TableHeaderColumn>
                         <TableHeaderColumn dataField='wg_name' filter={{ type: 'SelectFilter', options: wg }}>Рабочая группа</TableHeaderColumn>
@@ -761,6 +757,12 @@ class Gridview extends Component {
                         <History />
                     </Modal>
                 </Modal>
+                <Modal isOpen={this.props.order.loader_modal}
+                    contentLabel="Modal"
+                    style={{ content: { opacity: 0 } }}>
+                </Modal>
+                <ReactInterval timeout={10000} enabled={true}
+                    callback={() => console.log(1)} />
             </div>
 
         )
