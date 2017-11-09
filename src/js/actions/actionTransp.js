@@ -4,20 +4,18 @@ import { apiPrefix } from './../../../etc/config.json';
 // Фильтры
 export const transpMyWG = () => dispatch => {
   axios({
-    method:'post',
+    method: 'post',
     url: `${apiPrefix}/transp/myWG`,
     onDownloadProgress: function (progressEvent) {
-      console.log("onDownloadProgress - LOADER_MODAL");
-      dispatch({type: "LOADER_MODAL", data: true});
+      dispatch({ type: "LOADER", data: 'none' });
     },
   }).then((response) => {
-    console.log("then - LOADER_MODAL");
-    dispatch({type: "LOADER_MODAL", data: false});
+    dispatch({ type: "LOADER", data: '' });
     dispatch({
       type: "transpMyWG",
       data: response.data
     });
-    
+
 
   }).catch(function (error) {
     alert("Нет ответа от сервера");

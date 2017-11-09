@@ -361,8 +361,18 @@ class Gridview extends Component {
     showDirect() {
         this.setState({});
     }
+    cleanFilters() {
+        if (this.props.order.filtersGrid === '30px') {
+            this.refs.inp_sb_id.applyFilter('');
+            this.refs.inp_status.applyFilter('');
+            this.refs.inp_displayname.applyFilter('');
+            this.refs.inp_date_created.applyFilter('');
+            this.refs.inp_date_deadline.applyFilter('');
+        }
+    }
     filterGrid() {
         this.props.filterGrid();
+        this.cleanFilters();
         this.setState({});
     }
     setColorLine(row, rowIdx) {
@@ -424,7 +434,7 @@ class Gridview extends Component {
         }
 
         return (
-            <div className='gridTransp'>
+            <div className='gridTransp' >
                 <div style={{ display: this.props.transp.directoties.show }}>
                     <ReactHTMLTableToExcel
                         id="exportEXCEL"
@@ -466,13 +476,13 @@ class Gridview extends Component {
                         trClassName={this.setColorLine.bind(this)}
                         options={options}
                     >
-                        <TableHeaderColumn dataField='sb_id' ref={(inp_sb_id) => { this.inp_sb_id = inp_sb_id }} isKey={true} filter={{ type: 'TextFilter', defaultValue: '' }} >ID Сбербанка</TableHeaderColumn>
+                        <TableHeaderColumn dataField='sb_id' ref='inp_sb_id' isKey={true} filter={{ type: 'TextFilter' }} >ID Сбербанка</TableHeaderColumn>
                         <TableHeaderColumn dataField='status' filter={{ type: 'SelectFilter', options: status }}>Статус</TableHeaderColumn>
-                        <TableHeaderColumn dataField='descr' filter={{ type: 'TextFilter', defaultValue: '' }}>Тема</TableHeaderColumn>
+                        <TableHeaderColumn dataField='descr' ref='inp_status' filter={{ type: 'TextFilter' }}>Тема</TableHeaderColumn>
                         <TableHeaderColumn dataField='wg_name' filter={{ type: 'SelectFilter', options: wg }}>Рабочая группа</TableHeaderColumn>
-                        <TableHeaderColumn dataField='displayname' filter={{ type: 'TextFilter', defaultValue: '' }}>Исполнитель</TableHeaderColumn>
-                        <TableHeaderColumn dataField='date_created' width='19%' filter={{ type: 'TextFilter', defaultValue: '' }} >Дата создания</TableHeaderColumn>
-                        <TableHeaderColumn dataField='date_deadline' width='19%' filter={{ type: 'TextFilter', defaultValue: '' }}>Дата поездки</TableHeaderColumn>
+                        <TableHeaderColumn dataField='displayname' ref='inp_displayname' filter={{ type: 'TextFilter' }}>Исполнитель</TableHeaderColumn>
+                        <TableHeaderColumn dataField='date_created' ref='inp_date_created' width='19%' filter={{ type: 'TextFilter' }} >Дата создания</TableHeaderColumn>
+                        <TableHeaderColumn dataField='date_deadline' ref='inp_date_deadline' width='19%' filter={{ type: 'TextFilter' }}>Дата поездки</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
                 <div style={{ display: this.props.transp.directoties.showCarsDir }}>
@@ -757,12 +767,14 @@ class Gridview extends Component {
                         <History />
                     </Modal>
                 </Modal>
-                <Modal isOpen={this.props.order.loader_modal}
-                    contentLabel="Modal"
-                    style={{ content: { opacity: 0 } }}>
-                </Modal>
+                <div style={{ display: this.props.transp.directoties.showLoader }}>
+                    <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
+                    <span>Загрузка данных...</span>
+                </div>
+
                 <ReactInterval timeout={10000} enabled={true}
-                    callback={() => console.log(1)} />
+                    callback={() => []}
+                />
             </div>
 
         )

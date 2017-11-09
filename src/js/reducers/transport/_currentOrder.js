@@ -3,7 +3,6 @@ const initialState = {
     down: false,
     filtersGrid: '30px',
     defValuefiltersGrid: '',
-    loader_modal: false,
 
     order_view_id: 0,
     // Управление, визуализация
@@ -431,9 +430,6 @@ export default function currentOrder(state = initialState, action) {
     }
     if (action.type === 'DOWN') {
         state.down = !state.down;
-    }
-    if (action.type === 'LOADER_MODAL') {
-        state.loader_modal = action.data;
     }
     return state;
 }

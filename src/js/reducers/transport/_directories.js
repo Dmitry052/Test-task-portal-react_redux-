@@ -1,5 +1,6 @@
 const initialState = {
     show: '',
+    showLoader: 'none',
     showCarsDir: 'none',
     showDriversDir: 'none',
     showAddDriver: false,
@@ -193,6 +194,11 @@ export default function directoties(state = initialState, action) {
         state.car_alert = '';
         state.car_alert_text = action.data;
         return state;
+    }
+    if (action.type === "LOADER") {
+        state.show = action.data;
+        if (state.show === 'none') { state.showLoader = '' }
+        else { state.showLoader = 'none' }
     }
     return state;
 }
