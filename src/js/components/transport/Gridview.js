@@ -479,7 +479,7 @@ class Gridview extends Component {
                         <TableHeaderColumn dataField='sb_id' ref='inp_sb_id' isKey={true} filter={{ type: 'TextFilter' }} >ID Сбербанка</TableHeaderColumn>
                         <TableHeaderColumn dataField='status' filter={{ type: 'SelectFilter', options: status }}>Статус</TableHeaderColumn>
                         <TableHeaderColumn dataField='descr' ref='inp_status' filter={{ type: 'TextFilter' }}>Тема</TableHeaderColumn>
-                        <TableHeaderColumn dataField='wg_name' filter={{ type: 'SelectFilter', options: wg }}>Рабочая группа</TableHeaderColumn>
+                        <TableHeaderColumn dataField='wg_name' ref='inp_wg_name' filter={{ type: 'SelectFilter', options: wg }}>Рабочая группа</TableHeaderColumn>
                         <TableHeaderColumn dataField='displayname' ref='inp_displayname' filter={{ type: 'TextFilter' }}>Исполнитель</TableHeaderColumn>
                         <TableHeaderColumn dataField='date_created' ref='inp_date_created' width='19%' filter={{ type: 'TextFilter' }} >Дата создания</TableHeaderColumn>
                         <TableHeaderColumn dataField='date_deadline' ref='inp_date_deadline' width='19%' filter={{ type: 'TextFilter' }}>Дата поездки</TableHeaderColumn>
