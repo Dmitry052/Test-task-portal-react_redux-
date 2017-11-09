@@ -432,9 +432,9 @@ class Gridview extends Component {
                 return <MenuItem eventKey={i + 1} onSelect={() => this.setClosureCode(name)}>{name}</MenuItem>
             })
         }
-
+        console.log('в гриде',this.props.order.widthGrid,this.props.order.leftGrid);
         return (
-            <div className='gridTransp' >
+            <div className='gridTransp' style={{  width: this.props.order.widthGrid, left: this.props.order.leftGrid }} >
                 <div style={{ display: this.props.transp.directoties.show }}>
                     <ReactHTMLTableToExcel
                         id="exportEXCEL"

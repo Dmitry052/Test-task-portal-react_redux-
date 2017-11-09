@@ -3,6 +3,8 @@ const initialState = {
     down: false,
     filtersGrid: '30px',
     defValuefiltersGrid: '',
+    widthGrid: '83%',
+    leftGrid: '17%',
 
     order_view_id: 0,
     // Управление, визуализация
@@ -430,6 +432,17 @@ export default function currentOrder(state = initialState, action) {
     }
     if (action.type === 'DOWN') {
         state.down = !state.down;
+    }
+    if (action.type === 'LEFT_MENU') {
+        if (state.widthGrid === '83%') {
+            state.leftGrid = '3%';
+            state.widthGrid = '87%';
+        }
+        else {
+            state.leftGrid = '17%';
+            state.widthGrid = '83%';
+        }
+        console.log(state.leftGrid,state.widthGrid);
     }
     return state;
 }

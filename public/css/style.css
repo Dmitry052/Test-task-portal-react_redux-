@@ -174,8 +174,6 @@ body > div.ReactModalPortal > div > div > div.modalBody {
   position: absolute;
   display: inline-block;
   cursor: pointer;
-  width: 83%;
-  left: 17%;
   top: 33px; }
 
 .dropdown button {

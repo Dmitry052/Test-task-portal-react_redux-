@@ -61,6 +61,8 @@ class LeftMenu extends Component {
     }
 
     handleCheckedMenu() {
+        this.props.letf_menu();
+        
         this.setState({
             checkedValue: !this.state.checkedValue,
         });
@@ -209,6 +211,11 @@ export default connect(
         showDriversDirect: (cars, drivers, company) => {
             dispatch(showDriversDirect());
         },
+        // ----------------------
+        letf_menu: () => {
+            console.log('В дисптче');
+            dispatch({ type: 'LEFT_MENU' });
+        }
 
     })
 )(LeftMenu);
