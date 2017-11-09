@@ -433,16 +433,5 @@ export default function currentOrder(state = initialState, action) {
     if (action.type === 'DOWN') {
         state.down = !state.down;
     }
-    // if (action.type === 'LEFT_MENU') {
-    //     if (state.widthGrid === '83%') {
-    //         state.leftGrid = '3%';
-    //         state.widthGrid = '87%';
-    //     }
-    //     else {
-    //         state.leftGrid = '17%';
-    //         state.widthGrid = '83%';
-    //     }
-    //     return state;
-    // }
     return state;
 }

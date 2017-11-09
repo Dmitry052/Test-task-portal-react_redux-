@@ -1,11 +1,6 @@
 import axios from 'axios';
 import { apiPrefix } from './../../../etc/config.json';
 
-// css
-// export const letf_menu = () => dispatch => {
-//   axios({});
-//   dispatch({ type: 'LEFT_MENU' });
-// }
 // Фильтры
 export const transpMyWG = () => dispatch => {
   axios({

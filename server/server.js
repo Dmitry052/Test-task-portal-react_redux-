@@ -161,10 +161,10 @@ app.get('/expl/cancelClient', function (req, res) {
 // Транспорт
 // фильтры
 app.post('/transp/myWG', function (req, res) {
-    sqlConnetction.query(dbUtills.myWG + req.session.serviceType, (err, result) => { res.send(result) }); //req.session.serviceType
+    sqlConnetction.query(dbUtills.myWG + req.session.serviceType, (err, result) => { res.send(result) }); 
 });
 app.get('/transp/newOrder', function (req, res) {
-    sqlConnetction.query(dbUtills.newOrder + req.session.serviceType, (err, result) => { res.send(result); });//req.session.serviceType
+    sqlConnetction.query(dbUtills.newOrder + req.session.serviceType, (err, result) => { res.send(result); });
 });
 app.get('/transp/carAppoint', function (req, res) {
     sqlConnetction.query(dbUtills.carAppoint, (err, result) => { res.send(result); });
