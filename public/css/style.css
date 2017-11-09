@@ -24,11 +24,7 @@ textarea {
 .headerApp {
   width: 100%;
   background: #303a46;
-  border-bottom: 3px solid #455464;
-  position: fixed;
-  height: 34px;
-  overflow-x: 9999;
-  z-index: 9999; }
+  border-bottom: 3px solid #455464; }
 
 #logoText {
   letter-spacing: 0.03em;
@@ -95,10 +91,7 @@ textarea {
   height: 95.4vh;
   background: #303a46;
   position: relative;
-  overflow-x: hidden;
-  position: fixed;
-  width: 16.6%;
-  top: 34px; }
+  overflow-x: hidden; }
 
 .hideLeftMenu {
   position: absolute;
@@ -173,8 +166,7 @@ body > div.ReactModalPortal > div > div > div.modalBody {
   margin-top: 5px;
   position: absolute;
   display: inline-block;
-  cursor: pointer;
-  top: 33px; }
+  cursor: pointer; }
 
 .dropdown button {
   padding: 0 0;

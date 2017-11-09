@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { transpMyWG, transpNew, transpToMe, transpCarAppoint, transpDoneTrip, transpDataSend, cancelClient, showDirect, showCarsDirect, showDriversDirect } from 'Actions/actionTransp';
+import { transpMyWG, transpNew, transpToMe, transpCarAppoint, transpDoneTrip, transpDataSend, cancelClient, showDirect, showCarsDirect, showDriversDirect,letf_menu } from 'Actions/actionTransp';
 import { Nav, NavItem, Collapse, Button } from 'react-bootstrap';
 
 
@@ -61,7 +61,7 @@ class LeftMenu extends Component {
     }
 
     handleCheckedMenu() {
-        this.props.letf_menu();
+        // this.props.letf_menu();
         
         this.setState({
             checkedValue: !this.state.checkedValue,
@@ -213,8 +213,7 @@ export default connect(
         },
         // ----------------------
         letf_menu: () => {
-            console.log('В дисптче');
-            dispatch({ type: 'LEFT_MENU' });
+            dispatch(letf_menu());
         }
 
     })
