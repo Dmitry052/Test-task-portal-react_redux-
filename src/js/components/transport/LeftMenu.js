@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { transpMyWG, transpNew, transpToMe, transpCarAppoint, transpDoneTrip, transpDataSend, cancelClient, showDirect, showCarsDirect, showDriversDirect,letf_menu } from 'Actions/actionTransp';
+import { transpMyWG, transpNew, transpToMe, transpCarAppoint, transpDoneTrip, transpDataSend, cancelClient, showDirect, showCarsDirect, showDriversDirect } from 'Actions/actionTransp';
 import { Nav, NavItem, Collapse, Button } from 'react-bootstrap';
 
 
