@@ -4,8 +4,11 @@ import { apiPrefix } from './../../../etc/config.json';
 // Фильтры
 export const transpMyWG = () => dispatch => {
   axios({
-    method: 'post',
-    url: `${apiPrefix}/transp/myWG`,
+    method: 'get',
+    url: `${apiPrefix}/transp`,
+    params: {
+      action: 'myWG',
+    },
     onDownloadProgress: function (progressEvent) {
       dispatch({ type: "LOADER", data: 'none' });
     },
@@ -15,8 +18,6 @@ export const transpMyWG = () => dispatch => {
       type: "transpMyWG",
       data: response.data
     });
-
-
   }).catch(function (error) {
     alert("Нет ответа от сервера");
     dispatch({
@@ -24,21 +25,15 @@ export const transpMyWG = () => dispatch => {
     });
   });
 };
-export const transpNew = () => dispatch => {
-  axios.get(`${apiPrefix}/transp/newOrder`).then((response) => {
-    dispatch({
-      type: "transpNew",
-      data: response.data
-    });
-  }).catch(function (error) {
-    alert("Нет ответа от сервера");
-    dispatch({
-      type: "ERROR_CONNECT",
-    });
-  });
-};
+// --------------------------------------------
 export const transpToMe = () => dispatch => {
-  axios.get(`${apiPrefix}/transp/toMe`).then((response) => {
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/transp`,
+    params: {
+      action: 'toMe',
+    }
+  }).then((response) => {
     dispatch({
       type: "transpToMe",
       data: response.data
@@ -50,8 +45,35 @@ export const transpToMe = () => dispatch => {
     });
   });
 };
+// --------------------------------------------
+export const transpNew = () => dispatch => {
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/transp`,
+    params: {
+      action: 'newOrder',
+    }
+  }).then((response) => {
+    dispatch({
+      type: "transpNew",
+      data: response.data
+    });
+  }).catch(function (error) {
+    alert("Нет ответа от сервера");
+    dispatch({
+      type: "ERROR_CONNECT",
+    });
+  });
+};
+// --------------------------------------------
 export const transpCarAppoint = () => dispatch => {
-  axios.get(`${apiPrefix}/transp/carAppoint`).then((response) => {
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/transp`,
+    params: {
+      action: 'carAppoint',
+    }
+  }).then((response) => {
     dispatch({
       type: "carAppoint",
       data: response.data
@@ -63,8 +85,15 @@ export const transpCarAppoint = () => dispatch => {
     });
   });
 };
+// --------------------------------------------
 export const transpDoneTrip = () => dispatch => {
-  axios.get(`${apiPrefix}/transp/doneTrip`).then((response) => {
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/transp`,
+    params: {
+      action: 'doneTrip',
+    }
+  }).then((response) => {
     dispatch({
       type: "transpDoneTrip",
       data: response.data
@@ -76,23 +105,15 @@ export const transpDoneTrip = () => dispatch => {
     });
   });
 };
-
-export const transpDataSend = () => dispatch => {
-  axios.get(`${apiPrefix}/transp/dataSend`).then((response) => {
-    dispatch({
-      type: "transpDataSend",
-      data: response.data
-    });
-  }).catch(function (error) {
-    alert("Нет ответа от сервера");
-    dispatch({
-      type: "ERROR_CONNECT",
-    });
-  });
-};
-
+// --------------------------------------------
 export const cancelClient = () => dispatch => {
-  axios.get(`${apiPrefix}/transp/cancelClient`).then((response) => {
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/transp`,
+    params: {
+      action: 'cancelClient',
+    }
+  }).then((response) => {
     dispatch({
       type: "cancelClient",
       data: response.data
@@ -104,78 +125,151 @@ export const cancelClient = () => dispatch => {
     });
   });
 };
+// --------------------------------------------
+// export const transpDataSend = () => dispatch => {
+//   axios.get(`${apiPrefix}/transp/dataSend`).then((response) => {
+//     dispatch({
+//       type: "transpDataSend",
+//       data: response.data
+//     });
+//   }).catch(function (error) {
+//     alert("Нет ответа от сервера");
+//     dispatch({
+//       type: "ERROR_CONNECT",
+//     });
+//   });
+// };
+
+// --------------------------------------------
 // Для грида
 export const drivers = () => dispatch => {
-  axios.get(`${apiPrefix}/transp/carDrivers`).then((response) => {
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/transp`,
+    params: {
+      action: 'carDrivers',
+    }
+  }).then((response) => {
     dispatch({
       type: "carDrivers",
       data: response.data
     });
   })
 };
-
+// --------------------------------------------
 export const cars = () => dispatch => {
-  axios.get(`${apiPrefix}/transp/cars`).then((response) => {
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/transp`,
+    params: {
+      action: 'cars',
+    }
+  }).then((response) => {
     dispatch({
       type: "cars",
       data: response.data
     });
   });
 };
+// --------------------------------------------
 export const carsStatus = () => dispatch => {
-  axios.get(`${apiPrefix}/transp/cars-status`).then((response) => {
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/transp`,
+    params: {
+      action: 'cars-status',
+    }
+  }).then((response) => {
     dispatch({
       type: "transport_cars_status",
       data: response.data
     });
   });
 };
+// --------------------------------------------
 export const transpStatus = () => dispatch => {
-  axios.get(`${apiPrefix}/transp/transport_statuses`).then((response) => {
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/transp`,
+    params: {
+      action: 'transport_statuses',
+    }
+  }).then((response) => {
     dispatch({
       type: "transport_statuses",
       data: response.data
     });
   });
 };
-
+// --------------------------------------------
 export const transpDriversStatus = () => dispatch => {
-  axios.get(`${apiPrefix}/transp/transport-drivers-status`).then((response) => {
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/transp`,
+    params: {
+      action: 'transport-drivers-status',
+    }
+  }).then((response) => {
     dispatch({
       type: "transport-drivers-status",
       data: response.data
     });
   });
 };
-
+// --------------------------------------------
 export const transpUserToWg = () => dispatch => {
-  axios.get(`${apiPrefix}/transp/userstowg`).then((response) => {
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/transp`,
+    params: {
+      action: 'userstowg',
+    }
+  }).then((response) => {
     dispatch({
       type: "transpUserToWg",
       data: response.data
     });
   });
 };
+// --------------------------------------------
 export const companyToUser = () => dispatch => {
-  axios.get(`${apiPrefix}/transp/companyToUser`).then((response) => {
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/transp`,
+    params: {
+      action: 'companyToUser',
+    }
+  }).then((response) => {
     dispatch({
       type: "companyToUser",
       data: response.data
     });
   });
 };
-
+// --------------------------------------------
 export const closureStatuses = () => dispatch => {
-  axios.get(`${apiPrefix}/transp/closureStatuses`).then((response) => {
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/transp`,
+    params: {
+      action: 'closureStatuses',
+    }
+  }).then((response) => {
     dispatch({
       type: "closureStatuses",
       data: response.data
     });
   });
 };
-
+// --------------------------------------------
 export const carDriversAll = () => dispatch => {
-  axios.get(`${apiPrefix}/transp/carDriversAll`).then((response) => {
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/transp`,
+    params: {
+      action: 'carDriversAll',
+    }
+  }).then((response) => {
     dispatch({
       type: "carDriversAll",
       data: response.data
@@ -188,19 +282,34 @@ export const clickCurrentOrder = (row, drivers, statuses, wg, cars, listExecutor
     type: "currentOrder",
     data: [row, drivers, statuses, wg, cars, closure_code, index]
   });
-  axios.get(`${apiPrefix}/transp/transpExecutor?executor=${row.wg_name}`).then((response) => {
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/transp`,
+    params: {
+      action: 'transpExecutor',
+      executor: row.wg_name
+    }
+  }).then((response) => {
     dispatch({
       type: "listExecutors",
       data: response.data
     });
   });
-  axios.get(`${apiPrefix}/transp/transpExecutor?executor=${row.wg_name}`).then((response) => {
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/transp`,
+    params: {
+      action: 'transpExecutor',
+      executor: row.wg_name
+    }
+  }).then((response) => {
     dispatch({
       type: "transpExecutor",
       data: response.data
     });
   });
 };
+// -----------------------------------------------------------
 export const setDriver = (driver, drivers, cars) => dispatch => {
   dispatch({
     type: "setDriver",
@@ -218,12 +327,12 @@ export const setWG = (wg, name) => dispatch => {
     type: "setWG",
     data: wg
   });
-  axios.get(`${apiPrefix}/transp/transpExecutor?executor=${wg}`).then((response) => {
-    dispatch({
-      type: "listExecutors",
-      data: response.data
-    });
-  });
+  // axios.get(`${apiPrefix}/transp/transpExecutor?executor=${wg}`).then((response) => {
+  //   dispatch({
+  //     type: "listExecutors",
+  //     data: response.data
+  //   });
+  // });
 };
 export const setExecutor = (executor) => dispatch => {
   dispatch({
@@ -269,21 +378,9 @@ export const setSolution = (text) => dispatch => {
   });
 };
 // ***********************************************
-export const saveOrder = (orderData) => dispatch => {
-  axios.post(`${apiPrefix}/transp/saveOrder`, orderData).then((response) => {
-    // console.log('saved successfully');
-  }).catch(function (error) {
-    alert("Нет ответа от сервера");
-    dispatch({
-      type: "ERROR_CONNECT",
-    });
-  });
-};
-
 export const assignCar = () => dispatch => {
   dispatch({
     type: "assignCar",
-    // data: executor
   });
 };
 
@@ -414,9 +511,31 @@ export const selectCar = (selected) => dispatch => {
   });
 };
 // -------------------------
+export const saveOrder = (orderData) => dispatch => {
+  axios({
+    method: 'post',
+    url: `${apiPrefix}/transp`,
+    data: {
+      action: 'saveOrder',
+      data: orderData
+    }
+  }).then((response) => {
+  }).catch(function (error) {
+    alert("Нет ответа от сервера");
+    dispatch({
+      type: "ERROR_CONNECT",
+    });
+  });
+};
 export const saveToDBDriverDirect = (driver) => dispatch => {
-  axios.post(`${apiPrefix}/transp/saveDriver`, driver).then((response) => {
-    // console.log('saved successfully');
+  axios({
+    method: 'post',
+    url:`${apiPrefix}/transp`,
+    data: {
+      action: 'saveDriver',
+      data: driver
+    }
+  }).then((response) => {
   }).catch(function (error) {
     alert("Нет ответа от сервера");
     dispatch({
@@ -425,8 +544,14 @@ export const saveToDBDriverDirect = (driver) => dispatch => {
   });
 };
 export const saveToDBCarDirect = (car) => dispatch => {
-  axios.post(`${apiPrefix}/transp/saveCar`, car).then((response) => {
-    // console.log('saved successfully');
+  axios({
+    method: 'post',
+    url:`${apiPrefix}/transp`,
+    data: {
+      action: 'saveCar',
+      data: car
+    }
+  }).then((response) => {
   }).catch(function (error) {
     alert("Нет ответа от сервера");
     dispatch({
@@ -436,8 +561,14 @@ export const saveToDBCarDirect = (car) => dispatch => {
 };
 // -----------------------
 export const deleteDrivers = (drivers) => dispatch => {
-  axios.post(`${apiPrefix}/transp/deleteDrivers`, drivers).then((response) => {
-    // console.log('saved successfully');
+  axios({
+    method: 'post',
+    url:`${apiPrefix}/transp`,
+    data: {
+      action: 'deleteDrivers',
+      data: drivers
+    }
+  }).then((response) => {
   }).catch(function (error) {
     alert("Нет ответа от сервера");
     dispatch({

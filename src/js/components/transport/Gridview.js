@@ -269,7 +269,7 @@ class Gridview extends Component {
             assignee: (() => {
                 for (var key in this.props.transp.transpExecutor) {
                     if (this.props.transp.transpExecutor[key].displayname === this.props.order.order_def_executor) {
-                        return { new: this.props.transp.transpExecutor[key].username_id, old: this.state.originOrder.assignee };
+                        return { new: Number(this.props.transp.transpExecutor[key].username_id), old: Number(this.state.originOrder.assignee) };
                     }
                 }
                 return { new: null, old: null }
@@ -283,11 +283,26 @@ class Gridview extends Component {
                     return { new: this.props.order.order_ride_end_time_toDB, old: this.state.originOrder.ride_end_time };
                 }
             })(),
-            ride_duration: { new: this.props.order.order_ride_duration, old: this.state.originOrder.ride_duration },
-            ride_distance: { new: this.props.order.order_ride_distance, old: this.state.originOrder.ride_distance },
-            ride_idle_time: { new: this.props.order.order_ride_idle_time, old: this.state.originOrder.ride_idle_time },
-            ride_price: { new: this.props.order.order_ride_price, old: this.state.originOrder.ride_price },
-            solution: { new: this.props.order.order_solution, old: this.state.originOrder.solution },
+            ride_duration: {
+                new: this.props.order.order_ride_duration === '' || this.props.order.order_ride_duration === 'null' ? null : this.props.order.order_ride_duration,
+                old: this.state.originOrder.ride_duration === '' || this.state.originOrder.ride_duration === 'null' ? null : this.state.originOrder.ride_duration
+            },
+            ride_distance: {
+                new: this.props.order.order_ride_distance === '' || this.props.order.order_ride_distance === 'null' ? null : this.props.order.order_ride_distance,
+                old: this.state.originOrder.ride_distance === '' || this.state.originOrder.ride_distance === 'null' ? null : this.state.originOrder.ride_distance
+            },
+            ride_idle_time: {
+                new: this.props.order.order_ride_idle_time === '' || this.props.order.order_ride_idle_time === 'null' ? null : this.props.order.order_ride_idle_time,
+                old: this.state.originOrder.ride_idle_time === '' || this.state.originOrder.ride_idle_time === 'null' ? null : this.state.originOrder.ride_idle_time
+            },
+            ride_price: {
+                new: this.props.order.order_ride_price === '' || this.props.order.order_ride_price === 'null' ? null : this.props.order.order_ride_price,
+                old: this.state.originOrder.ride_price === '' || this.state.originOrder.ride_price === 'null' ? null : this.state.originOrder.ride_price
+            },
+            solution: {
+                new: this.props.order.order_solution === '' || this.props.order.order_solution === 'null' ? null : this.props.order.order_solution,
+                old: this.state.originOrder.solution === '' || this.state.originOrder.solution === 'null' ? null : this.state.originOrder.solution
+            },
             closure_code: (() => {
                 for (var key in this.props.transp.closureStatuses) {
                     if (this.props.transp.closureStatuses[key].closure_code_name === this.props.order.order_def_closure_statuses) {
@@ -435,7 +450,7 @@ class Gridview extends Component {
         // console.log('в гриде',this.props.order.widthGrid,this.props.order.leftGrid);
         return (
             // style={{  width: this.props.order.widthGrid, left: this.props.order.leftGrid }}
-            <div className='gridTransp'  > 
+            <div className='gridTransp'  >
                 <div style={{ display: this.props.transp.directoties.show }}>
                     <ReactHTMLTableToExcel
                         id="exportEXCEL"
@@ -769,7 +784,7 @@ class Gridview extends Component {
                     </Modal>
                 </Modal>
                 <div style={{ display: this.props.transp.directoties.showLoader }}>
-                    <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
+                    <i className="fa fa-refresh fa-spin fa-3x fa-fw"></i>
                     <span>Загрузка данных...</span>
                 </div>
 

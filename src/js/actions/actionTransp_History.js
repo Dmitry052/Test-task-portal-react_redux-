@@ -7,7 +7,14 @@ export const showHistory = () => dispatch => {
     });
 }
 export const getHistory = (sb_id) => dispatch => {
-    axios.get(`${apiPrefix}/transp/getHistory?sb_id=${sb_id}`).then((response) => {
+    axios({
+        method: 'get',
+        url: `${apiPrefix}/transp`,
+        params: {
+            action: 'getHistory',
+            sb_id: sb_id
+        }
+    }).then((response) => {
         dispatch({
             type: "GET_HISTORY",
             data: response.data
