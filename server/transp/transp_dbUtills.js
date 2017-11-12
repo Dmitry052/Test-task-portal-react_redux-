@@ -1,14 +1,5 @@
 module.exports = {
-    // Эксплуотация
-toMeExpl: `SELECT sb_id,status,descr,full_descr,closure_code,date_created,date_done 
-        FROM requests 
-        WHERE status<7 and assignee=`,
 
-doneMe: `SELECT sb_id,status,descr,full_descr,closure_code,date_created,date_done 
-        FROM requests 
-        INNER JOIN company ON requests.company_id = company.id 
-        WHERE service_type=1 and status=7`,
-    // Транспорт
 myWG: `select sb_id, transport_statuses.status as status, requests.status as id_status,users.displayname,descr,full_descr,closure_code,
 FROM_UNIXTIME(date_created,"%d.%m.%Y %h:%i")as date_created,FROM_UNIXTIME(date_deadline,"%d.%m.%Y %h:%i")as date_deadline, date_deadline as unix_date_deadline,
 bank_contact,bank_contact_phone,travel_from,travel_to,ride_stops,ride_start_time,ride_end_time,ride_duration,ride_distance,

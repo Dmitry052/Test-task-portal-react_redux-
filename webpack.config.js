@@ -48,6 +48,7 @@ module.exports = {
         alias: {
             ComponentsExpl: path.resolve(__dirname, 'src/js/components/exploitation'),
             ComponentsTransp: path.resolve(__dirname, 'src/js/components/transport'),
+            ComponentsAdmin: path.resolve(__dirname, 'src/js/components/admin'),
             Actions: path.resolve(__dirname, 'src/js/actions'),
             Config: path.resolve(__dirname, 'etc'),
         },

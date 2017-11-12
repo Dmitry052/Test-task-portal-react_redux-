@@ -1,10 +1,17 @@
 // Родительский Reducer
 import { combineReducers } from 'redux';
-import transp from './transport/transport_filters_left_menu';
-
+import admin_body from './admin/_admin_body';
+import service_types from './admin/service_types';
+import company from './admin/company';
+import companytowgAdmin from './admin/conformity/companytowg';
+import usertowgAdmin from './admin/conformity/usertowg';
+import users from './admin/users';
+import wg from './admin/wg';
+import wgbank from './admin/wgbank';
 
 import expl from './exploitation/exploitation';
 
+import transp from './transport/transport_filters_left_menu';
 import left_menu from './transport/left_menu';
 import carDrivers from './transport/carDrivers';
 import carDriversAll from './transport/carDriversAll';
@@ -17,58 +24,92 @@ import directoties from './transport/_directories';
 import closureStatuses from './transport/closure_statuses';
 import companyToUser from './transport/companyToUser';
 import transport_drivers_status from './transport/transport_drivers_status';
-import transport_cars_status from'./transport/transport_cars_status';
+import transport_cars_status from './transport/transport_cars_status';
 import history from './transport/_currentHIstory';
 
-const left_menuReducer = combineReducers ({
+const admin_bodyReducer = combineReducers({
+    admin_body
+});
+const service_typesReducer = combineReducers({
+    service_types
+});
+const companyReducer = combineReducers({
+    company
+});
+const companytowgAdminReducer = combineReducers({
+    companytowgAdmin
+});
+const usertowgAdminReducer = combineReducers({
+    usertowgAdmin
+});
+const usersReducer = combineReducers({
+    users
+});
+const wgReducer = combineReducers({
+    wg
+});
+const wgbankReducer = combineReducers({
+    wgbank
+});
+// -------------------------------------- 
+const left_menuReducer = combineReducers({
     left_menu
 });
-const transpReducer = combineReducers ({
+const transpReducer = combineReducers({
     transp
 });
-const explReducer = combineReducers ({
+const explReducer = combineReducers({
     expl
 });
-const carDriversReducer = combineReducers ({
+const carDriversReducer = combineReducers({
     carDrivers
 });
-const carsReducer = combineReducers ({
+const carsReducer = combineReducers({
     cars
 });
-const transpStatusReducer = combineReducers ({
+const transpStatusReducer = combineReducers({
     transpStatus
 });
-const transpUserToWgReducer = combineReducers ({
+const transpUserToWgReducer = combineReducers({
     transpUserToWg
 });
-const transpExecutorReducer = combineReducers ({
+const transpExecutorReducer = combineReducers({
     transpExecutor
 });
-const currentOrderReducer = combineReducers ({
+const currentOrderReducer = combineReducers({
     currentOrder
 });
-const closureStatusesReducer = combineReducers ({
+const closureStatusesReducer = combineReducers({
     closureStatuses
 });
-const directotiesReducer = combineReducers ({
+const directotiesReducer = combineReducers({
     directoties
 });
-const companyToUserReducer = combineReducers ({
+const companyToUserReducer = combineReducers({
     companyToUser
 });
-const carDriversAllReducer = combineReducers ({
+const carDriversAllReducer = combineReducers({
     carDriversAll
 });
-const transport_drivers_statusReducer = combineReducers ({
+const transport_drivers_statusReducer = combineReducers({
     transport_drivers_status
 });
-const transport_cars_statusReducer = combineReducers ({
+const transport_cars_statusReducer = combineReducers({
     transport_cars_status
 });
-const historyReducer = combineReducers ({
+const historyReducer = combineReducers({
     history
 });
 export default combineReducers({
+    admin_body,
+    service_types,
+    companytowgAdmin,
+    usertowgAdmin,
+    company,
+    users,
+    wg,
+    wgbank,
+    // --------
     transp,
     expl,
     carDrivers,

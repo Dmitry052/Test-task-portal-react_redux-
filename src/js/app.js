@@ -8,6 +8,7 @@ import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Index from './components/Index';
+import Admin from './containers/admin/admin';
 import Expl from './containers/exploitation/Expl';
 import Transp from './containers/transport/Transp';
 import Err404 from './containers/Err404';
@@ -33,6 +34,7 @@ ReactDOM.render(
         <Router > 
             <Switch>
                 <Route exact path='/' component={Index} />
+                <Route exact path='/admin' component={Admin} />
                 <Route exact path='/expl' component={Expl} />
                 <Route exact path='/transp' component={Transp} />
                 <Route exact path='/404' component={Err404} />

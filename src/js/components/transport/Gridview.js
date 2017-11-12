@@ -447,7 +447,7 @@ class Gridview extends Component {
                 return <MenuItem eventKey={i + 1} onSelect={() => this.setClosureCode(name)}>{name}</MenuItem>
             })
         }
-        // console.log('в гриде',this.props.order.widthGrid,this.props.order.leftGrid);
+        // console.log('в гриде',this.props.transp);
         return (
             // style={{  width: this.props.order.widthGrid, left: this.props.order.leftGrid }}
             <div className='gridTransp'  >

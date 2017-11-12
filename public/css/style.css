@@ -21,6 +21,29 @@ textarea {
   resize: none;
   /* Запрещаем изменять размер */ }
 
+#text_header_admin {
+  font-size: 0.8em;
+  color: red;
+  margin-left: 10px; }
+
+#bodyAdmin {
+  display: inline-block;
+  position: absolute; }
+
+#bodyAdmin button {
+  margin: 5px 5px; }
+
+#headerUsersAdmin, #headerSTAdmin {
+  height: 28px;
+  background: #303a46; }
+
+#headerUsersAdmin > button, #headerSTAdmin > button {
+  float: right; }
+
+#saveModal {
+  float: right;
+  margin: 30px 15px; }
+
 .headerApp {
   width: 100%;
   background: #303a46;

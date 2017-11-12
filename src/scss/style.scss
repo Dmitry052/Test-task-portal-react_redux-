@@ -20,6 +20,10 @@ button{
 textarea {
     resize: none; /* Запрещаем изменять размер */
    } 
+@import 'admin/header';
+@import 'admin/body';
+@import 'admin/modalAdmin';
+
 @import 'header';
 @import 'login';
 @import 'err404';
