@@ -25,7 +25,7 @@ var query = {
             case 'userinwg':
                 return dbUtills.userinwg + `'${data}'` + ' GROUP BY username';
             case 'service_type_name':
-                return dbUtills.service_type_name + `'${data}'` + ' GROUP BY service_name';
+                return dbUtills.service_type_name + `'${data}'`;
             default: 
                 return null;
         }
