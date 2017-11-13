@@ -46,6 +46,7 @@ export default function userToWg(state = initialState, action) {
         state.user_to_wg.user_id = '';
         state.user_to_wg.companyname = '';
         state.user_to_wg.company_id = '';
+        state.user_to_wg.service_name = '';
         return {
             userToWg: state.userToWg,
             editModal: state.editModal,
