@@ -16,8 +16,9 @@ module.exports = {
     left join bankwg on bankwg.id = companytowg.bank_wg_id
     left join workgroups on workgroups.id = companytowg.wg_id`,
     usertowg: `SELECT usertowg.id as usertowg_id,usertowg.wg_id as wg_id,
-    workgroups.wg_name, usertowg.username_id, users.username
+    workgroups.wg_name, usertowg.username_id, users.username,users.company_id,companyname
     FROM usertowg
     left join workgroups on workgroups.id = usertowg.wg_id
-    left join users on users.id = usertowg.username_id`,
+    left join users on users.id = usertowg.username_id
+    left join company on company.id = users.company_id`,
 }

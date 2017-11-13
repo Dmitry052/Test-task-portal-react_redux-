@@ -7,7 +7,9 @@ const initialState = {
         wgname: '',
         wg_id: '',
         username: '',
-        user_id: ''
+        user_id: '',
+        companyname: '',
+        company_id: ''
     },
     check_user_to_wg: new Map(),
 }
@@ -54,6 +56,8 @@ export default function userToWg(state = initialState, action) {
         state.user_to_wg.wg_id = action.data.wg_id;
         state.user_to_wg.username = action.data.username;
         state.user_to_wg.user_id = action.data.username_id;
+        state.user_to_wg.companyname = action.data.companyname;
+        state.user_to_wg.company_id = action.data.company_id;
         return {
             userToWg: state.userToWg,
             editModal: state.editModal,

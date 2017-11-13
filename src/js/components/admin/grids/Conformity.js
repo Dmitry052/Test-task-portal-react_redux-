@@ -175,15 +175,30 @@ class Conformity extends Component {
                         options={options_user}
                     >   
                         <TableHeaderColumn dataField='usertowg_id' width='15%' isKey={true} filter={{ type: 'TextFilter' }} >ID в базе</TableHeaderColumn>
-                        <TableHeaderColumn dataField='wg_name' filter={{ type: 'TextFilter' }} >Рабочая группа</TableHeaderColumn>
                         <TableHeaderColumn dataField='username' filter={{ type: 'TextFilter' }} >Пользователь</TableHeaderColumn>
+                        <TableHeaderColumn dataField='wg_name' filter={{ type: 'TextFilter' }} >Рабочая группа</TableHeaderColumn>
+                        <TableHeaderColumn dataField='companyname' filter={{ type: 'TextFilter' }} >Компания</TableHeaderColumn>
+                        
+                        
                     </BootstrapTable>
                 </div>
                 <Modal isOpen={this.props.store.usertowgAdmin.editModal} contentLabel="Modal"
-                    style={{ content: { width: '600px', margin: 'auto', 'backgroundColor': '#f5f5f5', height: '240px' } }}
+                    style={{ content: { width: '600px', margin: 'auto', 'backgroundColor': '#f5f5f5', height: '300px' } }}
                 >
                     <div id="headerSTAdmin">
                         <button className="btn btn-danger" onClick={this.closeModal_User.bind(this)}><i className="fa fa-times" aria-hidden="true" /></button>
+                        <div className='col-lg-12 col-md-12 col-sm-12'>
+                            <span>Компания<span>*</span></span>
+                            <select className='form-control' value={this.props.store.usertowgAdmin.user_to_wg.companyname || '---'} onChange={this.set_wg_user_to_wg.bind(this)} >
+                                <option key={777} value={'---'}>---</option>
+                                {
+                                    this.props.store.company.company.map((item, i) => {
+                                        return <option key={i} value={item.companyname}>{item.companyname}</option>
+                                    })
+                                }
+
+                            </select>
+                        </div>
                         <div className='col-lg-12 col-md-12 col-sm-12'>
                             <span>Рабочая группа<span>*</span></span>
                             <select className='form-control' value={this.props.store.usertowgAdmin.user_to_wg.wgname || '---'} onChange={this.set_wg_user_to_wg.bind(this)} >
