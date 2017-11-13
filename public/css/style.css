@@ -11,6 +11,9 @@ body {
   /*-webkit-font-smoothing: subpixel-antialiased !important;*/
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important; }
 
+tr, td {
+  cursor: default !important; }
+
 button {
   border-radius: 0 !important; }
 
@@ -43,6 +46,15 @@ textarea {
 #saveModal {
   float: right;
   margin: 30px 15px; }
+
+#company_conform {
+  padding: 0 0; }
+
+#st_conform {
+  padding-right: 0; }
+
+#st_conform > input {
+  cursor: default; }
 
 .headerApp {
   width: 100%;

@@ -4,7 +4,7 @@ var passwordHash = require('password-hash');
 var dbUtills = require('./admin_dbUtills');
 
 var query = {
-    action_GET: function (action) {
+    action_GET: function (action, data) {
         switch (action) {
             case 'st':
                 return dbUtills.st;
@@ -20,7 +20,13 @@ var query = {
                 return dbUtills.companytowg;
             case 'usertowg':
                 return dbUtills.usertowg;
-            default:
+            case 'wgincomapny':
+                return dbUtills.wgincomapny + `'${data}'` + ' GROUP BY wg_name';
+            case 'userinwg':
+                return dbUtills.userinwg + `'${data}'` + ' GROUP BY username';
+            case 'service_type_name':
+                return dbUtills.service_type_name + `'${data}'` + ' GROUP BY service_name';
+            default: 
                 return null;
         }
     },

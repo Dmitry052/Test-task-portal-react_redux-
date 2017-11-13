@@ -9,7 +9,10 @@ const initialState = {
         username: '',
         user_id: '',
         companyname: '',
-        company_id: ''
+        company_id: '',
+        service_name: '',
+        list_wg: [],
+        list_users: []
     },
     check_user_to_wg: new Map(),
 }
@@ -41,6 +44,8 @@ export default function userToWg(state = initialState, action) {
         state.user_to_wg.wg_id = '';
         state.user_to_wg.username = '';
         state.user_to_wg.user_id = '';
+        state.user_to_wg.companyname = '';
+        state.user_to_wg.company_id = '';
         return {
             userToWg: state.userToWg,
             editModal: state.editModal,
@@ -58,6 +63,51 @@ export default function userToWg(state = initialState, action) {
         state.user_to_wg.user_id = action.data.username_id;
         state.user_to_wg.companyname = action.data.companyname;
         state.user_to_wg.company_id = action.data.company_id;
+        return {
+            userToWg: state.userToWg,
+            editModal: state.editModal,
+            user_to_wg: state.user_to_wg,
+            check_user_to_wg: state.check_user_to_wg,
+        };
+    }
+    if (action.type === "SET_ST_NAME_USER_TO_WG_ADMIN") {
+        state.user_to_wg.service_name = action.data[0].service_name;
+        return {
+            userToWg: state.userToWg,
+            editModal: state.editModal,
+            user_to_wg: state.user_to_wg,
+            check_user_to_wg: state.check_user_to_wg,
+        };
+    }
+    if (action.type === "SET_LIST_WG_USER_TO_WG_ADMIN") {
+        state.user_to_wg.list_wg = action.data;
+        return {
+            userToWg: state.userToWg,
+            editModal: state.editModal,
+            user_to_wg: state.user_to_wg,
+            check_user_to_wg: state.check_user_to_wg,
+        };
+    }
+    if (action.type === "SET_LIST_USERS_USER_TO_WG_ADMIN") {
+        state.user_to_wg.list_users = action.data;
+        return {
+            userToWg: state.userToWg,
+            editModal: state.editModal,
+            user_to_wg: state.user_to_wg,
+            check_user_to_wg: state.check_user_to_wg,
+        };
+    }
+    if (action.type === "SET_COMPANY_USER_TO_WG_ADMIN") {
+        state.user_to_wg.wgname = '';
+        state.user_to_wg.username = '';
+        state.user_to_wg.companyname = action.data.event;
+        state.user_to_wg.company_id = (() => {
+            for (let key in action.data.data) {
+                if (action.data.data[key].companyname === action.data.event) {
+                    return action.data.data[key].company_id;
+                }
+            }
+        })();
         return {
             userToWg: state.userToWg,
             editModal: state.editModal,

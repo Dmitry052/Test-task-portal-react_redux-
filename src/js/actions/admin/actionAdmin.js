@@ -87,7 +87,7 @@ export const currentMenu = (value) => dispatch => {
       break;
     // -----------------------------------
     case 'conformity':
-      axios({method: 'get',url: `${apiPrefix}/admin`,params: {action: 'companytowg',}}).then((response) => {
+      axios({ method: 'get', url: `${apiPrefix}/admin`, params: { action: 'companytowg', } }).then((response) => {
         dispatch({
           type: "CONF_COMPANY_TOWG_ADMIN",
           data: response.data
@@ -95,7 +95,7 @@ export const currentMenu = (value) => dispatch => {
       }).catch(function (error) {
         alert("Нет ответа от сервера");
       });
-      axios({method: 'get',url: `${apiPrefix}/admin`,params: {action: 'usertowg',}}).then((response) => {
+      axios({ method: 'get', url: `${apiPrefix}/admin`, params: { action: 'usertowg', } }).then((response) => {
         dispatch({
           type: "CONF_USER_TOWG_ADMIN",
           data: response.data
@@ -103,7 +103,7 @@ export const currentMenu = (value) => dispatch => {
       }).catch(function (error) {
         alert("Нет ответа от сервера");
       });
-      axios({method: 'get',url: `${apiPrefix}/admin`,params: {action: 'wgbank',}}).then((response) => {
+      axios({ method: 'get', url: `${apiPrefix}/admin`, params: { action: 'wgbank', } }).then((response) => {
         dispatch({
           type: "WGBANK_ADMIN",
           data: response.data
@@ -111,7 +111,7 @@ export const currentMenu = (value) => dispatch => {
       }).catch(function (error) {
         alert("Нет ответа от сервера");
       });
-      axios({method: 'get',url: `${apiPrefix}/admin`,params: {action: 'wg',}}).then((response) => {
+      axios({ method: 'get', url: `${apiPrefix}/admin`, params: { action: 'wg', } }).then((response) => {
         dispatch({
           type: "WG_ADMIN",
           data: response.data
@@ -323,7 +323,6 @@ export const saveUserToWG = (user) => dispatch => {
 };
 // --------------------------------------------
 export const deleteUserToWG = (users) => dispatch => {
-  console.log(users);
   axios({
     method: 'post',
     url: `${apiPrefix}/admin`,
@@ -337,3 +336,48 @@ export const deleteUserToWG = (users) => dispatch => {
     alert("Нет ответа от сервера");
   });
 };
+// --------------------------------------------
+export const wgincomapny = (company) => dispatch => {
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/admin`,
+    params: {
+      action: 'wgincomapny',
+      data: company
+    }
+  }).then((response) => {
+    dispatch({ type: 'SET_LIST_WG_USER_TO_WG_ADMIN', data: response.data })
+  }).catch(function (error) {
+    alert("Нет ответа от сервера");
+  });
+};
+// --------------------------------------------
+export const userinwg = (wg) => dispatch => {
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/admin`,
+    params: {
+      action: 'userinwg',
+      data: wg
+    }
+  }).then((response) => {
+    dispatch({ type: 'SET_LIST_USERS_USER_TO_WG_ADMIN', data: response.data })
+  }).catch(function (error) {
+    alert("Нет ответа от сервера");
+  });
+};
+// --------------------------------------------
+export const stName = (company) => dispatch => {
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/admin`,
+    params: {
+      action: 'service_type_name',
+      data: company
+    }
+  }).then((response) => {
+    dispatch({ type: 'SET_ST_NAME_USER_TO_WG_ADMIN', data: response.data })
+  }).catch(function (error) {
+    alert("Нет ответа от сервера");
+  });
+}; 
