@@ -171,11 +171,9 @@ var query = {
                 return { type: 'USER_TO_WG', data: query }
             case 'deleteUserToWG':
                 var query = [];
-                console.log(data);
                 for (var i = 0; i < data.length; i++) {
                     query.push(`DELETE FROM usertowg WHERE id = ${data[i]}`);
                 }
-                console.log(query);
                 return { type: 'DEL_USER_TO_WG', data: query }
             default:
                 return { type: null };

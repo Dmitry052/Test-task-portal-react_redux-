@@ -1,6 +1,6 @@
 module.exports = {
     st: `SELECT * FROM service_types`,
-    users: `SELECT users.id,username,displayname,companyname,company_id,FROM_UNIXTIME(created_at,"%d.%m.%Y %h:%i")as created_at,email 
+    users: `SELECT users.id,username,displayname,companyname,company_id,created_at,email 
     FROM users
     left join company on company.id = users.company_id`,
     wg: `SELECT * FROM workgroups`,

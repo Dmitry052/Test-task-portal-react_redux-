@@ -70,6 +70,7 @@ class Drivers extends Component {
                         return this.props.transp.transport_drivers_status[key].id;
                     }
                 }
+                return null;
             })(),
             car_id: (() => {
                 for (var key in this.props.transp.cars) {
@@ -77,6 +78,7 @@ class Drivers extends Component {
                         return this.props.transp.cars[key].id;
                     }
                 }
+                return null;
             })(),
             company_id: (() => {
                 for (var key in this.props.transp.companyToUser) {
@@ -84,6 +86,7 @@ class Drivers extends Component {
                         return this.props.transp.companyToUser[key].company_id;
                     }
                 }
+                return null;
             })(),
         }
         var check = false;
@@ -91,7 +94,7 @@ class Drivers extends Component {
             if ((driver[key] === undefined || driver[key] === null) && key !== 'car_id') {
                 check = true;
                 break;
-            } 
+            }
         }
         if (check) {
             alert("Необходимо заполнить все поля.")
@@ -203,7 +206,7 @@ class Drivers extends Component {
                         <DropdownButton
                             title={this.props.transp.directoties.driver_vehicle_id_number || '-'}
                             placeholder="Е777KX"
-                        >   
+                        >
                             <MenuItem eventKey={'#0'} onSelect={() => this.setVehicleNumber('---')}>{'---'}</MenuItem>
                             {dropdataVehicleNumber}
                         </DropdownButton>

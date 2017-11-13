@@ -59,6 +59,17 @@ class Users extends Component {
         this.props.showUser();
         
     }
+    formatDate(cell, row) {   // String example
+        var date = new Date(Number(cell) * 1000);
+        var hours = (date.getHours() < 10 ? "0" : "") + date.getHours();
+        var min = (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
+        var day = (date.getDate() < 10 ? "0" : "") + date.getDate();
+        var month = ((date.getMonth() + 1) < 10 ? "0" : "") + (date.getMonth() + 1);
+        var year = date.getFullYear();
+        var formated_date = day + "-" + month + "-" + year + " " + hours + ":" + min;
+        return formated_date;
+    }
+    
     render() {
         const options = {
             sizePerPage: 10,
@@ -69,9 +80,8 @@ class Users extends Component {
             onSelect: this.handleRowSelect.bind(this),
             onSelectAll: this.handleRowSelect.bind(this)
         };
-        // console.log(this.props.store);
         return (
-            <div className='col-lg-6 col-md-12'>
+            <div className='col-lg-8 col-md-12'>
                 <button className="btn btn-success" onClick={this.createUser.bind(this)}><i className="fa fa-plus" aria-hidden="true"></i></button>
                 <button className="btn btn-danger" onClick={this.handleDelSelected.bind(this)} ><i className="fa fa-minus" aria-hidden="true"></i></button>
                 <BootstrapTable
@@ -81,9 +91,9 @@ class Users extends Component {
                     options={options}
                 >
                     <TableHeaderColumn dataField='username' isKey={true} filter={{ type: 'TextFilter' }} >Логин</TableHeaderColumn>
-                    <TableHeaderColumn dataField='displayname' filter={{ type: 'TextFilter' }}>Отображаемое имя</TableHeaderColumn>
+                    <TableHeaderColumn dataField='displayname' width='25%' filter={{ type: 'TextFilter' }}>Отображаемое имя</TableHeaderColumn>
                     <TableHeaderColumn dataField='email' filter={{ type: 'TextFilter' }}>Email</TableHeaderColumn>
-                    <TableHeaderColumn dataField='created_at' filter={{ type: 'TextFilter' }}>Создан</TableHeaderColumn>
+                    <TableHeaderColumn dataField='created_at' dataFormat={ this.formatDate.bind(this) } filter={{ type: 'TextFilter' }}>Создан</TableHeaderColumn>
                     <TableHeaderColumn dataField='companyname' filter={{ type: 'TextFilter' }}>Компания</TableHeaderColumn>
                 </BootstrapTable>
 

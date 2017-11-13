@@ -93,7 +93,6 @@ export default function users(state = initialState, action) {
             company_id: '',
             companyname: ''
         }
-        console.log('CREATE',state);
         return {
             users: state.users,
             user: state.user,

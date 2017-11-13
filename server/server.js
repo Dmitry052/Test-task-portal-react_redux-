@@ -144,8 +144,9 @@ app.post('/admin', function (req, res) {
         sqlConnetction.query(query.data, function (err, result) { });
         return res.sendStatus(200);
     }
-    if (query.type === 'DEL_USER_TO_WG' || query.type === 'DEL_COMPANY_TO_WG' || query.type === 'DELETE' || query.type === 'DEL_ST' || query.type === 'DEL_WG' || query.type === 'DEL_WGbank' || query.type === 'DEL_COMPANY') {
+    if ( query.type === 'DEL_USER_TO_WG' || query.type === 'DEL_COMPANY_TO_WG' || query.type === 'DELETE' || query.type === 'DEL_ST' || query.type === 'DEL_WG' || query.type === 'DEL_WGbank' || query.type === 'DEL_COMPANY') {
         for (key in query.data) {
+            console.log(query.data[key]);
             sqlConnetction.query(query.data[key], (err, result) => { });
         }
         return res.sendStatus(200);
@@ -167,7 +168,7 @@ app.get('/expl', function (req, res) {
 // Транспорт
 app.get('/transp', function (req, res) {
     if (req.query.action !== 'AUTH') {
-        var query = transp.action_GET(req.query.action, req.session.userID, req.session.serviceType, req.session.companyID, req.query.executor, req.query.sb_id, req.session.authUser);
+        var query = transp.action_GET(req.query.action, req.session.userID, req.session.serviceType, req.session.companyID, req.query.executor, req.query.sb_id, req.session.authUser,req.query.data);
         if (query !== null) {
             sqlConnetction.query(query, (err, result) => { res.send(result) });
         }

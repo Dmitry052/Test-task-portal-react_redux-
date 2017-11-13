@@ -434,6 +434,7 @@ class Gridview extends Component {
                 return <MenuItem eventKey={i + 1} onSelect={() => this.setWG(name)}>{name}</MenuItem>
             })
         }
+        
         if (this.props.order.data.order_executers instanceof Object) {
             dropdataAssigne = this.props.order.data.order_executers.map((name, i) => {
                 return <MenuItem eventKey={i + 1} onSelect={() => this.setExecutor(name)}>{name}</MenuItem>

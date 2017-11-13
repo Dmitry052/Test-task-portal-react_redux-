@@ -335,7 +335,7 @@ export default function currentOrder(state = initialState, action) {
         return { data: state.data }
     }
     if (action.type === 'listExecutors') {
-        state.data.order_executers = action.data.map((num, index, arr) => { return num.displayname });
+        state.data.order_executers = action.data.map((num, index, arr) => { return num.username });
         return { data: state.data }
     }
     if (action.type === 'setDriver') {
@@ -387,6 +387,7 @@ export default function currentOrder(state = initialState, action) {
     }
     if (action.type === 'setWG') {
         state.data.order_wg_val_def = action.data;
+        // state.data.order_executers =
         return { data: state.data }
     }
     if (action.type === 'setExecutor') {

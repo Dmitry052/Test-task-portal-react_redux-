@@ -300,7 +300,7 @@ export const clickCurrentOrder = (row, drivers, statuses, wg, cars, listExecutor
     url: `${apiPrefix}/transp`,
     params: {
       action: 'transpExecutor',
-      executor: row.wg_name
+      data: row.wg_name
     }
   }).then((response) => {
     dispatch({
@@ -308,19 +308,19 @@ export const clickCurrentOrder = (row, drivers, statuses, wg, cars, listExecutor
       data: response.data
     });
   });
-  axios({
-    method: 'get',
-    url: `${apiPrefix}/transp`,
-    params: {
-      action: 'transpExecutor',
-      executor: row.wg_name
-    }
-  }).then((response) => {
-    dispatch({
-      type: "transpExecutor",
-      data: response.data
-    });
-  });
+  // axios({
+  //   method: 'get',
+  //   url: `${apiPrefix}/transp`,
+  //   params: {
+  //     action: 'transpExecutor',
+  //     executor: row.wg_name
+  //   }
+  // }).then((response) => {
+  //   dispatch({
+  //     type: "transpExecutor",
+  //     data: response.data
+  //   });
+  // });
 };
 // -----------------------------------------------------------
 export const setDriver = (driver, drivers, cars) => dispatch => {
@@ -340,12 +340,12 @@ export const setWG = (wg, name) => dispatch => {
     type: "setWG",
     data: wg
   });
-  // axios.get(`${apiPrefix}/transp/transpExecutor?executor=${wg}`).then((response) => {
-  //   dispatch({
-  //     type: "listExecutors",
-  //     data: response.data
-  //   });
-  // });
+  axios({ method: 'get', url: `${apiPrefix}/transp`, params: { action: 'transpExecutor', data: wg } }).then((response) => {
+    dispatch({
+      type: "listExecutors",
+      data: response.data
+    });
+  });
 };
 export const setExecutor = (executor) => dispatch => {
   dispatch({

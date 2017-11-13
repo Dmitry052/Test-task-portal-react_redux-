@@ -322,13 +322,14 @@ export const saveUserToWG = (user) => dispatch => {
   });
 };
 // --------------------------------------------
-export const deleteUserToWG = (user) => dispatch => {
+export const deleteUserToWG = (users) => dispatch => {
+  console.log(users);
   axios({
     method: 'post',
     url: `${apiPrefix}/admin`,
     data: {
       action: 'deleteUserToWG',
-      data: user
+      data: users
     }
   }).then((response) => {
     // 

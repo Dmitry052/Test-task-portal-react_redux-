@@ -138,12 +138,11 @@ usersToWg: `SELECT workgroups.id,wg_name from usertowg
             INNER JOIN workgroups ON workgroups.id = usertowg.wg_id 
             WHERE username_id =`,
 
-listExecutors: `SELECT 
-                displayname,wg_id,username_id
-                FROM usertowg 
-                INNER JOIN workgroups on usertowg.wg_id = workgroups.id 
-                INNER JOIN users on usertowg.username_id = users.id 
-                WHERE wg_name =`,
+listExecutors: `SELECT users.id as id,username
+                FROM users
+                inner join usertowg on usertowg.username_id = users.id
+                inner join workgroups on workgroups.id = usertowg.wg_id
+                where wg_name =`,
 
 closureStatuses: `SELECT * FROM closure_statuses`,
 

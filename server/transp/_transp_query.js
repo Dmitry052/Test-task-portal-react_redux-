@@ -1,7 +1,8 @@
 var dbUtills = require('./transp_dbUtills');
 
 var query = {
-    action_GET: function (action, userID, serviceType, companyID, executor, sb_id, authUser) {
+    action_GET: function (action, userID, serviceType, companyID, executor, sb_id, authUser, data) {
+        console.log('data in utills', data);
         switch (action) {
             // Фильтры левого меню
             case 'myWG':
@@ -36,7 +37,7 @@ var query = {
             case 'carDriversAll':
                 return dbUtills.carDriversAll + companyID;
             case 'transpExecutor':
-                return dbUtills.listExecutors + `'${executor}'`;
+                return dbUtills.listExecutors + `'${data}'`;
             case 'getHistory':
                 return dbUtills.getHistory + `'${sb_id}'`;
             default:
@@ -99,6 +100,7 @@ var query = {
                     driver_fullname = '${data.driver_fullname}',
                     driver_phone = ${data.driver_phone},
                     status = ${data.status},
+                    car_id = ${data.car_id},
                     company_id = ${data.company_id} 
                     WHERE id = ${data.id}`;
                 }

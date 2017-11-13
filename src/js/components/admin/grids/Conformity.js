@@ -40,9 +40,9 @@ class Conformity extends Component {
         for (var key of selected) {
             key[1] === true ? trueArr.push(key[0]) : '';
         }
-        // this.props.deleteCompanyToWG(trueArr);
-        // this.props.uncheck_wg_comp_to_wg();
-        // this.props.currentMenu();
+        this.props.deleteCompanyToWG(trueArr);
+        this.props.uncheck_wg_comp_to_wg();
+        this.props.currentMenu();
     }
     // -----------------------------
     create_new_user_to_wg() {
@@ -65,19 +65,20 @@ class Conformity extends Component {
         this.props.currentMenu();
         this.props.show_user_to_wg();
     }
-    handleRowSelect(isSelected, rows) {
+    handleRowSelect_User(isSelected, rows) {
         if (isSelected instanceof Object) {
-            this.props.check_user_to_wg({ id: isSelected.usertowg_id, status: rows });
+            this.props.check_user_to_wg({ id: isSelected.companytowg_id, status: rows });
         } else {
             // console.log([isSelected, rows]);
         }
     }
-    handleDelSelected() {
+    handleDelSelected_User() {
         const selected = this.props.store.usertowgAdmin.check_user_to_wg;
         let trueArr = [];
         for (var key of selected) {
             key[1] === true ? trueArr.push(key[0]) : '';
         }
+        console.log(this.props.store.usertowgAdmin.check_user_to_wg,trueArr);
         this.props.deleteUserToWG(trueArr);
         this.props.uncheck_user_to_wg();
         this.props.currentMenu();
@@ -96,21 +97,27 @@ class Conformity extends Component {
             onSelect: this.handleRowSelect.bind(this),
             onSelectAll: this.handleRowSelect.bind(this)
         };
+        const selectRow_User = {
+            mode: 'checkbox',
+            onSelect: this.handleRowSelect_User.bind(this),
+            onSelectAll: this.handleRowSelect_User.bind(this)
+        };
         return (
             <div>
                 <div className='col-lg-6 col-md-12'>
                     <h4>Компания - Рабочая группа</h4>
                     <button className="btn btn-success" onClick={this.create_new_comp_to_wg.bind(this)}><i className="fa fa-plus" aria-hidden="true"></i></button>
-                    <button className="btn btn-danger" disabled={true} onClick={this.handleDelSelected.bind(this)}><i className="fa fa-minus" aria-hidden="true"></i></button>
+                    <button className="btn btn-danger" onClick={this.handleDelSelected.bind(this)}><i className="fa fa-minus" aria-hidden="true"></i></button>
                     <BootstrapTable
                         hover
                         data={this.props.companyToWg.companyToWg}
                         selectRow={selectRow}
                         options={options}
                     >
-                        <TableHeaderColumn dataField='companyname' isKey={true} filter={{ type: 'TextFilter' }} >Компания</TableHeaderColumn>
-                        <TableHeaderColumn dataField='bankwg_name' filter={{ type: 'TextFilter' }} >РГ банка</TableHeaderColumn>
+                        <TableHeaderColumn dataField='companytowg_id' isKey={true} width='20%' filter={{ type: 'TextFilter' }} >ID в базе</TableHeaderColumn>
+                        <TableHeaderColumn dataField='companyname' filter={{ type: 'TextFilter' }} >Компания</TableHeaderColumn>
                         <TableHeaderColumn dataField='wg_name' filter={{ type: 'TextFilter' }} >РГ портала</TableHeaderColumn>
+                        <TableHeaderColumn dataField='bankwg_name' filter={{ type: 'TextFilter' }} >РГ банка</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
                 <Modal isOpen={this.props.store.companytowgAdmin.editModal} contentLabel="Modal"
@@ -131,11 +138,11 @@ class Conformity extends Component {
                             </select>
                         </div>
                         <div className='col-lg-12 col-md-12 col-sm-12'>
-                            <span>РГ банка<span>*</span></span>
-                            <select className='form-control' value={this.props.store.companytowgAdmin.comp_to_wg.bank_wg_name || '---'} onChange={this.set_wgbank_comp_to_wg.bind(this)} >
+                            <span>РГ портала<span>*</span></span>
+                            <select className='form-control' value={this.props.store.companytowgAdmin.comp_to_wg.wg_name || '---'} onChange={this.set_wg_comp_to_wg.bind(this)} >
                                 <option key={777} value={'---'}>---</option>
                                 {
-                                    this.props.store.wgbank.wgbank.map((item, i) => {
+                                    this.props.store.wg.wg.map((item, i) => {
                                         return <option key={i} value={item.wg_name}>{item.wg_name}</option>
                                     })
                                 }
@@ -143,11 +150,11 @@ class Conformity extends Component {
                             </select>
                         </div>
                         <div className='col-lg-12 col-md-12 col-sm-12'>
-                            <span>РГ портала<span>*</span></span>
-                            <select className='form-control' value={this.props.store.companytowgAdmin.comp_to_wg.wg_name || '---'} onChange={this.set_wg_comp_to_wg.bind(this)} >
+                            <span>РГ банка<span>*</span></span>
+                            <select className='form-control' value={this.props.store.companytowgAdmin.comp_to_wg.bank_wg_name || '---'} onChange={this.set_wgbank_comp_to_wg.bind(this)} >
                                 <option key={777} value={'---'}>---</option>
                                 {
-                                    this.props.store.wg.wg.map((item, i) => {
+                                    this.props.store.wgbank.wgbank.map((item, i) => {
                                         return <option key={i} value={item.wg_name}>{item.wg_name}</option>
                                     })
                                 }
@@ -160,14 +167,15 @@ class Conformity extends Component {
                 <div className='col-lg-6 col-md-12'>
                     <h4>Пользователь - Рабочая группа</h4>
                     <button className="btn btn-success" onClick={this.create_new_user_to_wg.bind(this)}><i className="fa fa-plus" aria-hidden="true"></i></button>
-                    <button className="btn btn-danger" onClick={this.handleDelSelected.bind(this)} > <i className="fa fa-minus" aria-hidden="true"></i></button>
+                    <button className="btn btn-danger" onClick={this.handleDelSelected_User.bind(this)} > <i className="fa fa-minus" aria-hidden="true"></i></button>
                     <BootstrapTable
                         hover
                         data={this.props.userToWg.userToWg}
-                        selectRow={selectRow}
+                        selectRow={selectRow_User}
                         options={options_user}
-                    >
-                        <TableHeaderColumn dataField='wg_name' isKey={true} filter={{ type: 'TextFilter' }} >Рабочая группа</TableHeaderColumn>
+                    >   
+                        <TableHeaderColumn dataField='usertowg_id' width='15%' isKey={true} filter={{ type: 'TextFilter' }} >ID в базе</TableHeaderColumn>
+                        <TableHeaderColumn dataField='wg_name' filter={{ type: 'TextFilter' }} >Рабочая группа</TableHeaderColumn>
                         <TableHeaderColumn dataField='username' filter={{ type: 'TextFilter' }} >Пользователь</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
