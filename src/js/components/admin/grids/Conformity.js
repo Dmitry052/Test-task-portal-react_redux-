@@ -67,7 +67,7 @@ class Conformity extends Component {
     }
     handleRowSelect_User(isSelected, rows) {
         if (isSelected instanceof Object) {
-            this.props.check_user_to_wg({ id: isSelected.companytowg_id, status: rows });
+            this.props.check_user_to_wg({ id: isSelected.usertowg_id, status: rows });
         } else {
             // console.log([isSelected, rows]);
         }

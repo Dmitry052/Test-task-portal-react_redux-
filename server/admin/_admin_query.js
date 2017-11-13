@@ -28,7 +28,6 @@ var query = {
         switch (action) {
             case 'saveUser':
                 var query;
-                console.log('пришёл пароль', data, data.pass === '');
                 if (data.type === 'INSERT') {
                     var now = new Date();
                     query = `INSERT INTO users(authid,username,password,displayname,created_at,company_id,email) VALUES (

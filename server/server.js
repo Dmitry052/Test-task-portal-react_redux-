@@ -141,12 +141,11 @@ app.get('/admin', function (req, res) {
 app.post('/admin', function (req, res) {
     var query = admin.action_POST(req.body.action, req.body.data);
     if (query.type === 'USER_TO_WG' || query.type === 'COMPANY_TO_WG' || query.type === 'INSERT' || query.type === 'UPDATE' || query.type === 'ST' || query.type === 'WG' || query.type === 'WGbank' || query.type === 'COMPANY') {
-        sqlConnetction.query(query.data, function (err, result) { });
+        sqlConnetction.query(query.data, function (err, result) {  });
         return res.sendStatus(200);
     }
-    if ( query.type === 'DEL_USER_TO_WG' || query.type === 'DEL_COMPANY_TO_WG' || query.type === 'DELETE' || query.type === 'DEL_ST' || query.type === 'DEL_WG' || query.type === 'DEL_WGbank' || query.type === 'DEL_COMPANY') {
+    if (query.type === 'DEL_USER_TO_WG' || query.type === 'DEL_COMPANY_TO_WG' || query.type === 'DELETE' || query.type === 'DEL_ST' || query.type === 'DEL_WG' || query.type === 'DEL_WGbank' || query.type === 'DEL_COMPANY') {
         for (key in query.data) {
-            console.log(query.data[key]);
             sqlConnetction.query(query.data[key], (err, result) => { });
         }
         return res.sendStatus(200);
@@ -168,7 +167,7 @@ app.get('/expl', function (req, res) {
 // Транспорт
 app.get('/transp', function (req, res) {
     if (req.query.action !== 'AUTH') {
-        var query = transp.action_GET(req.query.action, req.session.userID, req.session.serviceType, req.session.companyID, req.query.executor, req.query.sb_id, req.session.authUser,req.query.data);
+        var query = transp.action_GET(req.query.action, req.session.userID, req.session.serviceType, req.session.companyID, req.query.executor, req.query.sb_id, req.session.authUser, req.query.data);
         if (query !== null) {
             sqlConnetction.query(query, (err, result) => { res.send(result) });
         }
@@ -203,6 +202,7 @@ app.post('/transp', function (req, res) {
     else {
         res.send('post action undefined');
     }
+
 });
 // Разлог
 app.get('/logout', (req, res) => {
