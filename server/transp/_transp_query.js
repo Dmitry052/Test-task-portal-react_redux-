@@ -1,21 +1,21 @@
 var dbUtills = require('./transp_dbUtills');
 
 var query = {
-    action_GET: function (action, userID, serviceType, companyID, executor, sb_id) {
+    action_GET: function (action, userID, serviceType, companyID, executor, sb_id, authUser) {
         switch (action) {
             // Фильтры левого меню
             case 'myWG':
-                return dbUtills.myWG + serviceType;
+                return dbUtills.myWG + userID;
             case 'toMe':
-                return dbUtills.toMeTransp + userID;
+                return dbUtills.toMeTransp + userID + ' and username_id =' + userID;
             case 'newOrder':
-                return dbUtills.newOrder + serviceType;
+                return dbUtills.newOrder + userID;
             case 'carAppoint':
-                return dbUtills.carAppoint;
+                return dbUtills.carAppoint + userID;
             case 'doneTrip':
-                return dbUtills.doneTrip;
+                return dbUtills.doneTrip + userID;
             case 'cancelClient':
-                return dbUtills.cancelClient;
+                return dbUtills.cancelClient + userID;
             // Для грида
             case 'carDrivers':
                 return dbUtills.carDrivers + companyID;

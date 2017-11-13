@@ -3,57 +3,70 @@ module.exports = {
 myWG: `select sb_id, transport_statuses.status as status, requests.status as id_status,users.displayname,descr,full_descr,closure_code,
 FROM_UNIXTIME(date_created,"%d.%m.%Y %h:%i")as date_created,FROM_UNIXTIME(date_deadline,"%d.%m.%Y %h:%i")as date_deadline, date_deadline as unix_date_deadline,
 bank_contact,bank_contact_phone,travel_from,travel_to,ride_stops,ride_start_time,ride_end_time,ride_duration,ride_distance,
-ride_idle_time,ride_price,solution,driver_id,workgroup_id,wg_name,assignee,displayname,requests.id,commentary_for_driver 
+ride_idle_time,ride_price,solution,driver_id,workgroup_id,wg_name,displayname,requests.id,commentary_for_driver,
+workgroups.id as wg_id, users.id as user_id,
+(select username from users where id = assignee) as assignee
 from requests
-left join transport_statuses on transport_statuses.id = requests.status
-INNER JOIN company ON requests.company_id = company.id
-INNER JOIN workgroups ON workgroups.id = requests.workgroup_id
-LEFT JOIN users on users.id = requests.assignee
-WHERE requests.status <=5 and service_type=`,
+left JOIN company ON requests.company_id = company.id
+left JOIN workgroups ON workgroups.id = requests.workgroup_id
+inner join transport_statuses on transport_statuses.id = requests.status
+inner join usertowg on usertowg.wg_id = requests.workgroup_id
+inner join users on users.id = usertowg.username_id
+WHERE requests.status <=5 and service_type=2 and username_id =`,
 
 newOrder: `select sb_id, transport_statuses.status as status, requests.status as id_status,users.displayname,descr,full_descr,closure_code,
 FROM_UNIXTIME(date_created,"%d.%m.%Y %h:%i")as date_created,FROM_UNIXTIME(date_deadline,"%d.%m.%Y %h:%i")as date_deadline,date_deadline as unix_date_deadline,
 bank_contact,bank_contact_phone,travel_from,travel_to,ride_stops,ride_start_time,ride_end_time,ride_duration,ride_distance,
-ride_idle_time,ride_price,solution,driver_id,workgroup_id,wg_name,assignee,displayname,requests.id,commentary_for_driver 
+ride_idle_time,ride_price,solution,driver_id,workgroup_id,wg_name,assignee,displayname,requests.id,commentary_for_driver,
+(select username from users where id = assignee) as assignee
 from requests
-left join transport_statuses on transport_statuses.id = requests.status
-INNER JOIN company ON requests.company_id = company.id
-INNER JOIN workgroups ON workgroups.id = requests.workgroup_id
-LEFT JOIN users on users.id = requests.assignee
-WHERE requests.status=2 and assignee is null and service_type=`,
+left JOIN company ON requests.company_id = company.id
+left JOIN workgroups ON workgroups.id = requests.workgroup_id
+inner join transport_statuses on transport_statuses.id = requests.status
+inner join usertowg on usertowg.wg_id = requests.workgroup_id
+inner join users on users.id = usertowg.username_id
+WHERE requests.status=2 and assignee is null and service_type=2 and username_id =`,
 
 toMeTransp: `select sb_id, transport_statuses.status as status, requests.status as id_status,users.displayname,descr,full_descr,closure_code,
 FROM_UNIXTIME(date_created,"%d.%m.%Y %h:%i")as date_created,FROM_UNIXTIME(date_deadline,"%d.%m.%Y %h:%i")as date_deadline,date_deadline as unix_date_deadline,
 bank_contact,bank_contact_phone,travel_from,travel_to,ride_stops,ride_start_time,ride_end_time,ride_duration,ride_distance,
-ride_idle_time,ride_price,solution,driver_id,workgroup_id,wg_name,assignee,displayname,requests.id,commentary_for_driver 
+ride_idle_time,ride_price,solution,driver_id,workgroup_id,wg_name,displayname,requests.id,commentary_for_driver,
+(select username from users where id = assignee) as assignee
 from requests
-left join transport_statuses on transport_statuses.id = requests.status
-INNER JOIN company ON requests.company_id = company.id
-INNER JOIN workgroups ON workgroups.id = requests.workgroup_id
-LEFT JOIN users on users.id = requests.assignee
+left JOIN company ON requests.company_id = company.id
+left JOIN workgroups ON workgroups.id = requests.workgroup_id
+inner join transport_statuses on transport_statuses.id = requests.status
+inner join usertowg on usertowg.wg_id = requests.workgroup_id
+inner join users on users.id = usertowg.username_id
 WHERE service_type=2 and requests.status <= 5 and assignee=`,
 
 carAppoint : `select sb_id, transport_statuses.status as status, requests.status as id_status,users.displayname,descr,full_descr,closure_code,
-FROM_UNIXTIME(date_created,"%d.%m.%Y %h:%i")as date_created,FROM_UNIXTIME(date_deadline,"%d.%m.%Y %h:%i")as date_deadline,date_deadline as unix_date_deadline,
+FROM_UNIXTIME(date_created,"%d.%m.%Y %h:%i")as date_created,FROM_UNIXTIME(date_deadline,"%d.%m.%Y %h:%i")as date_deadline, date_deadline as unix_date_deadline,
 bank_contact,bank_contact_phone,travel_from,travel_to,ride_stops,ride_start_time,ride_end_time,ride_duration,ride_distance,
-ride_idle_time,ride_price,solution,driver_id,workgroup_id,wg_name,assignee,displayname,requests.id,commentary_for_driver 
+ride_idle_time,ride_price,solution,driver_id,workgroup_id,wg_name,displayname,requests.id,commentary_for_driver,
+workgroups.id as wg_id, users.id as user_id,
+(select username from users where id = assignee) as assignee
 from requests
-left join transport_statuses on transport_statuses.id = requests.status
-INNER JOIN company ON requests.company_id = company.id
-INNER JOIN workgroups ON workgroups.id = requests.workgroup_id
-LEFT JOIN users on users.id = requests.assignee
-WHERE service_type=2 and requests.status=5`,
+left JOIN company ON requests.company_id = company.id
+left JOIN workgroups ON workgroups.id = requests.workgroup_id
+inner join transport_statuses on transport_statuses.id = requests.status
+inner join usertowg on usertowg.wg_id = requests.workgroup_id
+inner join users on users.id = usertowg.username_id
+WHERE requests.status =5 and service_type=2 and username_id =`,
 
 doneTrip: `select sb_id, transport_statuses.status as status, requests.status as id_status,users.displayname,descr,full_descr,closure_code,
-FROM_UNIXTIME(date_created,"%d.%m.%Y %h:%i")as date_created,FROM_UNIXTIME(date_deadline,"%d.%m.%Y %h:%i")as date_deadline,date_deadline as unix_date_deadline,
+FROM_UNIXTIME(date_created,"%d.%m.%Y %h:%i")as date_created,FROM_UNIXTIME(date_deadline,"%d.%m.%Y %h:%i")as date_deadline, date_deadline as unix_date_deadline,
 bank_contact,bank_contact_phone,travel_from,travel_to,ride_stops,ride_start_time,ride_end_time,ride_duration,ride_distance,
-ride_idle_time,ride_price,solution,driver_id,workgroup_id,wg_name,assignee,displayname,requests.id,commentary_for_driver 
+ride_idle_time,ride_price,solution,driver_id,workgroup_id,wg_name,displayname,requests.id,commentary_for_driver,
+workgroups.id as wg_id, users.id as user_id,
+(select username from users where id = assignee) as assignee
 from requests
-left join transport_statuses on transport_statuses.id = requests.status
-INNER JOIN company ON requests.company_id = company.id
-INNER JOIN workgroups ON workgroups.id = requests.workgroup_id
-LEFT JOIN users on users.id = requests.assignee
-WHERE service_type=2 and requests.status=7`,
+left JOIN company ON requests.company_id = company.id
+left JOIN workgroups ON workgroups.id = requests.workgroup_id
+inner join transport_statuses on transport_statuses.id = requests.status
+inner join usertowg on usertowg.wg_id = requests.workgroup_id
+inner join users on users.id = usertowg.username_id
+WHERE requests.status =7 and service_type=2 and username_id =`,
 
 dataSend: `select sb_id, transport_statuses.status as status, requests.status as id_status,users.displayname,descr,full_descr,closure_code,
 FROM_UNIXTIME(date_created,"%d.%m.%Y %h:%i")as date_created,FROM_UNIXTIME(date_deadline,"%d.%m.%Y %h:%i")as date_deadline,date_deadline as unix_date_deadline,
@@ -67,15 +80,18 @@ LEFT JOIN users on users.id = requests.assignee
 WHERE service_type=2 and requests.status=100`,
 
 cancelClient: `select sb_id, transport_statuses.status as status, requests.status as id_status,users.displayname,descr,full_descr,closure_code,
-FROM_UNIXTIME(date_created,"%d.%m.%Y %h:%i")as date_created,FROM_UNIXTIME(date_deadline,"%d.%m.%Y %h:%i")as date_deadline,date_deadline as unix_date_deadline,
+FROM_UNIXTIME(date_created,"%d.%m.%Y %h:%i")as date_created,FROM_UNIXTIME(date_deadline,"%d.%m.%Y %h:%i")as date_deadline, date_deadline as unix_date_deadline,
 bank_contact,bank_contact_phone,travel_from,travel_to,ride_stops,ride_start_time,ride_end_time,ride_duration,ride_distance,
-ride_idle_time,ride_price,solution,driver_id,workgroup_id,wg_name,assignee,displayname,requests.id,commentary_for_driver 
+ride_idle_time,ride_price,solution,driver_id,workgroup_id,wg_name,displayname,requests.id,commentary_for_driver,
+workgroups.id as wg_id, users.id as user_id,
+(select username from users where id = assignee) as assignee
 from requests
-left join transport_statuses on transport_statuses.id = requests.status
-INNER JOIN company ON requests.company_id = company.id
-INNER JOIN workgroups ON workgroups.id = requests.workgroup_id
-LEFT JOIN users on users.id = requests.assignee
-WHERE service_type=2 and requests.status=8`,               
+left JOIN company ON requests.company_id = company.id
+left JOIN workgroups ON workgroups.id = requests.workgroup_id
+inner join transport_statuses on transport_statuses.id = requests.status
+inner join usertowg on usertowg.wg_id = requests.workgroup_id
+inner join users on users.id = usertowg.username_id
+WHERE requests.status =8 and service_type=2 and username_id =`,               
 
 carDrivers: `select transport_drivers.id,driver_fullname,driver_phone,companyname,company.id as company_id,
 vehicle_brand,vehicle_id_number,vehicle_color,transport_drivers_status.status as status,transport_drivers.status as num_status

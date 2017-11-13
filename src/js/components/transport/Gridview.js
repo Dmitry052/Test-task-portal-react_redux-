@@ -83,27 +83,24 @@ class Gridview extends Component {
         })
     }
     showHistory() {
-
         this.props.showHistory();
-        this.setState({});
     }
     handlePrev() {
-        var index = this.props.order.order_view_id - 1;
+        var index = this.props.order.data.order_view_id - 1;
         if (index >= 0) {
-            if (this.props.order.down === true) { this.props.down(); }
+            if (this.props.order.data.down === true) { this.props.down(); }
             this.setState({ showAlert: 'none' });
             this.onRowClick(this.props.transp.transp[index]);
         }
         else {
             this.props.up();
-            this.setState({});
         }
 
     }
     handleNext() {
-        var index = this.props.order.order_view_id + 1;
+        var index = this.props.order.data.order_view_id + 1;
         if (index < this.props.transp.transp.length) {
-            if (this.props.order.up === true) { this.props.up(); }
+            if (this.props.order.data.up === true) { this.props.up(); }
             this.onRowClick(this.props.transp.transp[index]);
             this.setState({ showAlert: 'none' });
         }
@@ -163,7 +160,7 @@ class Gridview extends Component {
         this.setState({});
     }
     assignCar() {
-        if (this.props.order.order_def_executor === null) {
+        if (this.props.order.data.order_def_executor === null) {
             this.setState({
                 showAlert: 'block',
                 statusAlert: 'danger',
@@ -171,7 +168,7 @@ class Gridview extends Component {
             })
         }
         else {
-            if (this.props.order.defaultDriver === 'Выберете водителя') {
+            if (this.props.order.data.defaultDriver === 'Выберете водителя') {
                 this.setState({
                     showAlert: 'block',
                     statusAlert: 'danger',
@@ -179,7 +176,7 @@ class Gridview extends Component {
                 })
             }
             else {
-                this.props.assignCar();
+                this.props.assignCar(this.props.transp.user);
                 this.setState({
                     showAlert: 'none',
                 });
@@ -188,38 +185,38 @@ class Gridview extends Component {
         }
     }
     takeToWork() {
-        this.setExecutor({ value: this.props.order.order_executers[0] });
+        this.setExecutor({ value: this.props.order.data.order_executers[0] });
     }
     doneTrip() {
-        if (this.props.order.order_ride_duration === null || this.props.order.order_ride_duration === 'null') {
+        if (this.props.order.data.order_ride_duration === null || this.props.order.data.order_ride_duration === 'null') {
             this.setState({
                 showAlert: 'block',
                 statusAlert: 'danger',
                 messageAlert: 'Данные о длительности поездки не заполнены',
             })
         }
-        else if (this.props.order.order_ride_distance === null || this.props.order.order_ride_distance === 'null') {
+        else if (this.props.order.data.order_ride_distance === null || this.props.order.data.order_ride_distance === 'null') {
             this.setState({
                 showAlert: 'block',
                 statusAlert: 'danger',
                 messageAlert: 'Данные о пробеге не заполнены',
             })
         }
-        else if (this.props.order.order_ride_price === null || this.props.order.order_ride_price === 'null' || this.props.order.order_ride_price === '') {
+        else if (this.props.order.data.order_ride_price === null || this.props.order.data.order_ride_price === 'null' || this.props.order.data.order_ride_price === '') {
             this.setState({
                 showAlert: 'block',
                 statusAlert: 'danger',
                 messageAlert: 'Данные о цене не заполнены',
             })
         }
-        else if (this.props.order.order_solution === null || this.props.order.order_solution === '') {
+        else if (this.props.order.data.order_solution === null || this.props.order.data.order_solution === '') {
             this.setState({
                 showAlert: 'block',
                 statusAlert: 'danger',
                 messageAlert: 'Не заполнено поле "Решение"',
             })
         }
-        else if (this.props.order.order_def_closure_statuses === null || this.props.order.order_def_closure_statuses === '') {
+        else if (this.props.order.data.order_def_closure_statuses === null || this.props.order.data.order_def_closure_statuses === '') {
             this.setState({
                 showAlert: 'block',
                 statusAlert: 'danger',
@@ -242,18 +239,18 @@ class Gridview extends Component {
         var refusing = this.props.transp.transpStatus[4].status;
         // console.log(this.state.originOrder);
         var order = {
-            id: this.props.order.db_id,
-            sb_id: this.props.order.order_ID,
+            id: this.props.order.data.db_id,
+            sb_id: this.props.order.data.order_ID,
             status: (() => {
                 for (var key in this.props.transp.transpStatus) {
-                    if (this.props.transp.transpStatus[key].status === this.props.order.order_status_val_def) {
+                    if (this.props.transp.transpStatus[key].status === this.props.order.data.order_status_val_def) {
                         return { new: this.props.transp.transpStatus[key].id, old: this.state.originOrder.id_status };
                     }
                 }
             })(),
             driver_id: (() => {
                 for (var key in this.props.transp.carDrivers) {
-                    if (this.props.transp.carDrivers[key].driver_fullname === this.props.order.defaultDriver) {
+                    if (this.props.transp.carDrivers[key].driver_fullname === this.props.order.data.defaultDriver) {
                         return { new: this.props.transp.carDrivers[key].id, old: this.state.originOrder.driver_id };
                     }
                 }
@@ -261,51 +258,51 @@ class Gridview extends Component {
             })(),
             workgroup_id: (() => {
                 for (var key in this.props.transp.transpUserToWg) {
-                    if (this.props.transp.transpUserToWg[key].wg_name === this.props.order.order_wg_val_def) {
+                    if (this.props.transp.transpUserToWg[key].wg_name === this.props.order.data.order_wg_val_def) {
                         return { new: this.props.transp.transpUserToWg[key].id, old: this.state.originOrder.workgroup_id };
                     }
                 }
             })(),
             assignee: (() => {
                 for (var key in this.props.transp.transpExecutor) {
-                    if (this.props.transp.transpExecutor[key].displayname === this.props.order.order_def_executor) {
+                    if (this.props.transp.transpExecutor[key].displayname === this.props.order.data.order_def_executor) {
                         return { new: Number(this.props.transp.transpExecutor[key].username_id), old: Number(this.state.originOrder.assignee) };
                     }
                 }
                 return { new: null, old: null }
             })(),
-            ride_start_time: { new: this.props.order.order_ride_start_time_toDB, old: this.state.originOrder.ride_start_time },
+            ride_start_time: { new: this.props.order.data.order_ride_start_time_toDB, old: this.state.originOrder.ride_start_time },
             ride_end_time: (() => {
-                if (this.props.order.order_status_val_def === revoked || this.props.order.order_status_val_def === refusing) {
+                if (this.props.order.data.order_status_val_def === revoked || this.props.order.data.order_status_val_def === refusing) {
                     return { new: Math.floor(Date.now() / 1000), old: this.state.originOrder.ride_end_time };
                 }
                 else {
-                    return { new: this.props.order.order_ride_end_time_toDB, old: this.state.originOrder.ride_end_time };
+                    return { new: this.props.order.data.order_ride_end_time_toDB, old: this.state.originOrder.ride_end_time };
                 }
             })(),
             ride_duration: {
-                new: this.props.order.order_ride_duration === '' || this.props.order.order_ride_duration === 'null' ? null : this.props.order.order_ride_duration,
+                new: this.props.order.data.order_ride_duration === '' || this.props.order.data.order_ride_duration === 'null' ? null : this.props.order.data.order_ride_duration,
                 old: this.state.originOrder.ride_duration === '' || this.state.originOrder.ride_duration === 'null' ? null : this.state.originOrder.ride_duration
             },
             ride_distance: {
-                new: this.props.order.order_ride_distance === '' || this.props.order.order_ride_distance === 'null' ? null : this.props.order.order_ride_distance,
+                new: this.props.order.data.order_ride_distance === '' || this.props.order.data.order_ride_distance === 'null' ? null : this.props.order.data.order_ride_distance,
                 old: this.state.originOrder.ride_distance === '' || this.state.originOrder.ride_distance === 'null' ? null : this.state.originOrder.ride_distance
             },
             ride_idle_time: {
-                new: this.props.order.order_ride_idle_time === '' || this.props.order.order_ride_idle_time === 'null' ? null : this.props.order.order_ride_idle_time,
+                new: this.props.order.data.order_ride_idle_time === '' || this.props.order.data.order_ride_idle_time === 'null' ? null : this.props.order.data.order_ride_idle_time,
                 old: this.state.originOrder.ride_idle_time === '' || this.state.originOrder.ride_idle_time === 'null' ? null : this.state.originOrder.ride_idle_time
             },
             ride_price: {
-                new: this.props.order.order_ride_price === '' || this.props.order.order_ride_price === 'null' ? null : this.props.order.order_ride_price,
+                new: this.props.order.data.order_ride_price === '' || this.props.order.data.order_ride_price === 'null' ? null : this.props.order.data.order_ride_price,
                 old: this.state.originOrder.ride_price === '' || this.state.originOrder.ride_price === 'null' ? null : this.state.originOrder.ride_price
             },
             solution: {
-                new: this.props.order.order_solution === '' || this.props.order.order_solution === 'null' ? null : this.props.order.order_solution,
+                new: this.props.order.data.order_solution === '' || this.props.order.data.order_solution === 'null' ? null : this.props.order.data.order_solution,
                 old: this.state.originOrder.solution === '' || this.state.originOrder.solution === 'null' ? null : this.state.originOrder.solution
             },
             closure_code: (() => {
                 for (var key in this.props.transp.closureStatuses) {
-                    if (this.props.transp.closureStatuses[key].closure_code_name === this.props.order.order_def_closure_statuses) {
+                    if (this.props.transp.closureStatuses[key].closure_code_name === this.props.order.data.order_def_closure_statuses) {
                         return { new: this.props.transp.closureStatuses[key].id, old: this.state.originOrder.closure_code };
                     }
                 }
@@ -366,7 +363,7 @@ class Gridview extends Component {
         var closure_code = this.props.transp.closureStatuses;
 
         this.props.clickOrder(row, drivers, statuses, wg, cars, listExecutors, closure_code, index);
-        this.props.getHistory(this.props.order.db_id);
+        this.props.getHistory(this.props.order.data.db_id);
 
         this.setState({
             showModal: true,
@@ -377,7 +374,7 @@ class Gridview extends Component {
         this.setState({});
     }
     cleanFilters() {
-        if (this.props.order.filtersGrid === '30px') {
+        if (this.props.order.data.filtersGrid === '30px') {
             this.refs.inp_sb_id.applyFilter('');
             this.refs.inp_status.applyFilter('');
             this.refs.inp_displayname.applyFilter('');
@@ -422,28 +419,28 @@ class Gridview extends Component {
         let dropdataWG = [];
         let dropdataAssigne = [];
         let dropdataClosureCode = [];
-        if (this.props.order.car_drivers instanceof Object) {
-            dropdataDriver = this.props.order.car_drivers.map((name, i) => {
+        if (this.props.order.data.car_drivers instanceof Object) {
+            dropdataDriver = this.props.order.data.car_drivers.map((name, i) => {
                 return <MenuItem eventKey={i + 1} onSelect={() => this.setDriver(name)}>{name}</MenuItem>
             })
         }
-        if (this.props.order.order_statuses instanceof Object) {
-            dropdataStatuses = this.props.order.order_statuses.map((name, i) => {
+        if (this.props.order.data.order_statuses instanceof Object) {
+            dropdataStatuses = this.props.order.data.order_statuses.map((name, i) => {
                 return <MenuItem eventKey={i + 1} onSelect={() => this.setStatus(name)}>{name}</MenuItem>
             })
         }
-        if (this.props.order.order_wg instanceof Object) {
-            dropdataWG = this.props.order.order_wg.map((name, i) => {
+        if (this.props.order.data.order_wg instanceof Object) {
+            dropdataWG = this.props.order.data.order_wg.map((name, i) => {
                 return <MenuItem eventKey={i + 1} onSelect={() => this.setWG(name)}>{name}</MenuItem>
             })
         }
-        if (this.props.order.order_executers instanceof Object) {
-            dropdataAssigne = this.props.order.order_executers.map((name, i) => {
+        if (this.props.order.data.order_executers instanceof Object) {
+            dropdataAssigne = this.props.order.data.order_executers.map((name, i) => {
                 return <MenuItem eventKey={i + 1} onSelect={() => this.setExecutor(name)}>{name}</MenuItem>
             })
         }
-        if (this.props.order.order_closure_statuses instanceof Object) {
-            dropdataClosureCode = this.props.order.order_closure_statuses.map((name, i) => {
+        if (this.props.order.data.order_closure_statuses instanceof Object) {
+            dropdataClosureCode = this.props.order.data.order_closure_statuses.map((name, i) => {
                 return <MenuItem eventKey={i + 1} onSelect={() => this.setClosureCode(name)}>{name}</MenuItem>
             })
         }
@@ -488,7 +485,7 @@ class Gridview extends Component {
                         hover
                         data={this.props.transp.transp}
                         pagination={true}
-                        headerStyle={{ height: this.props.order.filtersGrid }}
+                        headerStyle={{ height: this.props.order.data.filtersGrid }}
                         trClassName={this.setColorLine.bind(this)}
                         options={options}
                     >
@@ -496,7 +493,7 @@ class Gridview extends Component {
                         <TableHeaderColumn dataField='status' filter={{ type: 'SelectFilter', options: status }}>Статус</TableHeaderColumn>
                         <TableHeaderColumn dataField='descr' ref='inp_status' filter={{ type: 'TextFilter' }}>Тема</TableHeaderColumn>
                         <TableHeaderColumn dataField='wg_name' ref='inp_wg_name' filter={{ type: 'SelectFilter', options: wg }}>Рабочая группа</TableHeaderColumn>
-                        <TableHeaderColumn dataField='displayname' ref='inp_displayname' filter={{ type: 'TextFilter' }}>Исполнитель</TableHeaderColumn>
+                        <TableHeaderColumn dataField='assignee' ref='inp_displayname' filter={{ type: 'TextFilter' }}>Исполнитель</TableHeaderColumn>
                         <TableHeaderColumn dataField='date_created' ref='inp_date_created' width='19%' filter={{ type: 'TextFilter' }} >Дата создания</TableHeaderColumn>
                         <TableHeaderColumn dataField='date_deadline' ref='inp_date_deadline' width='19%' filter={{ type: 'TextFilter' }}>Дата поездки</TableHeaderColumn>
                     </BootstrapTable>
@@ -509,8 +506,8 @@ class Gridview extends Component {
                 </div>
                 <Modal isOpen={this.state.showModal} contentLabel="Modal">
                     <div className='modalHead'>
-                        <h4><i className="fa fa-bookmark-o" aria-hidden="true"></i>{' '}{this.props.order.order_ID || 'SD12345678'}{' '}{' '} заказ на {this.props.order.order_date_deadline}</h4>
-                        <Button id='btn1' className={this.props.order.headerBtnClose} onClick={this.close}><i className="fa fa-times" aria-hidden="true"></i></Button>
+                        <h4><i className="fa fa-bookmark-o" aria-hidden="true"></i>{' '}{this.props.order.data.order_ID || 'SD12345678'}{' '}{' '} заказ на {this.props.order.data.order_date_deadline}</h4>
+                        <Button id='btn1' className={this.props.order.data.headerBtnClose} onClick={this.close}><i className="fa fa-times" aria-hidden="true"></i></Button>
                     </div>
                     <Alert id="alertBlock" style={{ display: this.state.showAlert }} bsStyle={this.state.statusAlert}>
                         <center>{this.state.messageAlert}</center>
@@ -528,38 +525,38 @@ class Gridview extends Component {
                                 <div id="infOrder" className="panel-body">
                                     <div className='col-lg-6 col-md-12 col-sm-12'>
                                         <span>Клиент</span>
-                                        <input disabled={this.props.order.edit_id_to_stops} type='text' value={this.props.order.order_BankContact || ''} />
+                                        <input disabled={this.props.order.data.edit_id_to_stops} type='text' value={this.props.order.data.order_BankContact || ''} />
                                     </div>
                                     <div className='col-lg-6 col-md-12 col-sm-12'>
                                         <span>Телефон клиента</span>
-                                        <input disabled={this.props.order.edit_id_to_stops} type='text' value={this.props.order.order_bank_contact_phone || ''} />
+                                        <input disabled={this.props.order.data.edit_id_to_stops} type='text' value={this.props.order.data.order_bank_contact_phone || ''} />
                                     </div>
                                     <div className='col-lg-6 col-md-12 col-sm-12'>
                                         <span>Пункт отправления</span>
-                                        <Textarea disabled={this.props.order.edit_id_to_stops} minRows={4} defaultValue={this.props.order.oreder_travel_from || ''}></Textarea>
+                                        <Textarea disabled={this.props.order.data.edit_id_to_stops} minRows={4} defaultValue={this.props.order.data.oreder_travel_from || ''}></Textarea>
                                     </div>
                                     <div className='col-lg-6 col-md-12 col-sm-12'>
                                         <span>Пункт назначения</span>
-                                        <Textarea disabled={this.props.order.edit_id_to_stops} minRows={4} defaultValue={this.props.order.oreder_travel_to || ''}></Textarea>
+                                        <Textarea disabled={this.props.order.data.edit_id_to_stops} minRows={4} defaultValue={this.props.order.data.oreder_travel_to || ''}></Textarea>
                                     </div>
                                     <div className='col-lg-6 col-md-12 col-sm-12'>
 
                                     </div>
                                     <div className='col-lg-12 col-md-12 col-sm-12'>
                                         <span>Промежуточные пункты</span>
-                                        <Textarea disabled={this.props.order.edit_id_to_stops} minRows={4} defaultValue={this.props.order.order_ride_stops || ''}></Textarea>
+                                        <Textarea disabled={this.props.order.data.edit_id_to_stops} minRows={4} defaultValue={this.props.order.data.order_ride_stops || ''}></Textarea>
                                     </div>
                                     <div className='col-lg-12 col-md-12 col-sm-12'>
                                         <span>Комментарии водителю</span>
-                                        <Textarea disabled={this.props.order.edit_commentary_for_driver} minRows={3} type='text' value={this.props.order.order_commentary_for_driver || ''} />
+                                        <Textarea disabled={this.props.order.data.edit_commentary_for_driver} minRows={3} type='text' value={this.props.order.data.order_commentary_for_driver || ''} />
                                     </div>
                                     <div className='col-lg-6 col-md-12 col-sm-12'>
                                         <span>Время назначения авто</span>
-                                        <input disabled={this.props.order.edit_time_start} type='text' value={this.props.order.order_ride_start_time || ''} />
+                                        <input disabled={this.props.order.data.edit_time_start} type='text' value={this.props.order.data.order_ride_start_time || ''} />
                                     </div>
                                     <div className='col-lg-6 col-md-12 col-sm-12'>
                                         <span>Время завершения поездки</span>
-                                        <DatePicker inputProps={{ disabled: this.props.order.edit_time_end }} value={this.props.order.order_ride_end_time} locale="ru" />
+                                        <DatePicker inputProps={{ disabled: this.props.order.data.edit_time_end }} value={this.props.order.data.order_ride_end_time} locale="ru" />
                                     </div>
                                 </div>
                             </div>
@@ -574,27 +571,27 @@ class Gridview extends Component {
                                         <div className='col-lg-12 col-md-12 col-sm-12'>
                                             <span>Водитель</span>
                                             <DropdownButton
-                                                disabled={this.props.order.edit_driver_drop}
-                                                title={this.props.order.defaultDriver}
+                                                disabled={this.props.order.data.edit_driver_drop}
+                                                title={this.props.order.data.defaultDriver}
                                                 id="bg-nested-dropdown">
                                                 {dropdataDriver}
                                             </DropdownButton>
                                         </div>
                                         <div className='col-lg-6 col-md-12 col-sm-12'>
                                             <span>Телефон</span>
-                                            <input disabled={this.props.order.edit_driver_data} type='text' value={this.props.order.order_driver_phone || ''} />
+                                            <input disabled={this.props.order.data.edit_driver_data} type='text' value={this.props.order.data.order_driver_phone || ''} />
                                         </div>
                                         <div className='col-lg-6 col-md-12 col-sm-12'>
                                             <span>Марка</span>
-                                            <input disabled={this.props.order.edit_driver_data} type='text' value={this.props.order.order_driver_brand_car || ''} />
+                                            <input disabled={this.props.order.data.edit_driver_data} type='text' value={this.props.order.data.order_driver_brand_car || ''} />
                                         </div>
                                         <div className='col-lg-6 col-md-12 col-sm-12'>
                                             <span>Цвет</span>
-                                            <input disabled={this.props.order.edit_driver_data} type='text' value={this.props.order.order_driver_color_car || ''} />
+                                            <input disabled={this.props.order.data.edit_driver_data} type='text' value={this.props.order.data.order_driver_color_car || ''} />
                                         </div>
                                         <div className='col-lg-6 col-md-12 col-sm-12'>
                                             <span>Госномер</span>
-                                            <input disabled={this.props.order.edit_driver_data} type='text' value={this.props.order.order_driver_num_car || ''} />
+                                            <input disabled={this.props.order.data.edit_driver_data} type='text' value={this.props.order.data.order_driver_num_car || ''} />
                                         </div>
                                     </div>
                                 </div>
@@ -606,10 +603,10 @@ class Gridview extends Component {
                                         <div className="col-lg-6 col-md-12 col-sm-12">
                                             <span>Длительность поездки</span>
                                             <MaskedInput mask="11:11"
-                                                disabled={this.props.order.edit_data_to_sendbank}
+                                                disabled={this.props.order.data.edit_data_to_sendbank}
                                                 size="20"
                                                 onChange={this.handletimeTrip}
-                                                value={this.props.order.order_ride_duration}
+                                                value={this.props.order.data.order_ride_duration}
                                                 placeholder="--:--"
                                             />
                                         </div>
@@ -623,9 +620,9 @@ class Gridview extends Component {
                                                 placeholder="XXX"
                                             /> */}
                                             <input type="number"
-                                                disabled={this.props.order.edit_data_to_sendbank}
+                                                disabled={this.props.order.data.edit_data_to_sendbank}
                                                 onChange={this.handleDistance}
-                                                value={this.props.order.order_ride_distance}
+                                                value={this.props.order.data.order_ride_distance}
                                                 placeholder="xxxx"
                                             />
                                             <span>КМ</span>
@@ -633,10 +630,10 @@ class Gridview extends Component {
                                         <div className="col-lg-6 col-md-12 col-sm-12">
                                             <span>Время простоя</span>
                                             <MaskedInput mask="11:11"
-                                                disabled={this.props.order.edit_data_to_sendbank}
+                                                disabled={this.props.order.data.edit_data_to_sendbank}
                                                 size="20"
                                                 onChange={this.handleIdletime}
-                                                value={this.props.order.order_ride_idle_time || '00:00'}
+                                                value={this.props.order.data.order_ride_idle_time || '00:00'}
                                                 placeholder="ЧЧ:ММ"
                                             />
                                         </div>
@@ -650,9 +647,9 @@ class Gridview extends Component {
                                                 placeholder="XXXX"
                                             /> */}
                                             <input type="number"
-                                                disabled={this.props.order.edit_data_to_sendbank}
+                                                disabled={this.props.order.data.edit_data_to_sendbank}
                                                 onChange={this.handlePrice}
-                                                value={this.props.order.order_ride_price}
+                                                value={this.props.order.data.order_ride_price}
                                                 placeholder="xxxx"
                                             />
                                             <span>р.</span>
@@ -669,8 +666,8 @@ class Gridview extends Component {
                                     <div className='col-lg-12 col-md-12 col-sm-12'>
                                         <span>Статус</span>
                                         <DropdownButton
-                                            disabled={this.props.order.edit_order_status}
-                                            title={this.props.order.order_status_val_def}
+                                            disabled={this.props.order.data.edit_order_status}
+                                            title={this.props.order.data.order_status_val_def}
                                             id="bg-nested-dropdown">
                                             {dropdataStatuses}
                                         </DropdownButton>
@@ -678,8 +675,8 @@ class Gridview extends Component {
                                     <div className='col-lg-6 col-md-6 col-sm-12'>
                                         <span>Рабочая группа</span>
                                         <DropdownButton
-                                            disabled={this.props.order.edit_order_status}
-                                            title={this.props.order.order_wg_val_def}
+                                            disabled={this.props.order.data.edit_order_status}
+                                            title={this.props.order.data.order_wg_val_def}
                                             id="bg-nested-dropdown">
                                             {dropdataWG}
                                         </DropdownButton>
@@ -687,8 +684,8 @@ class Gridview extends Component {
                                     <div className='col-lg-6 col-md-6 col-sm-12'>
                                         <span>Исполнитель</span>
                                         <DropdownButton
-                                            disabled={this.props.order.edit_order_status}
-                                            title={this.props.order.order_def_executor}
+                                            disabled={this.props.order.data.edit_order_status}
+                                            title={this.props.order.data.order_def_executor}
                                             id="bg-nested-dropdown">
                                             {dropdataAssigne}
                                         </DropdownButton>
@@ -704,8 +701,8 @@ class Gridview extends Component {
                                             rows="8"
                                             cols="10"
                                             onChange={this.handleSolution}
-                                            value={this.props.order.order_solution}
-                                            disabled={this.props.order.edit_solutions}
+                                            value={this.props.order.data.order_solution}
+                                            disabled={this.props.order.data.edit_solutions}
                                         ></textarea>
                                     </div>
                                 </div>
@@ -732,32 +729,32 @@ class Gridview extends Component {
                                     <div className="hidden">
                                         <span>Код закрытия</span>
                                         <DropdownButton
-                                            disabled={this.props.order.edit_closure_code}
-                                            title={this.props.order.order_def_closure_statuses}
+                                            disabled={this.props.order.data.edit_closure_code}
+                                            title={this.props.order.data.order_def_closure_statuses}
                                             id="bg-nested-dropdown">
                                             {dropdataClosureCode}
                                         </DropdownButton>
                                     </div>
                                     <div className="hidden">
                                         <span>Описание</span>
-                                        <Textarea disabled={this.props.order.edit_description} minRows={4} defaultValue={this.props.order.order_descr || ''}></Textarea>
+                                        <Textarea disabled={this.props.order.data.edit_description} minRows={4} defaultValue={this.props.order.data.order_descr || ''}></Textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="col-lg-12 col-md-12 col-sm-12">
-                        <Button id="up" onClick={this.handlePrev} disabled={this.props.order.up}>
+                        <Button id="up" onClick={this.handlePrev} disabled={this.props.order.data.up}>
                             <i className="fa fa-chevron-up" aria-hidden="true"></i>
                         </Button>
-                        <Button id="down" onClick={this.handleNext} disabled={this.props.order.down}>
+                        <Button id="down" onClick={this.handleNext} disabled={this.props.order.data.down}>
                             <i className="fa fa-chevron-down" aria-hidden="true"></i>
                         </Button>
 
-                        <Button id='btn5' className={this.props.order.headerBtnSave} bsStyle="primary" onClick={this.saveToDB}>Сохранить</Button>
+                        <Button id='btn5' className={this.props.order.data.headerBtnSave} bsStyle="primary" onClick={this.saveToDB}>Сохранить</Button>
                         {/* <Button id='btn2' className={this.props.order.headerBtnTakeToWork} onClick={this.takeToWork} bsStyle="warning">Взять в работу</Button> */}
-                        <Button id='btn3' className={this.props.order.headerBtnAssignCar} bsStyle="success" onClick={this.assignCar}>Назначить авто и закрыть</Button>
-                        <Button id='btn4' disabled={this.props.order.onoffbtnDoneTrip} style={{ opacity: this.props.order.opacitybtnDoneTrip }} className={this.props.order.headerBtnDoneTrip} bsStyle="warning" onClick={this.doneTrip}>Завершить поездку и сохранить</Button>
+                        <Button id='btn3' className={this.props.order.data.headerBtnAssignCar} bsStyle="success" onClick={this.assignCar}>Назначить авто и закрыть</Button>
+                        <Button id='btn4' disabled={this.props.order.data.onoffbtnDoneTrip} style={{ opacity: this.props.order.data.opacitybtnDoneTrip }} className={this.props.order.data.headerBtnDoneTrip} bsStyle="warning" onClick={this.doneTrip}>Завершить поездку и сохранить</Button>
                         {/* <Button id='btn6' className={this.props.order.headerBtnSendToBank} bsStyle="default">Передать данные о поездке в банк</Button> */}
                         <Button id='btn7' bsStyle="default" onClick={this.showHistory.bind(this)}>История</Button>
                     </div>
@@ -769,15 +766,15 @@ class Gridview extends Component {
                             </div>
                             <div id="result" className="panel-body">
                                 <div>
-                                    <Textarea disabled={this.props.order.edit_description} minRows={4} defaultValue={this.props.order.order_descr || ''}></Textarea>
+                                    <Textarea disabled={this.props.order.data.edit_description} minRows={4} defaultValue={this.props.order.data.order_descr || ''}></Textarea>
                                 </div>
                             </div>
                         </div>
                     </Modal>
 
-                    <Modal isOpen={this.props.history.showHistoryModal} contentLabel="Modal">
+                    <Modal isOpen={this.props.history.data.showHistoryModal} contentLabel="Modal">
                         <div className="history">
-                            <h4>История по {this.props.order.order_ID}</h4>
+                            <h4>История по {this.props.order.data.order_ID}</h4>
                             <button className='btn' onClick={this.showHistory.bind(this)}><i className="fa fa-times" aria-hidden="true" /></button>
                         </div>
                         <History />
@@ -874,8 +871,8 @@ export default connect(
         saveOrder: (order) => {
             dispatch(saveOrder(order));
         },
-        assignCar: () => {
-            dispatch(assignCar());
+        assignCar: (user) => {
+            dispatch(assignCar(user));
         },
         doneTripStatus: (status) => {
             dispatch(doneTripStatus(status));

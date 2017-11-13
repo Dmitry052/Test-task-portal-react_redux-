@@ -166,14 +166,19 @@ app.get('/expl', function (req, res) {
 });
 // Транспорт
 app.get('/transp', function (req, res) {
-    var query = transp.action_GET(req.query.action, req.session.userID, req.session.serviceType, req.session.companyID, req.query.executor, req.query.sb_id);
-    if (query !== null) {
-        sqlConnetction.query(query, (err, result) => { res.send(result) });
+    if (req.query.action !== 'AUTH') {
+        var query = transp.action_GET(req.query.action, req.session.userID, req.session.serviceType, req.session.companyID, req.query.executor, req.query.sb_id, req.session.authUser);
+        if (query !== null) {
+            sqlConnetction.query(query, (err, result) => { res.send(result) });
+        }
+        else {
+            if (!req.session.serviceType) { res.redirect('/') }
+            else if (req.session.serviceType === 1) { res.redirect('/expl') }
+            res.render('index');
+        }
     }
     else {
-        if (!req.session.serviceType) { res.redirect('/') }
-        else if (req.session.serviceType === 1) { res.redirect('/expl') }
-        res.render('index');
+        res.send({ id: req.session.userID, displayname: req.session.authUser });
     }
 });
 app.post('/transp', function (req, res) {

@@ -9,11 +9,11 @@ class History extends Component {
     render() {
         // console.log('История', this.props.history.dataHistory);
         let data = [];
-        if (this.props.history.dataHistory[0] === undefined) {
+        if (this.props.history.data.dataHistory[0] === undefined) {
             data = [];
         }
         else {
-            this.props.history.dataHistory.map((item, i) => {
+            this.props.history.data.dataHistory.map((item, i) => {
                 for (var key in item) {
                     let j = key.split('_');
                     if (j.length > 2) {

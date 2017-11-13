@@ -1,17 +1,20 @@
 const initialState = {
-    showHistoryModal: false,
-    dataHistory: '',
-    currentHistory: []
+    data: {
+        showHistoryModal: false,
+        dataHistory: '',
+        currentHistory: []
+    }
+
 }
 
 export default function currentOrderHistory(state = initialState, action) {
     if (action.type === "SHOW_HISTORY") {
-        state.showHistoryModal = !state.showHistoryModal;
-        return state;
+        state.data.showHistoryModal = !state.data.showHistoryModal;
+        return { data: state.data }
     }
     if (action.type === "GET_HISTORY") {
-        state.dataHistory = action.data;
-        return state;
+        state.data.dataHistory = action.data;
+        return { data: state.data }
     }
     // if (action.type === "PUSH_HISTORY") {
     //     state.dataHistory.push(action.data);

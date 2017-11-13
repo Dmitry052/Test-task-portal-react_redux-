@@ -4,9 +4,7 @@ import { apiPrefix } from './../../../etc/config.json';
 // Фильтры
 export const transpMyWG = () => dispatch => {
   axios({
-    method: 'get',
-    url: `${apiPrefix}/transp`,
-    params: {
+    method: 'get', url: `${apiPrefix}/transp`, params: {
       action: 'myWG',
     },
     onDownloadProgress: function (progressEvent) {
@@ -24,6 +22,21 @@ export const transpMyWG = () => dispatch => {
       type: "ERROR_CONNECT",
     });
   });
+
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/transp`,
+    params: {
+      action: 'AUTH',
+    }
+  }).then((response) => {
+    dispatch({
+      type: "AUTH",
+      data: response.data
+    });
+  });
+
+
 };
 // --------------------------------------------
 export const transpToMe = () => dispatch => {
@@ -378,9 +391,10 @@ export const setSolution = (text) => dispatch => {
   });
 };
 // ***********************************************
-export const assignCar = () => dispatch => {
+export const assignCar = (user) => dispatch => {
   dispatch({
     type: "assignCar",
+    data: user
   });
 };
 
@@ -530,7 +544,7 @@ export const saveOrder = (orderData) => dispatch => {
 export const saveToDBDriverDirect = (driver) => dispatch => {
   axios({
     method: 'post',
-    url:`${apiPrefix}/transp`,
+    url: `${apiPrefix}/transp`,
     data: {
       action: 'saveDriver',
       data: driver
@@ -546,7 +560,7 @@ export const saveToDBDriverDirect = (driver) => dispatch => {
 export const saveToDBCarDirect = (car) => dispatch => {
   axios({
     method: 'post',
-    url:`${apiPrefix}/transp`,
+    url: `${apiPrefix}/transp`,
     data: {
       action: 'saveCar',
       data: car
@@ -563,7 +577,7 @@ export const saveToDBCarDirect = (car) => dispatch => {
 export const deleteDrivers = (drivers) => dispatch => {
   axios({
     method: 'post',
-    url:`${apiPrefix}/transp`,
+    url: `${apiPrefix}/transp`,
     data: {
       action: 'deleteDrivers',
       data: drivers

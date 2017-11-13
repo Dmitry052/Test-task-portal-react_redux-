@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Button from 'react-bootstrap/lib/Button';
 import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
@@ -31,7 +32,7 @@ class Header extends Component {
 
     render() {
         const inputWidth = { width: this.state.width };
-       
+        console.log(this.props.store);
         return (
 
             <div className="headerApp">
@@ -39,7 +40,7 @@ class Header extends Component {
 
                 <Form inline id="logout">
                     <Button bsStyle="default">
-                        <a href="/logout">Выход</a>
+                        <a href="/logout">Выход{' '}({this.props.user})</a>
                     </Button>
                 </Form>
 
@@ -59,8 +60,15 @@ class Header extends Component {
                     </Button>
                 </Form> */}
             </div >
-         );
+        );
     }
 }
 
-export default Header;
+export default connect(
+    state => ({
+        user: state.user.displayname,
+    }),
+    dispatch => ({
+        
+    })
+)(Header);

@@ -5,7 +5,7 @@ export default function transpExecutor(state = initialState, action) {
         switch (action.type) {
             case 'transpExecutor':
                 state = action.data;
-                break;
+                return action.data;
         }
     }
       return state
