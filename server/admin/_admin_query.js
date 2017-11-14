@@ -148,17 +148,10 @@ var query = {
             case 'saveCompanyToWG':
                 var query;
                 if (data.type === 'INSERT') {
-                    query = `INSERT INTO companytowg(company_id,bank_wg_id,wg_id) VALUES(
-                    ${data.company_id},
-                    ${data.bank_wg_id === undefined ? null : data.bank_wg_id},
-                    ${data.wg_id})`;
+                    query = `INSERT INTO companytowg(company_id,bank_wg_id,wg_id) VALUES(${data.company_id},${data.bank_wg_id === undefined ? null : data.bank_wg_id},${data.wg_id})`;
                 }
                 else {
-                    query = `UPDATE companytowg SET 
-                company_id =${data.company_id}, 
-                bank_wg_id = ${data.bank_wg_id === undefined ? null : data.bank_wg_id},
-                wg_id = ${data.wg_id}
-                WHERE id = ${data.id}`;
+                    query = `UPDATE companytowg SET company_id =${data.company_id},bank_wg_id = ${data.bank_wg_id === undefined ? null : data.bank_wg_id},wg_id = ${data.wg_id} WHERE id = ${data.id}`;
                 }
                 return { type: 'COMPANY_TO_WG', data: query }
             case 'deleteCompanyToWG':
