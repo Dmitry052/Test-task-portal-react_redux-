@@ -308,7 +308,13 @@ export const saveCompanyToWG = (company) => dispatch => {
   if (company.type === 'INSERT') {
     axios({ method: 'post', url: `${apiPrefix}/admin`, data: { action: 'saveWG', data: company } }).then((response) => {
     }).catch(function (error) { alert("Нет ответа от сервера.saveWG"); });
-    axios({ method: 'get', url: `${apiPrefix}/admin`, params: { action: 'get_id_wg', data: company.wg_name } }).then((response) => {
+    axios({
+      method: 'get', url: `${apiPrefix}/admin`,
+      params: {
+        action: 'getIDwg',
+        data: company.wg_name
+      }
+    }).then((response) => {
       axios({
         method: 'post', url: `${apiPrefix}/admin`,
         data: {

@@ -14,7 +14,7 @@ var query = {
                 return dbUtills.wg;
             case 'wgbank':
                 return dbUtills.wgbank;
-            case 'get_id_wg':
+            case 'getIDwg':
                 console.log(get_id_wg + `'${data}'`);
                 return dbUtills.get_id_wg + `'${data}'`;
             case 'users':
