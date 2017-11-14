@@ -163,6 +163,7 @@ export default connect(
         },
         // ------------------------------------
         set_user_user_to_wg: (user, company) => {
+            console.log("dispatch set_user_user_to_wg",user, company);
             dispatch({ type: 'SET_USER_USER_TO_WG_ADMIN', data: user });
             dispatch(wgincomapny(company));
             dispatch(stName(company));
