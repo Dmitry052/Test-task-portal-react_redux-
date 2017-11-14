@@ -47,14 +47,20 @@ textarea {
   float: right;
   margin: 30px 15px; }
 
+#user_conform {
+  padding-left: 0; }
+
 #company_conform {
   padding: 0 0; }
 
 #st_conform {
   padding-right: 0; }
 
-#st_conform > input {
+#st_conform > input, #company_conform > input, #headerSTAdmin > div:nth-child(2) > select {
   cursor: default; }
+
+#headerUsersAdmin > div.col-lg-9.col-md-12.col-sm-12 > textarea {
+  color: #001dff; }
 
 .headerApp {
   width: 100%;

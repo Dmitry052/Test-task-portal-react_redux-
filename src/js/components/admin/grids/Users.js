@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { saveUser, currentMenu, deleteUsers } from 'Actions/admin/actionAdmin';
+import { saveUser, currentMenu, deleteUsers, usergroups } from 'Actions/admin/actionAdmin';
 import Modal from 'react-modal';
 import { DropdownButton, MenuItem, Alert } from "react-bootstrap";
 
@@ -57,7 +57,7 @@ class Users extends Component {
         this.props.saveUser(this.props.user);
         this.props.currentMenu();
         this.props.showUser();
-        
+
     }
     formatDate(cell, row) {   // String example
         var date = new Date(Number(cell) * 1000);
@@ -69,7 +69,7 @@ class Users extends Component {
         var formated_date = day + "-" + month + "-" + year + " " + hours + ":" + min;
         return formated_date;
     }
-    
+
     render() {
         const options = {
             sizePerPage: 10,
@@ -80,8 +80,14 @@ class Users extends Component {
             onSelect: this.handleRowSelect.bind(this),
             onSelectAll: this.handleRowSelect.bind(this)
         };
+        const usergroups = this.props.user.usergroups.map((item, i) => {
+            return item.wg_name;
+        }).join('\n');
+        console.log(usergroups);
+        // console.log(this.props.store);
+        // console.log(this.props.user.usergroups);
         return (
-            <div className='col-lg-8 col-md-12'>
+            <div className='col-lg-12 col-md-12'>
                 <button className="btn btn-success" onClick={this.createUser.bind(this)}><i className="fa fa-plus" aria-hidden="true"></i></button>
                 <button className="btn btn-danger" onClick={this.handleDelSelected.bind(this)} ><i className="fa fa-minus" aria-hidden="true"></i></button>
                 <BootstrapTable
@@ -90,10 +96,11 @@ class Users extends Component {
                     selectRow={selectRow}
                     options={options}
                 >
-                    <TableHeaderColumn dataField='username' isKey={true} filter={{ type: 'TextFilter' }} >Логин</TableHeaderColumn>
-                    <TableHeaderColumn dataField='displayname' width='25%' filter={{ type: 'TextFilter' }}>Отображаемое имя</TableHeaderColumn>
+                    <TableHeaderColumn dataField='id' width='12%' isKey={true} filter={{ type: 'TextFilter' }} >ID</TableHeaderColumn>
+                    <TableHeaderColumn dataField='username' filter={{ type: 'TextFilter' }} >Логин</TableHeaderColumn>
+                    <TableHeaderColumn dataField='displayname' width='15%' filter={{ type: 'TextFilter' }}>Отображаемое имя</TableHeaderColumn>
                     <TableHeaderColumn dataField='email' filter={{ type: 'TextFilter' }}>Email</TableHeaderColumn>
-                    <TableHeaderColumn dataField='created_at' dataFormat={ this.formatDate.bind(this) } filter={{ type: 'TextFilter' }}>Создан</TableHeaderColumn>
+                    <TableHeaderColumn dataField='created_at' width='20%' dataFormat={this.formatDate.bind(this)} filter={{ type: 'TextFilter' }}>Создан</TableHeaderColumn>
                     <TableHeaderColumn dataField='companyname' filter={{ type: 'TextFilter' }}>Компания</TableHeaderColumn>
                 </BootstrapTable>
 
@@ -150,6 +157,16 @@ class Users extends Component {
 
                             </select>
                         </div>
+                        <div className='col-lg-9 col-md-12 col-sm-12'>
+                            <span>Рабочие группы пользователя</span>
+                            <textarea
+                                disabled
+                                rows="3"
+                                cols="20"
+                                name="text"
+                                value={this.props.user.usergroups.map((item, i) => {return item.wg_name;}).join('\n') || ''}>
+                            </textarea>
+                        </div>
                     </div>
                     <button id="saveModal" className="btn btn-primary" onClick={this.saveToDBUser.bind(this)}>Сохранить</button>
                 </Modal>
@@ -186,6 +203,7 @@ export default connect(
         },
         editUser: (user) => {
             dispatch({ type: 'EDIT_USER_ADMIN', data: user });
+            dispatch(usergroups(user.id));
         },
         setCompanyUser: (company) => {
             dispatch({ type: 'SET_COMPANY_USER_ADMIN', data: company });

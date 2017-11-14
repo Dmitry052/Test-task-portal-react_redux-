@@ -10,16 +10,17 @@ const initialState = {
         displayname: '',
         email: '',
         company_id: '',
-        companyname: ''
+        companyname: '',
+        usergroups: []
     }
 }
 
 export default function users(state = initialState, action) {
     if (action.type === "USERS_ADMIN") {
-        state.users = action.data
+        state.users = action.data;
         return {
             users: state.users,
-            user: {},
+            user: state.user,
             editModal: false,
             check_users: state.check_users
         };
@@ -80,6 +81,15 @@ export default function users(state = initialState, action) {
             check_users: state.check_users
         }
     }
+    if (action.type === "SET_USER_GROUPS_USER_ADMIN") {
+        state.user.usergroups = action.data;
+        return {
+            users: state.users,
+            user: state.user,
+            editModal: state.editModal,
+            check_users: state.check_users
+        }
+    }
     // ---------------------------------------
     if (action.type === "CREATE_USER_ADMIN") {
         state.editModal = !state.editModal;
@@ -91,7 +101,8 @@ export default function users(state = initialState, action) {
             displayname: '',
             email: '',
             company_id: '',
-            companyname: ''
+            companyname: '',
+            usergroups: []
         }
         return {
             users: state.users,
@@ -111,6 +122,7 @@ export default function users(state = initialState, action) {
             email: action.data.email,
             company_id: action.data.company_id,
             companyname: action.data.companyname,
+            usergroups: []
         }
         return {
             user: state.user,

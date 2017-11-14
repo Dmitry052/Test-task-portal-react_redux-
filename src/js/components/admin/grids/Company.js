@@ -72,7 +72,8 @@ class Company extends Component {
                     selectRow={selectRow}
                     options={options}
                 >
-                    <TableHeaderColumn dataField='companyname' isKey={true} filter={{ type: 'TextFilter' }} >Название компании</TableHeaderColumn>
+                    <TableHeaderColumn dataField='company_id' width='8%' isKey={true} filter={{ type: 'TextFilter' }} >ID</TableHeaderColumn>
+                    <TableHeaderColumn dataField='companyname' filter={{ type: 'TextFilter' }} >Название компании</TableHeaderColumn>
                     <TableHeaderColumn dataField='service_name' filter={{ type: 'TextFilter' }}>Тип услуг</TableHeaderColumn>
                     <TableHeaderColumn dataField='assignee_sber' filter={{ type: 'TextFilter' }}>	Исполнитель в банке</TableHeaderColumn>
                     <TableHeaderColumn dataField='contact' filter={{ type: 'TextFilter' }}>Контакт</TableHeaderColumn>

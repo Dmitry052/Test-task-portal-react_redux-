@@ -58,7 +58,8 @@ class Service_type extends Component {
                     selectRow={selectRow}
                     options={options}
                 >
-                    <TableHeaderColumn dataField='service_name' isKey={true} filter={{ type: 'TextFilter' }} >Сервис</TableHeaderColumn>
+                    <TableHeaderColumn dataField='id'width='16%' isKey={true} filter={{ type: 'TextFilter' }} >ID</TableHeaderColumn>
+                    <TableHeaderColumn dataField='service_name' filter={{ type: 'TextFilter' }} >Сервис</TableHeaderColumn>
                 </BootstrapTable>
                 <Modal isOpen={this.props.store.service_types.editModal} contentLabel="Modal"
                     style={{ content: { width: '600px', margin: 'auto', 'backgroundColor': '#f5f5f5', height: '178px' } }}

@@ -1,7 +1,9 @@
 const initialState = {
     companyToWg: [],
     editModal: false,
+    edit_status: false,
     comp_to_wg: {
+        
         type: '',
         id: '',
         companyname: '',
@@ -9,7 +11,10 @@ const initialState = {
         bank_wg_name: '',
         bank_wg_id: '',
         wg_name: '',
-        wg_id: ''
+        wg_id: '',
+
+        list_company: [],
+        list_wg_bank: []
 
     },
     check_comp_to_wg: new Map(),
@@ -30,9 +35,11 @@ export default function companyToWg(state = initialState, action) {
         state.editModal = !state.editModal;
         return {
             companyToWg: state.companyToWg,
+            edit_status: true,
             editModal: state.editModal,
             comp_to_wg: state.comp_to_wg,
             check_comp_to_wg: state.check_comp_to_wg,
+            edit_status: true,
         };
     }
     if (action.type === "CREATE_COMP_TO_WG_ADMIN") {
@@ -49,6 +56,7 @@ export default function companyToWg(state = initialState, action) {
             companyToWg: state.companyToWg,
             editModal: state.editModal,
             comp_to_wg: state.comp_to_wg,
+            edit_status: false,
             check_comp_to_wg: state.check_comp_to_wg,
         };
     }
@@ -62,9 +70,11 @@ export default function companyToWg(state = initialState, action) {
         state.comp_to_wg.bank_wg_id = action.data.bank_wg_id;
         state.comp_to_wg.wg_name = action.data.wg_name;
         state.comp_to_wg.wg_id = action.data.companytowg_wg_id;
+
         return {
             companyToWg: state.companyToWg,
             editModal: state.editModal,
+            edit_status: true,
             comp_to_wg: state.comp_to_wg,
             check_comp_to_wg: state.check_comp_to_wg,
         };
@@ -83,6 +93,7 @@ export default function companyToWg(state = initialState, action) {
             editModal: state.editModal,
             comp_to_wg: state.comp_to_wg,
             check_comp_to_wg: state.check_comp_to_wg,
+            edit_status: state.edit_status,
         };
     }
     if (action.type === "SET_WGBANK_COMP_TO_WG_ADMIN") {
@@ -99,6 +110,7 @@ export default function companyToWg(state = initialState, action) {
             editModal: state.editModal,
             comp_to_wg: state.comp_to_wg,
             check_comp_to_wg: state.check_comp_to_wg,
+            edit_status: state.edit_status,
         };
     }
     if (action.type === "SET_WG_COMP_TO_WG_ADMIN") {
@@ -115,6 +127,17 @@ export default function companyToWg(state = initialState, action) {
             editModal: state.editModal,
             comp_to_wg: state.comp_to_wg,
             check_comp_to_wg: state.check_comp_to_wg,
+            edit_status: state.edit_status,
+        };
+    }
+    if (action.type === "SET_COMP_LIST_TO_WG_ADMIN") {
+        state.comp_to_wg.list_company = action.data;
+        return {
+            companyToWg: state.companyToWg,
+            editModal: state.editModal,
+            comp_to_wg: state.comp_to_wg,
+            check_comp_to_wg: state.check_comp_to_wg,
+            edit_status: state.edit_status,
         };
     }
     if (action.type === "CHECK_COMP_TO_WG_ADMIN") {
@@ -124,6 +147,7 @@ export default function companyToWg(state = initialState, action) {
             editModal: state.editModal,
             comp_to_wg: state.comp_to_wg,
             check_comp_to_wg: state.check_comp_to_wg,
+            edit_status: state.edit_status,
         }
     }
     if (action.type === "UNCHECK_COMP_TO_WG_ADMIN") {
@@ -133,6 +157,7 @@ export default function companyToWg(state = initialState, action) {
             editModal: state.editModal,
             comp_to_wg: state.comp_to_wg,
             check_comp_to_wg: state.check_comp_to_wg,
+            edit_status: state.edit_status,
         }
     }
     return state;

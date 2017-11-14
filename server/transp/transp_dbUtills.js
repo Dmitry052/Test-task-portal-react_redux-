@@ -118,11 +118,13 @@ left join transport_cars on transport_cars.id = transport_drivers.car_id
 left join transport_drivers_status on transport_drivers.status = transport_drivers_status.id
 where username_id=`,
 
-cars: `SELECT transport_cars.id, vehicle_brand,vehicle_id_number,vehicle_color,company_id,companyname,
-transport_cars_status.status,transport_cars.status as num_status  
+cars: `SELECT transport_cars.id, vehicle_brand,vehicle_id_number,vehicle_color,company.id as company_id,companyname,
+transport_cars_status.status,transport_cars.status as num_status 
 FROM transport_cars
-INNER JOIN company on transport_cars.company_id = company.id
-inner join transport_cars_status on transport_cars_status.id = transport_cars.status`,
+inner join transport_cars_status on transport_cars_status.id = transport_cars.status
+inner join company on company.id = transport_cars.company_id
+inner join users on users.company_id = company.id
+where users.id =`,
  
 carsStatus: `SELECT * FROM transport_cars_status`,
 

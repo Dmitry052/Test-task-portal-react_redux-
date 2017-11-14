@@ -137,6 +137,8 @@ export default function userToWg(state = initialState, action) {
         state.user_to_wg.user_id = (() => {
             for (let key in action.data.data) {
                 if (action.data.data[key].username === action.data.event) {
+                    state.user_to_wg.companyname = action.data.data[key].companyname;
+                    state.user_to_wg.company_id = action.data.data[key].company_id;
                     return action.data.data[key].id;
                 }
             }

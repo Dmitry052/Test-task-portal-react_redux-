@@ -128,7 +128,6 @@ app.post('/', (req, res) => {
 // **************************************************
 app.get('/admin', function (req, res) {
     var query = admin.action_GET(req.query.action,req.query.data);
-    console.log(query);
     if (query !== null) {
         sqlConnetction.query(query, (err, result) => { res.send(result) });
     }
@@ -141,13 +140,15 @@ app.get('/admin', function (req, res) {
 });
 app.post('/admin', function (req, res) {
     var query = admin.action_POST(req.body.action, req.body.data);
-    console.log(query.data);
+    
     if (query.type === 'USER_TO_WG' || query.type === 'COMPANY_TO_WG' || query.type === 'INSERT' || query.type === 'UPDATE' || query.type === 'ST' || query.type === 'WG' || query.type === 'WGbank' || query.type === 'COMPANY') {
         sqlConnetction.query(query.data, function (err, result) {  });
         return res.sendStatus(200);
     }
     if (query.type === 'DEL_USER_TO_WG' || query.type === 'DEL_COMPANY_TO_WG' || query.type === 'DELETE' || query.type === 'DEL_ST' || query.type === 'DEL_WG' || query.type === 'DEL_WGbank' || query.type === 'DEL_COMPANY') {
+       
         for (key in query.data) {
+            console.log(query.data[key]);
             sqlConnetction.query(query.data[key], (err, result) => { });
         }
         return res.sendStatus(200);

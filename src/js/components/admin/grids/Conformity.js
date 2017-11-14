@@ -54,14 +54,23 @@ class Conformity extends Component {
     onRowClick_user(row) {
         this.props.edit_user_to_wg(row);
     }
+    set_user_user_to_wg(e) {
+        console.log(this.props.store);
+        var company =  (() => {
+            for (let key in this.props.store.users.users) {
+                
+                if (this.props.store.users.users[key].displayname === e.target.value) {
+                    return this.props.store.users.users[key].companyname;
+                }
+            }
+        })();
+        this.props.set_user_user_to_wg({ event: e.target.value, data: this.props.store.users.users },company);
+    }
     set_company_user_to_wg(e) {
-        this.props.set_company_user_to_wg({ event: e.target.value, data: this.props.store.company.company });
+        // this.props.set_company_user_to_wg({ event: e.target.value, data: this.props.store.company.company });
     }
     set_wg_user_to_wg(e) {
         this.props.set_wg_user_to_wg({ event: e.target.value, data: this.props.store.wg.wg });
-    }
-    set_user_user_to_wg(e) {
-        this.props.set_user_user_to_wg({ event: e.target.value, data: this.props.store.users.users });
     }
     saveUserToWG() {
         this.props.saveUserToWG(this.props.store.usertowgAdmin.user_to_wg);
@@ -129,7 +138,7 @@ class Conformity extends Component {
                         <button className="btn btn-danger" onClick={this.closeModal.bind(this)}><i className="fa fa-times" aria-hidden="true" /></button>
                         <div className='col-lg-12 col-md-12 col-sm-12'>
                             <span>Компания<span>*</span></span>
-                            <select className='form-control' value={this.props.store.companytowgAdmin.comp_to_wg.companyname || '---'} onChange={this.set_company_comp_to_wg.bind(this)} >
+                            <select disabled={this.props.store.companytowgAdmin.edit_status} className='form-control' value={this.props.store.companytowgAdmin.comp_to_wg.companyname || '---'} onChange={this.set_company_comp_to_wg.bind(this)} >
                                 <option key={777} value={'---'}>---</option>
                                 {
                                     this.props.store.company.company.map((item, i) => {
@@ -144,7 +153,7 @@ class Conformity extends Component {
                             <select className='form-control' value={this.props.store.companytowgAdmin.comp_to_wg.wg_name || '---'} onChange={this.set_wg_comp_to_wg.bind(this)} >
                                 <option key={777} value={'---'}>---</option>
                                 {
-                                    this.props.store.wg.wg.map((item, i) => {
+                                    this.props.store.companytowgAdmin.comp_to_wg.list_company.map((item, i) => {
                                         return <option key={i} value={item.wg_name}>{item.wg_name}</option>
                                     })
                                 }
@@ -185,14 +194,30 @@ class Conformity extends Component {
                     </BootstrapTable>
                 </div>
                 <Modal isOpen={this.props.store.usertowgAdmin.editModal} contentLabel="Modal"
-                    style={{ content: { width: '600px', margin: 'auto', 'backgroundColor': '#f5f5f5', height: '300px' } }}
+                    style={{ content: { width: '600px', margin: 'auto', 'backgroundColor': '#f5f5f5', height: '250px' } }}
                 >
                     <div id="headerSTAdmin">
                         <button className="btn btn-danger" onClick={this.closeModal_User.bind(this)}><i className="fa fa-times" aria-hidden="true" /></button>
                         <div className='col-lg-12 col-md-12 col-sm-12'>
-                            <div id="company_conform" className='col-lg-8 col-md-8 col-sm-6'>
+                            <div id="user_conform" className='col-lg-4 col-md-4 col-sm-12'>
+                                <span>Пользователь<span>*</span></span>
+                                <select className='form-control' value={this.props.store.usertowgAdmin.user_to_wg.username || '---'} onChange={this.set_user_user_to_wg.bind(this)} >
+                                    <option key={777} value={'---'}>---</option>
+                                    {
+                                        // this.props.store.usertowgAdmin.user_to_wg.list_users.map((item, i) => {
+                                        //     return <option key={i} value={item.username}>{item.username}</option>
+                                        // })
+                                        this.props.store.users.users.map((item, i) => {
+                                            return <option key={i} value={item.username}>{item.username}</option>
+                                        })
+                                    }
+
+                                </select>
+                            </div>
+                            <div id="company_conform" className='col-lg-4 col-md-4 col-sm-6'>
                                 <span>Компания<span>*</span></span>
-                                <select className='form-control' value={this.props.store.usertowgAdmin.user_to_wg.companyname || '---'} onChange={this.set_company_user_to_wg.bind(this)} >
+                                <input className='form-control' disabled='disabled' value={this.props.store.usertowgAdmin.user_to_wg.companyname || ''} />
+                                {/* <select className='form-control' value={this.props.store.usertowgAdmin.user_to_wg.companyname || '---'} onChange={this.set_company_user_to_wg.bind(this)} >
                                     <option key={777} value={'---'}>---</option>
                                     {
                                         this.props.store.company.company.map((item, i) => {
@@ -200,7 +225,7 @@ class Conformity extends Component {
                                         })
                                     }
 
-                                </select>
+                                </select> */}
                             </div>
                             <div id="st_conform" className='col-lg-4 col-md-4 col-sm-6'>
                                 <span>Тип услуги</span>
@@ -220,21 +245,7 @@ class Conformity extends Component {
 
                             </select>
                         </div>
-                        <div className='col-lg-12 col-md-12 col-sm-12'>
-                            <span>Пользователь<span>*</span></span>
-                            <select className='form-control' value={this.props.store.usertowgAdmin.user_to_wg.username || '---'} onChange={this.set_user_user_to_wg.bind(this)} >
-                                <option key={777} value={'---'}>---</option>
-                                {
-                                    // this.props.store.usertowgAdmin.user_to_wg.list_users.map((item, i) => {
-                                    //     return <option key={i} value={item.username}>{item.username}</option>
-                                    // })
-                                    this.props.store.users.users.map((item, i) => {
-                                        return <option key={i} value={item.username}>{item.username}</option>
-                                    })
-                                }
 
-                            </select>
-                        </div>
                         <button id="saveModal" className="btn btn-primary" onClick={this.saveUserToWG.bind(this)}>Сохранить</button>
                     </div>
                 </Modal>
@@ -258,6 +269,7 @@ export default connect(
         },
         edit_comp_to_wg: (company) => {
             dispatch({ type: 'EDIT_COMP_TO_WG_ADMIN', data: company });
+            dispatch(wgincomapny(company.companyname));
         },
         set_company_comp_to_wg: (company) => {
             dispatch({ type: 'SET_COMPANY_COMP_TO_WG_ADMIN', data: company });
@@ -293,18 +305,20 @@ export default connect(
             dispatch(stName(row.companyname));
             // dispatch(userinwg(row.wg_name));
         },
+        // ------------------------------------
+        set_user_user_to_wg: (user,company) => {
+            dispatch({ type: 'SET_USER_USER_TO_WG_ADMIN', data: user });
+            dispatch(wgincomapny(company));
+            dispatch(stName(company));
+        },
         set_company_user_to_wg: (company) => {
-            dispatch({ type: 'SET_COMPANY_USER_TO_WG_ADMIN', data: company });
-            dispatch(wgincomapny(company.event));
-            dispatch(stName(company.event));
+            // dispatch({ type: 'SET_COMPANY_USER_TO_WG_ADMIN', data: company });
         },
         set_wg_user_to_wg: (wg) => {
             dispatch({ type: 'SET_WG_USER_TO_WG_ADMIN', data: wg });
             // dispatch(userinwg(wg.event));
         },
-        set_user_user_to_wg: (user) => {
-            dispatch({ type: 'SET_USER_USER_TO_WG_ADMIN', data: user });
-        },
+        // ------------------------------------
         check_user_to_wg: (wg) => {
             dispatch({ type: 'CHECK_USER_TO_WG_ADMIN', data: wg });
         },

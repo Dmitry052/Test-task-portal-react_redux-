@@ -146,6 +146,7 @@ class Drivers extends Component {
             }
             return <MenuItem eventKey={i} onSelect={() => this.setVehicleNumber(num.vehicle_id_number)}>{num.vehicle_id_number}</MenuItem>
         });
+        console.log(this.props.transp.directoties.show_drivers_all,this.props.transp.carDriversAll, this.props.transp.carDrivers)
         return (
             <div id="gridDrivers">
                 <button className='btn-success' onClick={this.showAddDriver.bind(this)} title="Добавить нового водителя"><i className="fa fa-plus" aria-hidden="true"></i></button>

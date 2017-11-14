@@ -19,9 +19,9 @@ var query = {
                 return dbUtills.cancelClient + userID;
             // Для грида
             case 'carDrivers':
-                return dbUtills.carDrivers + companyID;
+                return dbUtills.carDrivers + userID;
             case 'cars':
-                return dbUtills.cars;
+                return dbUtills.cars + userID;
             case 'cars-status':
                 return dbUtills.carsStatus;
             case 'transport_statuses':
@@ -35,7 +35,7 @@ var query = {
             case 'closureStatuses':
                 return dbUtills.closureStatuses;
             case 'carDriversAll':
-                return dbUtills.carDriversAll + companyID;
+                return dbUtills.carDriversAll + userID;
             case 'transpExecutor':
                 return dbUtills.listExecutors + `'${data}'`;
             case 'getHistory':

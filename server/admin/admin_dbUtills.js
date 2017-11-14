@@ -3,8 +3,20 @@ module.exports = {
     users: `SELECT users.id,username,displayname,companyname,company_id,created_at,email 
     FROM users
     left join company on company.id = users.company_id`,
-    wg: `SELECT * FROM workgroups`,
+    usergroups: `SELECT workgroups.id,wg_name 
+    FROM workgroups
+    inner join usertowg on usertowg.wg_id = workgroups.id
+    inner join users on users.id = usertowg.username_id
+    where users.id =`,
+    wg: `SELECT workgroups.id,wg_name, company_id,company.companyname 
+    FROM companytowg
+    inner join workgroups on workgroups.id = companytowg.wg_id
+    inner join company on company.id = companytowg.company_id
+    group by workgroups.id,wg_name, company_id,company.companyname`,
     wgbank: `SELECT * FROM bankwg`,
+    get_id_wg: `SELECT id
+    from workgroups
+    where wg_name =`,
     company: `SELECT company.id as company_id,companyname,contact,coordinator,assignee_sber,company.service_type as st_id, service_name
     FROM company
     left join service_types on service_types.id = company.service_type`,
@@ -14,7 +26,7 @@ module.exports = {
     FROM companytowg
     left join company on company.id = companytowg.company_id
     left join bankwg on bankwg.id = companytowg.bank_wg_id
-    left join workgroups on workgroups.id = companytowg.wg_id`,
+    inner join workgroups on workgroups.id = companytowg.wg_id`,
     wgincomapny: `SELECT wg_name 
     FROM workgroups
     inner join companytowg on workgroups.id = companytowg.wg_id

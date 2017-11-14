@@ -283,6 +283,7 @@ export const carDriversAll = () => dispatch => {
       action: 'carDriversAll',
     }
   }).then((response) => {
+    console.log('dis',response.data);
     dispatch({
       type: "carDriversAll",
       data: response.data

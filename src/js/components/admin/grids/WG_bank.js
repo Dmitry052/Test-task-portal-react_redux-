@@ -57,8 +57,9 @@ class WG_bank extends Component {
                     data={this.props.store.wgbank.wgbank}
                     selectRow={selectRow}
                     options={options}
-                >
-                    <TableHeaderColumn dataField='wg_name' isKey={true} filter={{ type: 'TextFilter' }}>Рабочая группа</TableHeaderColumn>
+                >   
+                    <TableHeaderColumn dataField='id'width='16%' isKey={true} filter={{ type: 'TextFilter' }}>ID</TableHeaderColumn>
+                    <TableHeaderColumn dataField='wg_name' filter={{ type: 'TextFilter' }}>Рабочая группа</TableHeaderColumn>
                 </BootstrapTable>
                 <Modal isOpen={this.props.store.wgbank.editModal} contentLabel="Modal"
                     style={{ content: { width: '600px', margin: 'auto', 'backgroundColor': '#f5f5f5', height: '178px' } }}

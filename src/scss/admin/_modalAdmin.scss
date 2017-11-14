@@ -9,12 +9,20 @@
     float: right;
     margin: 30px 15px;
 }
-#company_conform{
+#user_conform{
+    padding-left: 0;
+}
+#company_conform,{
     padding: 0 0;
 }
 #st_conform{
     padding-right: 0;
 }
-#st_conform > input {
+
+#st_conform > input,#company_conform > input,#headerSTAdmin > div:nth-child(2) > select {
     cursor: default;
+}
+// цвет РГ в таблице пользователи
+#headerUsersAdmin > div.col-lg-9.col-md-12.col-sm-12 > textarea{
+    color: #001dff;
 }

@@ -95,6 +95,14 @@ export const currentMenu = (value) => dispatch => {
       }).catch(function (error) {
         alert("Нет ответа от сервера");
       });
+      axios({ method: 'get', url: `${apiPrefix}/admin`, params: { action: 'users', } }).then((response) => {
+        dispatch({
+          type: "USERS_ADMIN",
+          data: response.data
+        });
+      }).catch(function (error) {
+        alert("Нет ответа от сервера.USERS_ADMIN");
+      });
       axios({ method: 'get', url: `${apiPrefix}/admin`, params: { action: 'usertowg', } }).then((response) => {
         dispatch({
           type: "CONF_USER_TOWG_ADMIN",
@@ -157,6 +165,23 @@ export const deleteUsers = (users) => dispatch => {
   });
 };
 // --------------------------------------------
+// Вытаскиваем группы в которых состоит user
+export const usergroups = (user_id) => dispatch => {
+  axios({
+    method: 'get',
+    url: `${apiPrefix}/admin`,
+    params: {
+      action: 'usergroups',
+      data: user_id
+    }
+  }).then((response) => {
+    console.log('ответ', response.data);
+    dispatch({ type: 'SET_USER_GROUPS_USER_ADMIN', data: response.data })
+  }).catch(function (error) {
+    alert("Нет ответа от сервера");
+  });
+};
+// --------------------------------------------
 export const saveST = (st) => dispatch => {
   axios({
     method: 'post',
@@ -187,16 +212,28 @@ export const deleteST = (st) => dispatch => {
   });
 };
 // --------------------------------------------
+// Сохраняем рабочую группу и связку Компания - РГ
 export const saveWG = (wg) => dispatch => {
-  axios({
-    method: 'post',
-    url: `${apiPrefix}/admin`,
-    data: {
-      action: 'saveWG',
-      data: wg
-    }
-  }).then((response) => {
+  axios({ method: 'post', url: `${apiPrefix}/admin`, data: { action: 'saveWG', data: wg.wg_name } }).then((response) => {
     // 
+  }).catch(function (error) {
+    alert("Нет ответа от сервера");
+  });
+  axios({ method: 'get', url: `${apiPrefix}/admin`, params: { action: 'get_id_wg', data: wg.wg_name.name } }).then((response) => {
+    // console.log(wg.wg_name.type, response.data[0].id, wg.wg_name.company_id);
+    axios({
+      method: 'post', url: `${apiPrefix}/admin`,
+      data: {
+        action: 'saveCompanyToWG',
+        data: {
+          type: wg.wg_name.type,
+          wg_id: response.data[0].id,
+          company_id: wg.wg_name.company_id
+        }
+      }
+    }).then((response) => {
+      console.log("good write");
+    }).catch(function (error) { alert("Нет ответа от сервера"); });
   }).catch(function (error) {
     alert("Нет ответа от сервера");
   });
@@ -278,14 +315,7 @@ export const deleteCompany = (company) => dispatch => {
 };
 // --------------------------------------------
 export const saveCompanyToWG = (company) => dispatch => {
-  axios({
-    method: 'post',
-    url: `${apiPrefix}/admin`,
-    data: {
-      action: 'saveCompanyToWG',
-      data: company
-    }
-  }).then((response) => {
+  axios({ method: 'post', url: `${apiPrefix}/admin`, data: { action: 'saveCompanyToWG', data: company } }).then((response) => {
     // 
   }).catch(function (error) {
     alert("Нет ответа от сервера");
@@ -338,15 +368,9 @@ export const deleteUserToWG = (users) => dispatch => {
 };
 // --------------------------------------------
 export const wgincomapny = (company) => dispatch => {
-  axios({
-    method: 'get',
-    url: `${apiPrefix}/admin`,
-    params: {
-      action: 'wgincomapny',
-      data: company
-    }
-  }).then((response) => {
-    dispatch({ type: 'SET_LIST_WG_USER_TO_WG_ADMIN', data: response.data })
+  axios({ method: 'get', url: `${apiPrefix}/admin`, params: { action: 'wgincomapny', data: company } }).then((response) => {
+    dispatch({ type: 'SET_LIST_WG_USER_TO_WG_ADMIN', data: response.data });
+    dispatch({ type: 'SET_COMP_LIST_TO_WG_ADMIN', data: response.data });
   }).catch(function (error) {
     alert("Нет ответа от сервера");
   });

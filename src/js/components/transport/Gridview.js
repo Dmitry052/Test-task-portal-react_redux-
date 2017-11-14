@@ -446,6 +446,7 @@ class Gridview extends Component {
             })
         }
         // console.log('в гриде',this.props.transp);
+        console.log(this.props.transp.carDriversAll);
         return (
             // style={{  width: this.props.order.widthGrid, left: this.props.order.leftGrid }}
             <div className='gridTransp'  >
@@ -479,7 +480,7 @@ class Gridview extends Component {
                                     </tr>
                                 )
                             })
-                        }
+                        } 
                     </table>
                     <Button id="filterGrid" onClick={this.filterGrid.bind(this)}>Фильры</Button>
                     <BootstrapTable className='col-lg-12 col-md-12'

@@ -14,6 +14,9 @@ var query = {
                 return dbUtills.wg;
             case 'wgbank':
                 return dbUtills.wgbank;
+            case 'get_id_wg':
+                console.log(dbUtills.get_id_wg + `'${data}'`);
+                return dbUtills.get_id_wg + `'${data}'`;
             case 'users':
                 return dbUtills.users;
             case 'companytowg':
@@ -26,7 +29,9 @@ var query = {
                 return dbUtills.userinwg + `'${data}'` + ' GROUP BY username';
             case 'service_type_name':
                 return dbUtills.service_type_name + `'${data}'`;
-            default: 
+            case 'usergroups':
+                return dbUtills.usergroups + data;
+            default:
                 return null;
         }
     },
@@ -144,14 +149,18 @@ var query = {
                 var query;
                 if (data.type === 'INSERT') {
                     query = `INSERT INTO companytowg(company_id,bank_wg_id,wg_id) VALUES(
-                    ${data.company_id},${data.bank_wg_id},${data.wg_id})`;
+                    ${data.company_id},
+                    ${data.bank_wg_id === undefined ? null : data.bank_wg_id},
+                    ${data.wg_id})`;
                 }
                 else {
                     query = `UPDATE companytowg SET 
                 company_id =${data.company_id}, 
-                bank_wg_id = ${data.bank_wg_id},
+                bank_wg_id = ${data.bank_wg_id === undefined ? null : data.bank_wg_id},
                 wg_id = ${data.wg_id}
                 WHERE id = ${data.id}`;
+
+                    console.log(query);
                 }
                 return { type: 'COMPANY_TO_WG', data: query }
             case 'deleteCompanyToWG':
