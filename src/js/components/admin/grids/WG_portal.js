@@ -16,11 +16,14 @@ class Conformity extends Component {
     set_company_comp_to_wg(e) {
         this.props.set_company_comp_to_wg({ event: e.target.value, data: this.props.store.company.company });
     }
-    set_wgbank_comp_to_wg(e) {
-        this.props.set_wgbank_comp_to_wg({ event: e.target.value, data: this.props.store.wgbank.wgbank });
-    }
     set_wg_comp_to_wg(e) {
         this.props.set_wg_comp_to_wg({ event: e.target.value, data: this.props.store.wg.wg });
+    }
+    set_wg_input_to_wg() {
+        this.props.set_wg_input_to_wg(this.wg_input.value);
+    }
+    set_wgbank_comp_to_wg(e) {
+        this.props.set_wgbank_comp_to_wg({ event: e.target.value, data: this.props.store.wgbank.wgbank });
     }
     saveCompanyToWG() {
         this.props.saveCompanyToWG(this.props.store.companytowgAdmin.comp_to_wg);
@@ -96,6 +99,8 @@ class Conformity extends Component {
                             <span>РГ портала<span>*</span></span>
                             <input
                                 className='form-control'
+                                ref={(wg_input) => { this.wg_input = wg_input }}
+                                onChange={this.set_wg_input_to_wg.bind(this)}
                                 defaultValue={this.props.store.companytowgAdmin.comp_to_wg.wg_name || '---'}
                             />
                         </div>
@@ -158,6 +163,10 @@ export default connect(
         set_wg_comp_to_wg: (wg) => {
             dispatch({ type: 'SET_WG_COMP_TO_WG_ADMIN', data: wg });
         },
+        set_wg_input_to_wg: (wg_input) => {
+            
+            dispatch({ type: 'SET_WG_INPUT_COMP_TO_WG_ADMIN', data: wg_input });
+        },
         check_wg_comp_to_wg: (company) => {
             dispatch({ type: 'CHECK_COMP_TO_WG_ADMIN', data: company });
         },
@@ -166,6 +175,7 @@ export default connect(
         },
         saveCompanyToWG: (company) => {
             dispatch(saveCompanyToWG(company));
+            dispatch(currentMenu('wg'));
         },
         deleteCompanyToWG: (company) => {
             dispatch(deleteCompanyToWG(company));
@@ -211,7 +221,7 @@ export default connect(
         // },
         // ----------------------------------------
         currentMenu: () => {
-            dispatch(currentMenu('conformity'));
+            dispatch(currentMenu('wg'));
         }
     })
 )(Conformity);

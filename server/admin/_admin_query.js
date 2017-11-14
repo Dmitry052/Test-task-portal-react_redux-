@@ -15,7 +15,6 @@ var query = {
             case 'wgbank':
                 return dbUtills.wgbank;
             case 'get_id_wg':
-                console.log(dbUtills.get_id_wg + `'${data}'`);
                 return dbUtills.get_id_wg + `'${data}'`;
             case 'users':
                 return dbUtills.users;
@@ -96,11 +95,12 @@ var query = {
             case 'saveWG':
                 var query;
                 if (data.type === 'INSERT') {
-                    query = `INSERT INTO workgroups(wg_name) VALUES('${data.name}')`;
+                    query = `INSERT INTO workgroups(wg_name) VALUES('${data.wg_name}')`;
                 }
                 else {
                     query = `UPDATE workgroups SET wg_name ='${data.name}' WHERE id = ${data.id}`;
                 }
+
                 return { type: 'WG', data: query }
             case 'deleteWG':
                 var query = [];
@@ -159,8 +159,6 @@ var query = {
                 bank_wg_id = ${data.bank_wg_id === undefined ? null : data.bank_wg_id},
                 wg_id = ${data.wg_id}
                 WHERE id = ${data.id}`;
-
-                    console.log(query);
                 }
                 return { type: 'COMPANY_TO_WG', data: query }
             case 'deleteCompanyToWG':

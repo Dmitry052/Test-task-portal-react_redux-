@@ -138,6 +138,16 @@ export default function companyToWg(state = initialState, action) {
             edit_status: state.edit_status,
         };
     }
+    if (action.type === "SET_WG_INPUT_COMP_TO_WG_ADMIN") {
+        state.comp_to_wg.wg_name = action.data;
+        return {
+            companyToWg: state.companyToWg,
+            editModal: state.editModal,
+            comp_to_wg: state.comp_to_wg,
+            check_comp_to_wg: state.check_comp_to_wg,
+            edit_status: state.edit_status,
+        };
+    }
     if (action.type === "SET_COMP_LIST_TO_WG_ADMIN") {
         state.comp_to_wg.list_company = action.data;
         return {

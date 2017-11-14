@@ -303,12 +303,43 @@ export const deleteCompany = (company) => dispatch => {
   });
 };
 // --------------------------------------------
+// Сохраняем рабочую группу и связку Компания - РГ NEW
 export const saveCompanyToWG = (company) => dispatch => {
-  axios({ method: 'post', url: `${apiPrefix}/admin`, data: { action: 'saveCompanyToWG', data: company } }).then((response) => {
-    // 
-  }).catch(function (error) {
-    alert("Нет ответа от сервера");
-  });
+  if (company.type === 'INSERT') {
+    axios({ method: 'post', url: `${apiPrefix}/admin`, data: { action: 'saveWG', data: company } }).then((response) => {
+    }).catch(function (error) { alert("Нет ответа от сервера.saveWG"); });
+    axios({ method: 'get', url: `${apiPrefix}/admin`, params: { action: 'get_id_wg', data: company.wg_name } }).then((response) => {
+      axios({
+        method: 'post', url: `${apiPrefix}/admin`,
+        data: {
+          action: 'saveCompanyToWG',
+          data: {
+            type: company.type,
+            wg_id: response.data[0].id,
+            bank_wg_id: company.bank_wg_id,
+            company_id: company.company_id
+          }
+        }
+      }).then((response) => {
+      }).catch((error) => { alert("Нет ответа от сервера"); });
+    }).catch((error) => { alert("Нет ответа от сервера 1"); });
+  }
+  else {
+    axios({
+      method: 'post', url: `${apiPrefix}/admin`,
+      data: {
+        action: 'saveCompanyToWG',
+        data: {
+          type: company.type,
+          id: company.id,
+          wg_id: company.wg_id,
+          bank_wg_id: company.bank_wg_id,
+          company_id: company.company_id
+        }
+      }
+    }).then((response) => { }).catch((error) => { alert("Нет ответа от сервера"); });
+  }
+  console.log(company);
 };
 // --------------------------------------------
 export const deleteCompanyToWG = (company) => dispatch => {

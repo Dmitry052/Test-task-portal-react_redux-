@@ -86,7 +86,7 @@ app.get('/', function (req, res) {
 app.post('/', (req, res) => {
     // Данные с формы
     var uname = req.body.login;
-    var pwd = req.body.password;
+    var pwd = req.body.password; 
     // Поиск пользователя вБД
     var query = 'SELECT * FROM users WHERE authid = ?';
     sqlConnetction.query(query, ['local:' + uname], function (err, result) {
@@ -146,9 +146,7 @@ app.post('/admin', function (req, res) {
         return res.sendStatus(200);
     }
     if (query.type === 'DEL_USER_TO_WG' || query.type === 'DEL_COMPANY_TO_WG' || query.type === 'DELETE' || query.type === 'DEL_ST' || query.type === 'DEL_WG' || query.type === 'DEL_WGbank' || query.type === 'DEL_COMPANY') {
-       
         for (key in query.data) {
-            console.log(query.data[key]);
             sqlConnetction.query(query.data[key], (err, result) => { });
         }
         return res.sendStatus(200);

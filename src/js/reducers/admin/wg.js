@@ -47,7 +47,6 @@ export default function wg(state = initialState, action) {
         state.wg_name.name = action.data.wg_name;
         state.wg_name.companyname = action.data.companyname;
         state.wg_name.company_id = action.data.company_id
-        console.log(action.data, state.wg_name);
         return {
             wg: state.wg,
             editModal: state.editModal,

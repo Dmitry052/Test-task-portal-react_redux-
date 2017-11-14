@@ -14,7 +14,6 @@ class Usertowg extends Component {
         this.props.edit_user_to_wg(row);
     }
     set_user_user_to_wg(e) {
-        console.log(this.props.store);
         var company = (() => {
             for (let key in this.props.store.users.users) {
 

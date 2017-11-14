@@ -83,9 +83,7 @@ class Users extends Component {
         const usergroups = this.props.user.usergroups.map((item, i) => {
             return item.wg_name;
         }).join('\n');
-        console.log(usergroups);
         // console.log(this.props.store);
-        // console.log(this.props.user.usergroups);
         return (
             <div className='col-lg-12 col-md-12'>
                 <button className="btn btn-success" onClick={this.createUser.bind(this)}><i className="fa fa-plus" aria-hidden="true"></i></button>

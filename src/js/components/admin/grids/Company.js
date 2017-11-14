@@ -29,7 +29,6 @@ class Company extends Component {
         this.props.setCoordinatorCompany(this.coordinator.value);
     }
     saveToDCompany() {
-        console.log(this.props.store.company.set_comp);
         this.props.saveCompany(this.props.store.company.set_comp);
         this.props.currentMenu();
         this.props.showCompany();
