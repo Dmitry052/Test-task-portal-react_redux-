@@ -25,7 +25,7 @@ class LeftMenu extends Component {
             nameFilters: 'Меню',
             nameFilter1: 'Типы услуг',
             nameFilter2: 'Компании',
-            nameFilter3: 'Соответствия',
+            nameFilter3: 'Пользователь-Рабочая группа',
             nameFilter4: 'РГ портала',
             nameFilter5: 'Пользователи',
             nameFilter6: 'РГ банка',
@@ -51,7 +51,7 @@ class LeftMenu extends Component {
                 nameFilters: 'Меню',
                 nameFilter1: 'Типы услуг',
                 nameFilter2: 'Компании',
-                nameFilter3: 'Соответствия',
+                nameFilter3: 'Пользователь-Рабочая группа',
                 nameFilter4: 'РГ портала',
                 nameFilter5: 'Пользователи',
                 nameFilter6: 'РГ банка',
@@ -100,7 +100,7 @@ class LeftMenu extends Component {
                             
                             <NavItem eventKey={1} href="#" className={this.props.transp.left_menu.filter2} onClick={this.hendleMenu.bind(this, 'st', 1)}><i className={this.state.iconFilter1}></i>{' '}{this.state.nameFilter1}</NavItem>
                             
-                            <NavItem eventKey={3} href="#" className={this.props.transp.left_menu.filter4} onClick={this.hendleMenu.bind(this, 'conformity', 3)}><i className={this.state.iconFilter3}></i>{' '}{this.state.nameFilter3}</NavItem>
+                            <NavItem eventKey={3} href="#" className={this.props.transp.left_menu.filter4} onClick={this.hendleMenu.bind(this, 'usertowg', 3)}><i className={this.state.iconFilter3}></i>{' '}{this.state.nameFilter3}</NavItem>
                             
                             
                             

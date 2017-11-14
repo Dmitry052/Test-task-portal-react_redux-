@@ -6,7 +6,7 @@ import Wg from './grids/WG_portal';
 import Wgbank from './grids/WG_bank';
 import Users from './grids/Users';
 import Company from './grids/Company';
-import Conformity from './grids/Conformity';
+import Usertowg from './grids/usertowg';
 
 
 class Body extends Component {
@@ -17,13 +17,13 @@ class Body extends Component {
             users: <Users />, 
             st: <Service_type />, 
             company: <Company />, 
-            conformity: <Conformity />,
+            usertowg: <Usertowg />,
 
         };
         return (
             <div id="bodyAdmin">
                 {
-                    grids[this.props.body.currentMenu]
+                    grids[this.props.body.currentMenu] 
                 }
             </div>
         )

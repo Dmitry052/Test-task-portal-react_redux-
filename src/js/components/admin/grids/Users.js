@@ -105,7 +105,7 @@ class Users extends Component {
                 </BootstrapTable>
 
                 <Modal isOpen={this.props.users.editModal} contentLabel="Modal"
-                    style={{ content: { width: '600px', margin: 'auto', 'backgroundColor': '#f5f5f5', height: '400px' } }}
+                    style={{ content: { width: '600px', border: 0, margin: 'auto', 'backgroundColor': '#f5f5f5', height: '400px' } }}
                 >
                     <div id="headerUsersAdmin">
                         <button className="btn btn-danger" onClick={this.closeModal.bind(this)}><i className="fa fa-times" aria-hidden="true" /></button>
@@ -164,7 +164,7 @@ class Users extends Component {
                                 rows="3"
                                 cols="20"
                                 name="text"
-                                value={this.props.user.usergroups.map((item, i) => {return item.wg_name;}).join('\n') || ''}>
+                                value={this.props.user.usergroups.map((item, i) => { return item.wg_name; }).join('\n') || ''}>
                             </textarea>
                         </div>
                     </div>

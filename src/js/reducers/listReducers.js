@@ -6,7 +6,7 @@ import company from './admin/company';
 import companytowgAdmin from './admin/conformity/companytowg';
 import usertowgAdmin from './admin/conformity/usertowg';
 import users from './admin/users';
-import wg from './admin/wg';
+//import wg from './admin/wg';
 import wgbank from './admin/wgbank';
 
 import user from './_authUser';
@@ -47,9 +47,9 @@ const usertowgAdminReducer = combineReducers({
 const usersReducer = combineReducers({
     users
 });
-const wgReducer = combineReducers({
-    wg
-});
+// const wgReducer = combineReducers({
+//     wg
+// });
 const wgbankReducer = combineReducers({
     wgbank
 });
@@ -113,7 +113,7 @@ export default combineReducers({
     usertowgAdmin,
     company,
     users,
-    wg,
+    //wg,
     wgbank,
     // --------
     user,

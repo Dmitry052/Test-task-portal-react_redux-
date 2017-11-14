@@ -3,7 +3,7 @@ const initialState = {
     editModal: false,
     edit_status: false,
     comp_to_wg: {
-        
+
         type: '',
         id: '',
         companyname: '',
@@ -12,6 +12,9 @@ const initialState = {
         bank_wg_id: '',
         wg_name: '',
         wg_id: '',
+
+        addWGinput: 'none',
+        addWGselect: '',
 
         list_company: [],
         list_wg_bank: []
@@ -52,6 +55,9 @@ export default function companyToWg(state = initialState, action) {
         state.comp_to_wg.bank_wg_id = '';
         state.comp_to_wg.wg_name = '';
         state.comp_to_wg.wg_id = '';
+
+        state.comp_to_wg.addWGinput = '';
+        state.comp_to_wg.addWGselect = 'none';
         return {
             companyToWg: state.companyToWg,
             editModal: state.editModal,
@@ -71,6 +77,8 @@ export default function companyToWg(state = initialState, action) {
         state.comp_to_wg.wg_name = action.data.wg_name;
         state.comp_to_wg.wg_id = action.data.companytowg_wg_id;
 
+        state.comp_to_wg.addWGinput = 'none';
+        state.comp_to_wg.addWGselect = '';
         return {
             companyToWg: state.companyToWg,
             editModal: state.editModal,
