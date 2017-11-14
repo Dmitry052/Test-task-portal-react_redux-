@@ -6,7 +6,7 @@ import Wg from './grids/WG_portal';
 import Wgbank from './grids/WG_bank';
 import Users from './grids/Users';
 import Company from './grids/Company';
-import Usertowg from './grids/usertowg';
+import Usertowg from './grids/Usertowg';
 
 
 class Body extends Component {
