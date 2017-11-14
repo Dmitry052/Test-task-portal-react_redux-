@@ -127,6 +127,7 @@ app.post('/', (req, res) => {
 });
 // **************************************************
 app.get('/admin', function (req, res) {
+    console.log(req.query);
     var query = admin.action_GET(req.query.action,req.query.data);
     if (query !== null) {
         sqlConnetction.query(query, (err, result) => { res.send(result) });
