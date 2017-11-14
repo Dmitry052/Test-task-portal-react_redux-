@@ -208,7 +208,7 @@ export const saveWG = (wg) => dispatch => {
   }).catch(function (error) {
     alert("Нет ответа от сервера");
   });
-  axios({ method: 'get', url: `${apiPrefix}/admin`, params: { action: 'get_id_wg', data: wg.wg_name.name } }).then((response) => {
+  axios({ method: 'get', url: `${apiPrefix}/admin`, params: { action: 'getIDwg', data: wg.wg_name.name } }).then((response) => {
     // console.log(wg.wg_name.type, response.data[0].id, wg.wg_name.company_id);
     axios({
       method: 'post', url: `${apiPrefix}/admin`,
@@ -221,7 +221,7 @@ export const saveWG = (wg) => dispatch => {
         }
       }
     }).then((response) => {
-      console.log("good write");
+      // console.log("good write");
     }).catch(function (error) { alert("Нет ответа от сервера"); });
   }).catch(function (error) {
     alert("Нет ответа от сервера");
@@ -345,7 +345,7 @@ export const saveCompanyToWG = (company) => dispatch => {
       }
     }).then((response) => { }).catch((error) => { alert("Нет ответа от сервера"); });
   }
-  console.log(company);
+  // console.log(company);
 };
 // --------------------------------------------
 export const deleteCompanyToWG = (company) => dispatch => {
