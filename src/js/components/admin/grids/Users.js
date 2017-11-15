@@ -54,9 +54,16 @@ class Users extends Component {
 
     }
     saveToDBUser() {
-        this.props.saveUser(this.props.user);
-        this.props.currentMenu();
-        this.props.showUser();
+        console.log(this.props.user);
+        let check_user_input = false;
+        for (var key in this.props.user) {
+            if(key !== 'usergroups' && key !== 'pass' && key !== 'type' && key !== 'id'){
+                console.log(key);
+            }
+        }
+        // this.props.saveUser(this.props.user);
+        // this.props.currentMenu();
+        // this.props.showUser();
 
     }
     formatDate(cell, row) {   // String example
