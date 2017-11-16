@@ -125,8 +125,10 @@ export default function users(state = initialState, action) {
             usergroups: []
         }
         return {
+            users: state.users,
             user: state.user,
-            editModal: state.editModal
+            editModal: state.editModal,
+            check_users: state.check_users
         };
     }
     // ---------------------------------------
