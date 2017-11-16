@@ -73,17 +73,18 @@ class Users extends Component {
                     if (check_user) { alert("Пользователь с указаным лоигном уже существует"); check_user_input = true; break; }
                 }
                 if (key === 'pass') {
-                    if (this.props.user.type === 'INSERT' && this.props.user[key].length === 0) {
-                        alert("Не заполнено поле 'пароль'");
-                        check_user_input = true;
-                        break;
+                    if (this.props.user[key] !== null) {
+                        if (this.props.user.type === 'INSERT' && this.props.user[key].length === 0) {
+                            alert("Не заполнено поле 'пароль'");
+                            check_user_input = true;
+                            break;
+                        }
+                        if (this.props.user[key].length >= 1 && this.props.user[key].length < 5) {
+                            alert("Длина пароля должна быть не менее 5 символов");
+                            check_user_input = true;
+                            break;
+                        }
                     }
-                    if (this.props.user[key].length >= 1 && this.props.user[key].length < 5) {
-                        alert("Длина пароля должна быть не менее 5 символов");
-                        check_user_input = true;
-                        break;
-                    }
-
                 }
                 if (key === 'displayname' && this.props.user[key].length === 0) { alert("Не заполнено поле 'Отображаемое имя'"); check_user_input = true; break; }
                 if (key === 'email') {
@@ -95,7 +96,11 @@ class Users extends Component {
                         if (domen.length === 1 || domen[1] === '') { alert("Поле 'email' заполнено не корректно"); check_user_input = true; break; }
                     }
                 }
-                if (key === 'companyname' && this.props.user[key].length === 0) { alert("Не выбрана 'Компания'"); check_user_input = true; break; }
+                if (key === 'companyname') {
+                    if (this.props.user[key] === null) { alert("Не выбрана 'Компания'"); check_user_input = true; break; }
+                    if (this.props.user[key].length === 0) { alert("Не выбрана 'Компания'"); check_user_input = true; break; }
+
+                }
             }
         }
         if (!check_user_input) {
