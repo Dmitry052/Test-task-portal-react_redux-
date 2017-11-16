@@ -116,7 +116,6 @@ class Conformity extends Component {
             onSelect: this.handleRowSelect.bind(this),
             onSelectAll: this.handleRowSelect.bind(this)
         };
-        console.log(this.props.store);
         return (
             <div>
                 <div className='col-lg-12 col-md-12'>

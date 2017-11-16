@@ -19,7 +19,7 @@ class Usertowg extends Component {
                 if (this.props.store.users.users[key].username === e.target.value) {
                     return this.props.store.users.users[key].company_id;
                 }
-            }
+            } 
         })();
         this.props.set_user_user_to_wg({ event: e.target.value, data: this.props.store.users.users }, company_id);
     }
@@ -156,8 +156,8 @@ export default connect(
         },
         edit_user_to_wg: (row) => {
             dispatch({ type: 'EDIT_USER_TO_WG_ADMIN', data: row });
-            dispatch(wgincomapny(row.companyname));
-            dispatch(stName(row.companyname));
+            dispatch(wgincomapny(row.company_id));
+            dispatch(stName(row.company_id));
             // dispatch(userinwg(row.wg_name));
         },
         // ------------------------------------
