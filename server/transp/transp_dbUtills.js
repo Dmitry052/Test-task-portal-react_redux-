@@ -93,17 +93,17 @@ inner join usertowg on usertowg.wg_id = requests.workgroup_id
 inner join users on users.id = usertowg.username_id
 WHERE requests.status =8 and service_type=2 and username_id =`,               
 
-carDrivers: `select transport_drivers.id,driver_fullname,driver_phone,companyname,company.id as company_id,
-vehicle_brand,vehicle_id_number,vehicle_color,transport_drivers_status.status as status,transport_drivers.status as num_status
-from workgroups
-inner join usertowg on usertowg.wg_id = workgroups.id
-inner join companytowg on companytowg.wg_id  = workgroups.id
+carDrivers: `SELECT transport_drivers.id,driver_fullname,driver_phone,companyname,company.id as company_id,
+vehicle_brand,vehicle_id_number,vehicle_color,transport_drivers_status.status as status,transport_drivers.status as num_status 
+FROM users
+inner join usertowg on usertowg.username_id = users.id
+inner join companytowg on companytowg.wg_id = usertowg.wg_id
+inner join company on company.id = companytowg.company_id
 inner join transport_drivers on transport_drivers.company_id = companytowg.company_id
-
-inner join company on transport_drivers.company_id = company.id
+inner join transport_drivers_status on transport_drivers_status.id = transport_drivers.status
 inner join transport_cars on transport_cars.id = transport_drivers.car_id
-left join transport_drivers_status on transport_drivers.status = transport_drivers_status.id
-where transport_drivers.status = 1 and username_id=`,
+inner join transport_cars_status on transport_cars_status.id = transport_cars.status
+where transport_drivers.status = 1 and users.id =`,
 
 carDriversAll: `SELECT transport_drivers.id,driver_fullname,driver_phone,companyname,company.id as company_id,
 vehicle_brand,vehicle_id_number,vehicle_color,transport_drivers_status.status as status,transport_drivers.status as num_status 

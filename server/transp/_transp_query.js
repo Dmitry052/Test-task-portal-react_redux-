@@ -19,7 +19,9 @@ var query = {
                 return dbUtills.cancelClient + userID;
             // Для грида
             case 'carDrivers':
-                return dbUtills.carDrivers + userID;
+                return dbUtills.carDrivers + userID + ` group by id,driver_fullname,driver_phone,companyname,company_id,vehicle_brand,vehicle_id_number,vehicle_color,status,num_status`;
+            case 'carDriversAll':
+                return dbUtills.carDriversAll + userID + ` group by id,driver_fullname,driver_phone,companyname,company_id,vehicle_brand,vehicle_id_number,vehicle_color,status,num_status`;
             case 'cars':
                 return dbUtills.cars + userID;
             case 'cars-status':
@@ -34,8 +36,6 @@ var query = {
                 return dbUtills.companyToUser + userID;
             case 'closureStatuses':
                 return dbUtills.closureStatuses;
-            case 'carDriversAll':
-                return dbUtills.carDriversAll + userID + ` group by id,driver_fullname,driver_phone,companyname,company_id,vehicle_brand,vehicle_id_number,vehicle_color,status,num_status`;
             case 'transpExecutor':
                 return dbUtills.listExecutors + `'${data}'`;
             case 'getHistory':
