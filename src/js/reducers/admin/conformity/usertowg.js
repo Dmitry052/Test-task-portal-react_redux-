@@ -117,7 +117,10 @@ export default function userToWg(state = initialState, action) {
         };
     }
     if (action.type === "SET_WG_USER_TO_WG_ADMIN") {
-        state.user_to_wg.wgname = action.data.event;
+        state.user_to_wg.wgname = '';
+        state.user_to_wg.wg_id = '';
+
+        state.user_to_wg.wgname = action.data.event === '---' ? '' : action.data.event;
         state.user_to_wg.wg_id = (() => {
             for (let key in action.data.data) {
                 if (action.data.data[key].wg_name === action.data.event) {
@@ -133,6 +136,12 @@ export default function userToWg(state = initialState, action) {
         };
     }
     if (action.type === "SET_USER_USER_TO_WG_ADMIN") {
+        if (action.data.event === '---') {
+            state.user_to_wg.list_wg = [];
+        }
+        state.user_to_wg.wgname = '';
+        state.user_to_wg.wg_id = '';
+
         state.user_to_wg.username = action.data.event;
         state.user_to_wg.user_id = (() => {
             for (let key in action.data.data) {

@@ -19,7 +19,7 @@ class Usertowg extends Component {
                 if (this.props.store.users.users[key].username === e.target.value) {
                     return this.props.store.users.users[key].company_id;
                 }
-            } 
+            }
         })();
         this.props.set_user_user_to_wg({ event: e.target.value, data: this.props.store.users.users }, company_id);
     }
@@ -30,9 +30,36 @@ class Usertowg extends Component {
         this.props.set_wg_user_to_wg({ event: e.target.value, data: this.props.store.wg.wg });
     }
     saveUserToWG() {
-        this.props.saveUserToWG(this.props.store.usertowgAdmin.user_to_wg);
-        this.props.currentMenu();
-        this.props.show_user_to_wg();
+        console.log(this.props.store);
+        let check_user_to_wg_input = false;
+        for (var key in this.props.store.usertowgAdmin.user_to_wg) {
+            if (key === 'username') {
+                if (this.props.store.usertowgAdmin.user_to_wg[key].length === 0 || this.props.store.usertowgAdmin.user_to_wg[key].length === '---') {
+                    alert("Выберете пользователя");
+                    check_user_to_wg_input = true;
+                    break;
+                }
+            }
+            if (key === 'wgname') {
+                if (this.props.store.usertowgAdmin.user_to_wg[key].length === 0 || this.props.store.usertowgAdmin.user_to_wg[key].length === '---') {
+                    alert("Выберете рабочую группу");
+                    check_user_to_wg_input = true;
+                    break;
+                }
+            }
+        }
+        for (let key in this.props.store.usertowgAdmin.userToWg) {
+            if (this.props.store.usertowgAdmin.userToWg[key].username_id === this.props.store.usertowgAdmin.user_to_wg.user_id && this.props.store.usertowgAdmin.userToWg[key].wg_id === this.props.store.usertowgAdmin.user_to_wg.wg_id) {
+                alert("Выбранная связка уже существует");
+                check_user_to_wg_input = true;
+                break;
+            }
+        }
+        if (!check_user_to_wg_input) {
+            this.props.saveUserToWG(this.props.store.usertowgAdmin.user_to_wg);
+            this.props.currentMenu();
+            this.props.show_user_to_wg();
+        }
     }
     handleRowSelect_User(isSelected, rows) {
         if (isSelected instanceof Object) {
@@ -96,14 +123,15 @@ class Usertowg extends Component {
                                         //     return <option key={i} value={item.username}>{item.username}</option>
                                         // })
                                         this.props.store.users.users.map((item, i) => {
-                                            return <option key={i} value={item.username}>{item.username}</option>
+                                            let status = item.username === 'admin' ? true : false;
+                                            return <option disabled={status} key={i} value={item.username}>{item.username}</option>
                                         })
                                     }
 
                                 </select>
                             </div>
                             <div id="company_conform" className='col-lg-4 col-md-4 col-sm-6'>
-                                <span>Компания<span>*</span></span>
+                                <span>Компания</span>
                                 <input className='form-control' disabled='disabled' value={this.props.store.usertowgAdmin.user_to_wg.companyname || ''} />
                                 {/* <select className='form-control' value={this.props.store.usertowgAdmin.user_to_wg.companyname || '---'} onChange={this.set_company_user_to_wg.bind(this)} >
                                     <option key={777} value={'---'}>---</option>
@@ -163,9 +191,10 @@ export default connect(
         // ------------------------------------
         set_user_user_to_wg: (user, company_id) => {
             dispatch({ type: 'SET_USER_USER_TO_WG_ADMIN', data: user });
-            dispatch(stName(company_id));
-            dispatch(wgincomapny(company_id));
-            
+            if (user.event !== '---') {
+                dispatch(stName(company_id));
+                dispatch(wgincomapny(company_id));
+            }
         },
         set_company_user_to_wg: (company) => {
             // dispatch({ type: 'SET_COMPANY_USER_TO_WG_ADMIN', data: company });
