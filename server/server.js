@@ -170,6 +170,7 @@ app.get('/expl', function (req, res) {
 app.get('/transp', function (req, res) {
     if (req.query.action !== 'AUTH') {
         var query = transp.action_GET(req.query.action, req.session.userID, req.session.serviceType, req.session.companyID, req.query.executor, req.query.sb_id, req.session.authUser, req.query.data);
+        console.log(query);
         if (query !== null) {
             sqlConnetction.query(query, (err, result) => { res.send(result) });
         }

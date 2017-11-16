@@ -54,19 +54,57 @@ class Users extends Component {
 
     }
     saveToDBUser() {
-        console.log(this.props.user);
         let check_user_input = false;
         for (var key in this.props.user) {
-            if(key !== 'usergroups' && key !== 'pass' && key !== 'type' && key !== 'id'){
-                console.log(key);
+            if (key !== 'usergroups' && key !== 'type' && key !== 'id') {
+                if (key === 'login') {
+                    if (this.props.user[key].length < 4) {
+                        alert("Логин должен содержать не менее 4 символов");
+                        check_user_input = true;
+                        break;
+                    }
+                    let check_user = false;
+                    for (let key2 in this.props.store.users.users) {
+                        if (this.props.store.users.users[key2].username.toUpperCase() === this.props.user[key].toUpperCase()) {
+                            check_user = true;
+                            break;
+                        }
+                    }
+                    if (check_user) { alert("Пользователь с указаным лоигном уже существует"); check_user_input = true; break; }
+                }
+                if (key === 'pass') {
+                    if (this.props.user.type === 'INSERT' && this.props.user[key].length === 0) {
+                        alert("Не заполнено поле 'пароль'");
+                        check_user_input = true;
+                        break;
+                    }
+                    if (this.props.user[key].length >= 1 && this.props.user[key].length < 5) {
+                        alert("Длина пароля должна быть не менее 5 символов");
+                        check_user_input = true;
+                        break;
+                    }
+
+                }
+                if (key === 'displayname' && this.props.user[key].length === 0) { alert("Не заполнено поле 'Отображаемое имя'"); check_user_input = true; break; }
+                if (key === 'email') {
+                    if (this.props.user[key].length === 0) { alert("Не заполнено поле 'email'"); check_user_input = true; break; }
+                    let email = this.props.user[key].split('@');
+                    if (email.length > 1) {
+                        if (email[1] === '') { alert("Поле 'email' заполнено не корректно"); check_user_input = true; break; }
+                        let domen = email[1].split('.');
+                        if (domen.length === 1 || domen[1] === '') { alert("Поле 'email' заполнено не корректно"); check_user_input = true; break; }
+                    }
+                }
+                if (key === 'companyname' && this.props.user[key].length === 0) { alert("Не выбрана 'Компания'"); check_user_input = true; break; }
             }
         }
-        // this.props.saveUser(this.props.user);
-        // this.props.currentMenu();
-        // this.props.showUser();
-
+        if (!check_user_input) {
+            this.props.saveUser(this.props.user);
+            this.props.currentMenu();
+            this.props.showUser();
+        }
     }
-    formatDate(cell, row) {   // String example
+    formatDate(cell, row) {
         var date = new Date(Number(cell) * 1000);
         var hours = (date.getHours() < 10 ? "0" : "") + date.getHours();
         var min = (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
@@ -146,6 +184,7 @@ class Users extends Component {
                             <input type='email'
                                 value={this.props.user.email}
                                 className='form-control'
+                                data-toggle="validator"
                                 ref={(email) => { this.email = email }}
                                 onChange={this.setEmail.bind(this)}
                             />

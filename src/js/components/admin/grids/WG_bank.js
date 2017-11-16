@@ -17,9 +17,27 @@ class WG_bank extends Component {
         this.props.setNameWG_bank(this.bankWG.value);
     }
     saveToDBbankWG() {
-        this.props.saveWG_bank(this.props.store.wgbank.wgbank_name);
-        this.props.currentMenu();
-        this.props.showWG_bank();
+        let check_wgbank = false;
+        if (this.props.store.wgbank.wgbank_name.name.length === 0) {
+            alert("Незаполнено поле 'Рабочая группа банка'");
+            check_wgbank = true;
+        }
+        else {
+            for (let key in this.props.store.wgbank.wgbank) {
+                if (this.props.store.wgbank.wgbank_name.type === 'INSERT' && this.props.store.wgbank.wgbank[key].wg_name.toUpperCase() === this.props.store.wgbank.wgbank_name.name.toUpperCase()) {
+                    alert("Данная группа уже существует");
+                    check_wgbank = true;
+                    break;
+                }
+            }
+        }
+
+        if (!check_wgbank) {
+            this.props.saveWG_bank(this.props.store.wgbank.wgbank_name);
+            this.props.currentMenu();
+            this.props.showWG_bank();
+        }
+
     }
     handleRowSelect(isSelected, rows) {
         if (isSelected instanceof Object) {
@@ -57,8 +75,8 @@ class WG_bank extends Component {
                     data={this.props.store.wgbank.wgbank}
                     selectRow={selectRow}
                     options={options}
-                >   
-                    <TableHeaderColumn dataField='id'width='16%' isKey={true} filter={{ type: 'TextFilter' }}>ID</TableHeaderColumn>
+                >
+                    <TableHeaderColumn dataField='id' width='16%' isKey={true} filter={{ type: 'TextFilter' }}>ID</TableHeaderColumn>
                     <TableHeaderColumn dataField='wg_name' filter={{ type: 'TextFilter' }}>Рабочая группа</TableHeaderColumn>
                 </BootstrapTable>
                 <Modal isOpen={this.props.store.wgbank.editModal} contentLabel="Modal"

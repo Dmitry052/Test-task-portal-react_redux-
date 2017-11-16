@@ -164,7 +164,6 @@ export const usergroups = (user_id) => dispatch => {
       data: user_id
     }
   }).then((response) => {
-    console.log('ответ', response.data);
     dispatch({ type: 'SET_USER_GROUPS_USER_ADMIN', data: response.data })
   }).catch(function (error) {
     alert("Нет ответа от сервера");
@@ -203,7 +202,7 @@ export const deleteST = (st) => dispatch => {
 // --------------------------------------------
 // Сохраняем рабочую группу и связку Компания - РГ
 export const saveWG = (wg) => dispatch => {
-  axios({ method: 'post', url: `${apiPrefix}/admin`, data: { action: 'saveWG', data: wg.wg_name } }).then((response) => {
+  axios({ method: 'post', url: `${apiPrefix}/admin`, data: { action: 'saveWG', data: { wg: wg.wg_name, company_id: wg.company_id } } }).then((response) => {
     // 
   }).catch(function (error) {
     alert("Нет ответа от сервера");

@@ -29,9 +29,19 @@ class Company extends Component {
         this.props.setCoordinatorCompany(this.coordinator.value);
     }
     saveToDCompany() {
-        this.props.saveCompany(this.props.store.company.set_comp);
-        this.props.currentMenu();
-        this.props.showCompany();
+
+        let check_company_input = false;
+        for (let key in this.props.store.company.set_comp) {
+            if (key !== 'type' && key !== 'st_id' && key !== 'id') {
+                if (this.props.store.company.set_comp[key] === null) { alert("Не заполнены обязательные поля"); check_company_input = true; break; }
+                if (this.props.store.company.set_comp[key].length === 0) { alert("Не заполнены обязательные поля"); check_company_input = true; break; }
+            }
+        }
+        if (!check_company_input) {
+            this.props.saveCompany(this.props.store.company.set_comp);
+            this.props.currentMenu();
+            this.props.showCompany();
+        }
     }
     handleRowSelect(isSelected, rows) {
         if (isSelected instanceof Object) {

@@ -62,6 +62,16 @@ textarea {
 #headerUsersAdmin > div.col-lg-9.col-md-12.col-sm-12 > textarea {
   color: #001dff; }
 
+#headerUsersAdmin > div > span > span, #headerSTAdmin > div > span > span {
+  padding-left: 5px;
+  color: #f00; }
+
+#headerSTAdmin > div > label {
+  position: absolute;
+  margin-left: 90px;
+  z-index: 999;
+  font-weight: 400; }
+
 .headerApp {
   width: 100%;
   background: #303a46;

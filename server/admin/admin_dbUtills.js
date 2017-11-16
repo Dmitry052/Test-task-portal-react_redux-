@@ -8,10 +8,9 @@ module.exports = {
     inner join usertowg on usertowg.wg_id = workgroups.id
     inner join users on users.id = usertowg.username_id
     where users.id =`,
-    wg: `SELECT workgroups.id,wg_name, company_id,company.companyname 
-    FROM companytowg
-    inner join workgroups on workgroups.id = companytowg.wg_id
-    inner join company on company.id = companytowg.company_id
+    wg: `SELECT workgroups.id,wg_name, company.id as company_id,company.companyname  
+    FROM workgroups
+    inner join company on company.id = workgroups.company_id
     group by workgroups.id,wg_name, company_id,company.companyname`,
     wgbank: `SELECT * FROM bankwg`,
     get_id_wg: `SELECT id
@@ -29,9 +28,7 @@ module.exports = {
     inner join workgroups on workgroups.id = companytowg.wg_id`,
     wgincomapny: `SELECT wg_name 
     FROM workgroups
-    inner join companytowg on workgroups.id = companytowg.wg_id
-    inner join company on company.id = companytowg.company_id
-    where companyname =`,
+    where company_id =`,
     userinwg: `SELECT username 
     FROM users
     inner join usertowg on usertowg.username_id = users.id
@@ -41,6 +38,6 @@ module.exports = {
     left join workgroups on workgroups.id = usertowg.wg_id
     left join users on users.id = usertowg.username_id
     left join company on company.id = users.company_id`,
-    service_type_name: `SELECT service_types.id,service_name FROM service_types inner join company on company.service_type = service_types.id where companyname =`
+    service_type_name: `SELECT service_types.id,service_name FROM service_types inner join company on company.service_type = service_types.id where company.id =`
 
 }

@@ -14,15 +14,14 @@ class Usertowg extends Component {
         this.props.edit_user_to_wg(row);
     }
     set_user_user_to_wg(e) {
-        var company = (() => {
+        let company_id = (() => {
             for (let key in this.props.store.users.users) {
-
-                if (this.props.store.users.users[key].displayname === e.target.value) {
-                    return this.props.store.users.users[key].companyname;
+                if (this.props.store.users.users[key].username === e.target.value) {
+                    return this.props.store.users.users[key].company_id;
                 }
             }
         })();
-        this.props.set_user_user_to_wg({ event: e.target.value, data: this.props.store.users.users }, company);
+        this.props.set_user_user_to_wg({ event: e.target.value, data: this.props.store.users.users }, company_id);
     }
     set_company_user_to_wg(e) {
         // this.props.set_company_user_to_wg({ event: e.target.value, data: this.props.store.company.company });
@@ -162,11 +161,11 @@ export default connect(
             // dispatch(userinwg(row.wg_name));
         },
         // ------------------------------------
-        set_user_user_to_wg: (user, company) => {
-            console.log("dispatch set_user_user_to_wg",user, company);
+        set_user_user_to_wg: (user, company_id) => {
             dispatch({ type: 'SET_USER_USER_TO_WG_ADMIN', data: user });
-            dispatch(wgincomapny(company));
-            dispatch(stName(company));
+            dispatch(stName(company_id));
+            dispatch(wgincomapny(company_id));
+            
         },
         set_company_user_to_wg: (company) => {
             // dispatch({ type: 'SET_COMPANY_USER_TO_WG_ADMIN', data: company });

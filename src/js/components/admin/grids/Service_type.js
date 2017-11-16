@@ -17,9 +17,27 @@ class Service_type extends Component {
         this.props.setNameST(this.service_name.value);
     }
     saveToDBST() {
-        this.props.saveST(this.props.store.service_types.st_name);
-        this.props.currentMenu();
-        this.props.showST();
+        console.log(this.props.store.service_types.st);
+        let check_st = false;
+        if (this.props.store.service_types.st_name.name.length === 0) {
+            alert("Незаполнено поле 'Назавание сервиса'");
+            check_st = true;
+        }
+        else {
+            for (let key in this.props.store.service_types.st) {
+                if (this.props.store.service_types.st[key].service_name.toUpperCase() === this.props.store.service_types.st_name.name.toUpperCase()) {
+                    alert("Данный сервис уже существует");
+                    check_st = true;
+                    break;
+                }
+            }
+        }
+        if (!check_st) {
+            this.props.saveST(this.props.store.service_types.st_name);
+            this.props.currentMenu();
+            this.props.showST();
+        }
+
     }
     handleRowSelect(isSelected, rows) {
         if (isSelected instanceof Object) {
@@ -58,7 +76,7 @@ class Service_type extends Component {
                     selectRow={selectRow}
                     options={options}
                 >
-                    <TableHeaderColumn dataField='id'width='16%' isKey={true} filter={{ type: 'TextFilter' }} >ID</TableHeaderColumn>
+                    <TableHeaderColumn dataField='id' width='16%' isKey={true} filter={{ type: 'TextFilter' }} >ID</TableHeaderColumn>
                     <TableHeaderColumn dataField='service_name' filter={{ type: 'TextFilter' }} >Сервис</TableHeaderColumn>
                 </BootstrapTable>
                 <Modal isOpen={this.props.store.service_types.editModal} contentLabel="Modal"
@@ -104,7 +122,7 @@ export default connect(
             dispatch({ type: 'CHECK_ST_ADMIN', data: st });
         },
         uncheck_st: (st) => {
-            dispatch({ type: 'UNCHECK_ST_ADMIN'});
+            dispatch({ type: 'UNCHECK_ST_ADMIN' });
         },
         saveST: (st) => {
             dispatch(saveST(st));

@@ -26,3 +26,15 @@
 #headerUsersAdmin > div.col-lg-9.col-md-12.col-sm-12 > textarea{
     color: #001dff;
 }
+// Цвета звёздочек обязательных полей
+#headerUsersAdmin > div > span > span,#headerSTAdmin > div > span > span{
+    padding-left: 5px;
+    color: #f00;
+}
+// показать все группы
+#headerSTAdmin > div > label{
+    position: absolute;
+    margin-left: 90px;
+    z-index: 999;
+    font-weight: 400;
+}

@@ -17,7 +17,13 @@ const initialState = {
         addWGselect: '',
 
         list_company: [],
-        list_wg_bank: []
+        list_wg_bank: [],
+
+        showOldWg: false,
+        checked_wg: false,
+
+        showCheck: ''
+
 
     },
     check_comp_to_wg: new Map(),
@@ -38,7 +44,6 @@ export default function companyToWg(state = initialState, action) {
         state.editModal = !state.editModal;
         return {
             companyToWg: state.companyToWg,
-            edit_status: true,
             editModal: state.editModal,
             comp_to_wg: state.comp_to_wg,
             check_comp_to_wg: state.check_comp_to_wg,
@@ -47,6 +52,7 @@ export default function companyToWg(state = initialState, action) {
     }
     if (action.type === "CREATE_COMP_TO_WG_ADMIN") {
         state.editModal = !state.editModal;
+        state.comp_to_wg.showCheck = '';
         state.comp_to_wg.type = 'INSERT';
         state.comp_to_wg.id = '';
         state.comp_to_wg.companyname = '';
@@ -69,6 +75,7 @@ export default function companyToWg(state = initialState, action) {
     if (action.type === "EDIT_COMP_TO_WG_ADMIN") {
         state.editModal = !state.editModal;
         state.comp_to_wg.type = 'UPDATE';
+        state.comp_to_wg.showCheck = 'none';
         state.comp_to_wg.id = action.data.companytowg_id;
         state.comp_to_wg.companyname = action.data.companyname;
         state.comp_to_wg.company_id = action.data.company_id;
@@ -88,6 +95,7 @@ export default function companyToWg(state = initialState, action) {
         };
     }
     if (action.type === "SET_COMPANY_COMP_TO_WG_ADMIN") {
+        if (action.data.event === '---') { state.comp_to_wg.checked_wg = false; }
         state.comp_to_wg.companyname = action.data.event;
         state.comp_to_wg.company_id = (() => {
             for (let key in action.data.data) {
@@ -160,6 +168,25 @@ export default function companyToWg(state = initialState, action) {
     }
     if (action.type === "CHECK_COMP_TO_WG_ADMIN") {
         state.check_comp_to_wg.set(action.data.id, action.data.status);
+        return {
+            companyToWg: state.companyToWg,
+            editModal: state.editModal,
+            comp_to_wg: state.comp_to_wg,
+            check_comp_to_wg: state.check_comp_to_wg,
+            edit_status: state.edit_status,
+        }
+    }
+    if (action.type === "SHOW_OLD_WG_COMP_TO_WG_ADMIN") {
+        if (state.comp_to_wg.addWGinput === '') {
+            state.comp_to_wg.addWGinput = 'none';
+            state.comp_to_wg.addWGselect = '';
+            state.comp_to_wg.checked_wg = true;
+        }
+        else {
+            state.comp_to_wg.addWGinput = '';
+            state.comp_to_wg.addWGselect = 'none';
+            state.comp_to_wg.checked_wg = false;
+        }
         return {
             companyToWg: state.companyToWg,
             editModal: state.editModal,
