@@ -32,7 +32,6 @@ class Header extends Component {
 
     render() {
         const inputWidth = { width: this.state.width };
-        console.log(this.props.store);
         return (
 
             <div className="headerApp">

@@ -86,7 +86,7 @@ app.get('/', function (req, res) {
 app.post('/', (req, res) => {
     // Данные с формы
     var uname = req.body.login;
-    var pwd = req.body.password; 
+    var pwd = req.body.password;
     // Поиск пользователя вБД
     var query = 'SELECT * FROM users WHERE authid = ?';
     sqlConnetction.query(query, ['local:' + uname], function (err, result) {
@@ -128,7 +128,7 @@ app.post('/', (req, res) => {
 // **************************************************
 app.get('/admin', function (req, res) {
     console.log(req.query);
-    var query = admin.action_GET(req.query.action,req.query.data);
+    var query = admin.action_GET(req.query.action, req.query.data);
     if (query !== null) {
         sqlConnetction.query(query, (err, result) => { res.send(result) });
     }
@@ -141,9 +141,9 @@ app.get('/admin', function (req, res) {
 });
 app.post('/admin', function (req, res) {
     var query = admin.action_POST(req.body.action, req.body.data);
-    
+
     if (query.type === 'USER_TO_WG' || query.type === 'COMPANY_TO_WG' || query.type === 'INSERT' || query.type === 'UPDATE' || query.type === 'ST' || query.type === 'WG' || query.type === 'WGbank' || query.type === 'COMPANY') {
-        sqlConnetction.query(query.data, function (err, result) {  });
+        sqlConnetction.query(query.data, function (err, result) { });
         return res.sendStatus(200);
     }
     if (query.type === 'DEL_USER_TO_WG' || query.type === 'DEL_COMPANY_TO_WG' || query.type === 'DELETE' || query.type === 'DEL_ST' || query.type === 'DEL_WG' || query.type === 'DEL_WGbank' || query.type === 'DEL_COMPANY') {
@@ -170,7 +170,6 @@ app.get('/expl', function (req, res) {
 app.get('/transp', function (req, res) {
     if (req.query.action !== 'AUTH') {
         var query = transp.action_GET(req.query.action, req.session.userID, req.session.serviceType, req.session.companyID, req.query.executor, req.query.sb_id, req.session.authUser, req.query.data);
-        console.log(query);
         if (query !== null) {
             sqlConnetction.query(query, (err, result) => { res.send(result) });
         }

@@ -35,7 +35,7 @@ var query = {
             case 'closureStatuses':
                 return dbUtills.closureStatuses;
             case 'carDriversAll':
-                return dbUtills.carDriversAll + userID;
+                return dbUtills.carDriversAll + userID + ` group by id,driver_fullname,driver_phone,companyname,company_id,vehicle_brand,vehicle_id_number,vehicle_color,status,num_status`;
             case 'transpExecutor':
                 return dbUtills.listExecutors + `'${data}'`;
             case 'getHistory':

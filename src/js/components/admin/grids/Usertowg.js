@@ -212,6 +212,7 @@ export default connect(
         },
         saveUserToWG: (user) => {
             dispatch(saveUserToWG(user));
+            dispatch(currentMenu('usertowg'));
         },
         deleteUserToWG: (user) => {
             dispatch(deleteUserToWG(user));

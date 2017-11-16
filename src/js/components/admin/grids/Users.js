@@ -262,6 +262,7 @@ export default connect(
         },
         saveUser: (user) => {
             dispatch(saveUser(user));
+            dispatch(currentMenu('users'));
         },
         deleteUsers: (users) => {
             dispatch(deleteUsers(users));

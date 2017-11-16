@@ -27,7 +27,6 @@ class History extends Component {
                             }
                             
                             if (s[0] === 'new' && s[1] === j[1]) {
-                                console.log(key,key2,item[key],item[key2],item[key] !== item[key2]);
                                 if (item[key] !== item[key2]) {
                                     switch (s[1]) {
                                         case 'status':
@@ -86,7 +85,6 @@ class History extends Component {
                     }
                 }
             });
-            console.log(data);
         }
         return (
             <div className="dataHistory">

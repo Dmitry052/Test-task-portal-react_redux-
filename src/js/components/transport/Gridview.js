@@ -446,7 +446,7 @@ class Gridview extends Component {
             })
         }
         // console.log('в гриде',this.props.transp);
-        console.log(this.props.transp.carDriversAll);
+        console.log(this.props.transp);
         return (
             // style={{  width: this.props.order.widthGrid, left: this.props.order.leftGrid }}
             <div className='gridTransp'  >
@@ -459,6 +459,7 @@ class Gridview extends Component {
                         sheet="sheet"
                         buttonText="Экспорт в Excel" />
                     <table id="tableEXCEL" style={{ display: 'none' }}>
+                    <tbody>
                         <tr>
                             <th>ID Сбербанка</th>
                             <th>Статус</th>
@@ -467,6 +468,7 @@ class Gridview extends Component {
                             <th>Дата создания</th>
                             <th>Дата поездки</th>
                         </tr>
+
                         {
                             this.props.transp.transp.map((order, i) => {
                                 return (
@@ -481,6 +483,7 @@ class Gridview extends Component {
                                 )
                             })
                         } 
+                        </tbody>
                     </table>
                     <Button id="filterGrid" onClick={this.filterGrid.bind(this)}>Фильры</Button>
                     <BootstrapTable className='col-lg-12 col-md-12'
