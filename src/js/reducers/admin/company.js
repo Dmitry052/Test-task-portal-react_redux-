@@ -64,7 +64,6 @@ export default function company(state = initialState, action) {
         state.set_comp.assignee_sber = action.data.row.assignee_sber;
         state.set_comp.contact = action.data.row.contact;
         state.set_comp.coordinator = action.data.row.coordinator;
-        console.log(state.set_comp);
         return {
             company: state.company,
             set_comp: state.set_comp,
@@ -74,7 +73,6 @@ export default function company(state = initialState, action) {
     }
     if (action.type === "CHECK_COMPANY_ADMIN") {
         state.check_company.set(action.data.id, action.data.status);
-        console.log(action.data);
         return {
             company: state.company,
             set_comp: state.set_comp,

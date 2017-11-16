@@ -70,7 +70,7 @@ class Users extends Component {
                             break;
                         }
                     }
-                    if (check_user) { alert("Пользователь с указаным лоигном уже существует"); check_user_input = true; break; }
+                    if (check_user && this.props.user.type === 'INSERT') { alert("Пользователь с указаным лоигном уже существует"); check_user_input = true; break; }
                 }
                 if (key === 'pass') {
                     if (this.props.user[key] !== null) {

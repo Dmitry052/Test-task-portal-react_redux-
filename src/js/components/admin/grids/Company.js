@@ -188,6 +188,7 @@ export default connect(
         },
         saveCompany: (company) => {
             dispatch(saveCompany(company));
+            dispatch(currentMenu('company'));
         },
         deleteCompany: (company) => {
             dispatch(deleteCompany(company));
