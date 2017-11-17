@@ -49,14 +49,14 @@ class Conformity extends Component {
 
         for (let key in comp_to_wg) {
             if (key === 'companyname') {
-                if (comp_to_wg[key].length === 0) {
+                if (comp_to_wg[key].length === 0 || comp_to_wg[key] === '---') {
                     alert("Не указана компания");
                     check_wg_input = true;
                     break;
                 }
             }
             if (key === 'wg_name') {
-                if (comp_to_wg[key].length === 0) {
+                if (comp_to_wg[key].length === 0 || comp_to_wg[key] === '---') {
                     alert("Не указана рабочая группа портала");
                     check_wg_input = true;
                     break;
@@ -64,7 +64,7 @@ class Conformity extends Component {
 
             }
             if (key === 'bank_wg_name') {
-                if (comp_to_wg[key].length === 0) {
+                if (comp_to_wg[key].length === 0 || comp_to_wg[key] === '---') {
                     alert("Не указана рабочая группа банка");
                     check_wg_input = true;
                     break;
@@ -72,7 +72,7 @@ class Conformity extends Component {
 
             }
         }
-        // console.log('На входе',this.props.store.companytowgAdmin.comp_to_wg.company_id,this.props.store.companytowgAdmin.comp_to_wg.bank_wg_id,this.props.store.companytowgAdmin.comp_to_wg.wg_id);
+        console.log('На входе',this.props.store.companytowgAdmin.comp_to_wg.company_id,this.props.store.companytowgAdmin.comp_to_wg.wg_id,this.props.store.companytowgAdmin.comp_to_wg.bank_wg_id);
         for (let key in this.props.store.companytowgAdmin.companyToWg) {
             // console.log(this.props.store.companytowgAdmin.companyToWg[key].company_id, this.props.store.companytowgAdmin.companyToWg[key].bank_wg_id,this.props.store.companytowgAdmin.companyToWg[key].companytowg_wg_id);
             if (this.props.store.companytowgAdmin.companyToWg[key].company_id === this.props.store.companytowgAdmin.comp_to_wg.company_id && this.props.store.companytowgAdmin.companyToWg[key].bank_wg_id === this.props.store.companytowgAdmin.comp_to_wg.bank_wg_id && this.props.store.companytowgAdmin.companyToWg[key].companytowg_wg_id === this.props.store.companytowgAdmin.comp_to_wg.wg_id) {
@@ -82,9 +82,9 @@ class Conformity extends Component {
             }
         }
         if (!check_wg_input) {
-            this.props.saveCompanyToWG(this.props.store.companytowgAdmin.comp_to_wg);
-            this.props.currentMenu();
-            this.props.show_comp_to_wg();
+            // this.props.saveCompanyToWG(this.props.store.companytowgAdmin.comp_to_wg);
+            // this.props.currentMenu();
+            // this.props.show_comp_to_wg();
         }
     }
     handleRowSelect(isSelected, rows) {
@@ -244,46 +244,6 @@ export default connect(
         deleteCompanyToWG: (company) => {
             dispatch(deleteCompanyToWG(company));
         },
-        // -----------------------------------------
-        // show_user_to_wg: () => {
-        //     dispatch({ type: 'SHOW_USER_TO_WG_ADMIN' });
-        // },
-        // create_new_user_to_wg: () => {
-        //     dispatch({ type: 'CREATE_USER_TO_WG_ADMIN' });
-        // },
-        // edit_user_to_wg: (row) => {
-        //     dispatch({ type: 'EDIT_USER_TO_WG_ADMIN', data: row });
-        //     dispatch(wgincomapny(row.companyname));
-        //     dispatch(stName(row.companyname));
-        //     // dispatch(userinwg(row.wg_name));
-        // },
-        // // ------------------------------------
-        // set_user_user_to_wg: (user,company) => {
-        //     dispatch({ type: 'SET_USER_USER_TO_WG_ADMIN', data: user });
-        //     dispatch(wgincomapny(company));
-        //     dispatch(stName(company));
-        // },
-        // set_company_user_to_wg: (company) => {
-        //     // dispatch({ type: 'SET_COMPANY_USER_TO_WG_ADMIN', data: company });
-        // },
-        // set_wg_user_to_wg: (wg) => {
-        //     dispatch({ type: 'SET_WG_USER_TO_WG_ADMIN', data: wg });
-        //     // dispatch(userinwg(wg.event));
-        // },
-        // // ------------------------------------
-        // check_user_to_wg: (wg) => {
-        //     dispatch({ type: 'CHECK_USER_TO_WG_ADMIN', data: wg });
-        // },
-        // uncheck_user_to_wg: () => {
-        //     dispatch({ type: 'UNCHECK_USER_TO_WG_ADMIN' });
-        // },
-        // saveUserToWG: (user) => {
-        //     dispatch(saveUserToWG(user));
-        // },
-        // deleteUserToWG: (user) => {
-        //     dispatch(deleteUserToWG(user));
-        // },
-        // ----------------------------------------
         currentMenu: () => {
             dispatch(currentMenu('wg'));
         }

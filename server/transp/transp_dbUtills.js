@@ -5,7 +5,8 @@ FROM_UNIXTIME(date_created,"%d.%m.%Y %h:%i")as date_created,FROM_UNIXTIME(date_d
 bank_contact,bank_contact_phone,travel_from,travel_to,ride_stops,ride_start_time,ride_end_time,ride_duration,ride_distance,
 ride_idle_time,ride_price,solution,driver_id,workgroup_id,wg_name,displayname,requests.id,commentary_for_driver,
 workgroups.id as wg_id, users.id as user_id,
-(select username from users where id = assignee) as assignee
+(select displayname from users where id = assignee) as assignee,
+assignee as assignee_id
 from requests
 left JOIN company ON requests.company_id = company.id
 left JOIN workgroups ON workgroups.id = requests.workgroup_id
@@ -18,7 +19,7 @@ newOrder: `select sb_id, transport_statuses.status as status, requests.status as
 FROM_UNIXTIME(date_created,"%d.%m.%Y %h:%i")as date_created,FROM_UNIXTIME(date_deadline,"%d.%m.%Y %h:%i")as date_deadline,date_deadline as unix_date_deadline,
 bank_contact,bank_contact_phone,travel_from,travel_to,ride_stops,ride_start_time,ride_end_time,ride_duration,ride_distance,
 ride_idle_time,ride_price,solution,driver_id,workgroup_id,wg_name,assignee,displayname,requests.id,commentary_for_driver,
-(select username from users where id = assignee) as assignee
+(select displayname from users where id = assignee) as assignee
 from requests
 left JOIN company ON requests.company_id = company.id
 left JOIN workgroups ON workgroups.id = requests.workgroup_id
@@ -31,7 +32,7 @@ toMeTransp: `select sb_id, transport_statuses.status as status, requests.status 
 FROM_UNIXTIME(date_created,"%d.%m.%Y %h:%i")as date_created,FROM_UNIXTIME(date_deadline,"%d.%m.%Y %h:%i")as date_deadline,date_deadline as unix_date_deadline,
 bank_contact,bank_contact_phone,travel_from,travel_to,ride_stops,ride_start_time,ride_end_time,ride_duration,ride_distance,
 ride_idle_time,ride_price,solution,driver_id,workgroup_id,wg_name,displayname,requests.id,commentary_for_driver,
-(select username from users where id = assignee) as assignee
+(select displayname from users where id = assignee) as assignee
 from requests
 left JOIN company ON requests.company_id = company.id
 left JOIN workgroups ON workgroups.id = requests.workgroup_id
@@ -45,7 +46,7 @@ FROM_UNIXTIME(date_created,"%d.%m.%Y %h:%i")as date_created,FROM_UNIXTIME(date_d
 bank_contact,bank_contact_phone,travel_from,travel_to,ride_stops,ride_start_time,ride_end_time,ride_duration,ride_distance,
 ride_idle_time,ride_price,solution,driver_id,workgroup_id,wg_name,displayname,requests.id,commentary_for_driver,
 workgroups.id as wg_id, users.id as user_id,
-(select username from users where id = assignee) as assignee
+(select displayname from users where id = assignee) as assignee
 from requests
 left JOIN company ON requests.company_id = company.id
 left JOIN workgroups ON workgroups.id = requests.workgroup_id
@@ -59,7 +60,7 @@ FROM_UNIXTIME(date_created,"%d.%m.%Y %h:%i")as date_created,FROM_UNIXTIME(date_d
 bank_contact,bank_contact_phone,travel_from,travel_to,ride_stops,ride_start_time,ride_end_time,ride_duration,ride_distance,
 ride_idle_time,ride_price,solution,driver_id,workgroup_id,wg_name,displayname,requests.id,commentary_for_driver,
 workgroups.id as wg_id, users.id as user_id,
-(select username from users where id = assignee) as assignee
+(select displayname from users where id = assignee) as assignee
 from requests
 left JOIN company ON requests.company_id = company.id
 left JOIN workgroups ON workgroups.id = requests.workgroup_id
@@ -84,7 +85,7 @@ FROM_UNIXTIME(date_created,"%d.%m.%Y %h:%i")as date_created,FROM_UNIXTIME(date_d
 bank_contact,bank_contact_phone,travel_from,travel_to,ride_stops,ride_start_time,ride_end_time,ride_duration,ride_distance,
 ride_idle_time,ride_price,solution,driver_id,workgroup_id,wg_name,displayname,requests.id,commentary_for_driver,
 workgroups.id as wg_id, users.id as user_id,
-(select username from users where id = assignee) as assignee
+(select displayname from users where id = assignee) as assignee
 from requests
 left JOIN company ON requests.company_id = company.id
 left JOIN workgroups ON workgroups.id = requests.workgroup_id
@@ -139,7 +140,7 @@ usersToWg: `SELECT workgroups.id,wg_name from usertowg
             INNER JOIN workgroups ON workgroups.id = usertowg.wg_id 
             WHERE username_id =`,
 
-listExecutors: `SELECT users.id as id,username
+listExecutors: `SELECT users.id as id,username,users.displayname
                 FROM users
                 inner join usertowg on usertowg.username_id = users.id
                 inner join workgroups on workgroups.id = usertowg.wg_id

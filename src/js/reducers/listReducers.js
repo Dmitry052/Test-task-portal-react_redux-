@@ -11,6 +11,8 @@ import wgbank from './admin/wgbank';
 
 import user from './_authUser';
 
+import transp_body from './_transp/_transp_body';
+
 import expl from './exploitation/exploitation';
 
 import transp from './transport/transport_filters_left_menu';
@@ -56,6 +58,10 @@ const wgbankReducer = combineReducers({
 // --------------------------------------
 const userReducer = combineReducers({
     user
+});
+// --------------------------------------
+const transp_bodyReducer = combineReducers({
+    transp_body
 });
 // -------------------------------------- 
 const left_menuReducer = combineReducers({
@@ -117,6 +123,8 @@ export default combineReducers({
     wgbank,
     // --------
     user,
+    // --------
+    transp_body,
     // --------
     transp,
     expl,

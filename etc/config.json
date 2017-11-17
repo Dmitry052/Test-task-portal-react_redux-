@@ -2,10 +2,10 @@
     "apiPrefix": "http://localhost:3000",
     "serverPort": "3000",
     "db":{
-        "hosts":"localhost",
-        "user":"root",
+        "hosts":"http://localhost:3000",
+        "user":"portal_db",
         "port": 3306,
-        "password":"root",
+        "password":"SqesR12",
         "database":"portal_yii2"
     }
 }

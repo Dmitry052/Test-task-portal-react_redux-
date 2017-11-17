@@ -12,7 +12,7 @@ import MaskedInput from 'react-maskedinput';
 import Cars from './Cars';
 import Drivers from './Drivers';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-import History from './History';
+import History from './History'; 
 import ReactInterval from 'react-interval';
 
 class Gridview extends Component {
@@ -264,9 +264,9 @@ class Gridview extends Component {
                 }
             })(),
             assignee: (() => {
-                for (var key in this.props.transp.transpExecutor) {
-                    if (this.props.transp.transpExecutor[key].displayname === this.props.order.data.order_def_executor) {
-                        return { new: Number(this.props.transp.transpExecutor[key].username_id), old: Number(this.state.originOrder.assignee) };
+                for (var key in this.props.order.data.order_executers) {
+                    if (this.props.order.data.order_executers[key].displayname === this.props.order.data.order_def_executor) {
+                        return { new: Number(this.props.order.data.order_executers[key].id), old: Number(this.state.originOrder.assignee_id) };
                     }
                 }
                 return { new: null, old: null }
@@ -301,14 +301,31 @@ class Gridview extends Component {
                 old: this.state.originOrder.solution === '' || this.state.originOrder.solution === 'null' ? null : this.state.originOrder.solution
             },
             closure_code: (() => {
-                for (var key in this.props.transp.closureStatuses) {
-                    if (this.props.transp.closureStatuses[key].closure_code_name === this.props.order.data.order_def_closure_statuses) {
-                        return { new: this.props.transp.closureStatuses[key].id, old: this.state.originOrder.closure_code };
+                let currentCode;
+                if (this.props.order.data.order_status_val_def === 'Назначено в группу') {
+                    currentCode = null;
+                }
+                else if (this.props.order.data.order_status_val_def === 'Машина назначена' || this.props.order.data.order_status_val_def === 'Поездка завершена') {
+                    currentCode = 'Решено полностью';
+                }
+                else if (this.props.order.data.order_status_val_def === 'Отозвана клиентом') {
+                    currentCode = 'Отозвано клиентом';
+                }
+                else if (this.props.order.data.order_status_val_def === 'Отказ в обслуживании') {
+                    currentCode = 'Отказ в обслуживании';
+                }
+                for (let key in this.props.transp.closureStatuses) {
+                    if (this.props.transp.closureStatuses[key].closure_code_name === currentCode) {
+                        return {
+                            new: this.props.transp.closureStatuses[key].id,
+                            old: this.state.originOrder.closure_code
+                        }
                     }
                 }
                 return { new: null, old: null }
             })(),
         }
+        console.log(order);
         this.props.saveOrder(order);
         this.refreshState.call(this);
         this.setState({
@@ -434,10 +451,10 @@ class Gridview extends Component {
                 return <MenuItem eventKey={i + 1} onSelect={() => this.setWG(name)}>{name}</MenuItem>
             })
         }
-        
+
         if (this.props.order.data.order_executers instanceof Object) {
             dropdataAssigne = this.props.order.data.order_executers.map((name, i) => {
-                return <MenuItem eventKey={i + 1} onSelect={() => this.setExecutor(name)}>{name}</MenuItem>
+                return <MenuItem eventKey={i + 1} onSelect={() => this.setExecutor(name.displayname)}>{name.displayname}</MenuItem>
             })
         }
         if (this.props.order.data.order_closure_statuses instanceof Object) {
@@ -446,7 +463,7 @@ class Gridview extends Component {
             })
         }
         // console.log('в гриде',this.props.transp);
-        console.log(this.props.transp);
+        // console.log(this.props.transp);
         return (
             // style={{  width: this.props.order.widthGrid, left: this.props.order.leftGrid }}
             <div className='gridTransp'  >
@@ -459,30 +476,30 @@ class Gridview extends Component {
                         sheet="sheet"
                         buttonText="Экспорт в Excel" />
                     <table id="tableEXCEL" style={{ display: 'none' }}>
-                    <tbody>
-                        <tr>
-                            <th>ID Сбербанка</th>
-                            <th>Статус</th>
-                            <th>Рабочая группа</th>
-                            <th>Исполнитель</th>
-                            <th>Дата создания</th>
-                            <th>Дата поездки</th>
-                        </tr>
+                        <tbody>
+                            <tr>
+                                <th>ID Сбербанка</th>
+                                <th>Статус</th>
+                                <th>Рабочая группа</th>
+                                <th>Исполнитель</th>
+                                <th>Дата создания</th>
+                                <th>Дата поездки</th>
+                            </tr>
 
-                        {
-                            this.props.transp.transp.map((order, i) => {
-                                return (
-                                    <tr>
-                                        <td>{order.status}</td>
-                                        <td>{order.descr}</td>
-                                        <td>{order.wg_name}</td>
-                                        <td>{order.displayname}</td>
-                                        <td>{order.date_created}</td>
-                                        <td>{order.date_deadline}</td>
-                                    </tr>
-                                )
-                            })
-                        } 
+                            {
+                                this.props.transp.transp.map((order, i) => {
+                                    return (
+                                        <tr>
+                                            <td>{order.status}</td>
+                                            <td>{order.descr}</td>
+                                            <td>{order.wg_name}</td>
+                                            <td>{order.displayname}</td>
+                                            <td>{order.date_created}</td>
+                                            <td>{order.date_deadline}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
                         </tbody>
                     </table>
                     <Button id="filterGrid" onClick={this.filterGrid.bind(this)}>Фильры</Button>
@@ -759,7 +776,7 @@ class Gridview extends Component {
                         <Button id='btn5' className={this.props.order.data.headerBtnSave} bsStyle="primary" onClick={this.saveToDB}>Сохранить</Button>
                         {/* <Button id='btn2' className={this.props.order.headerBtnTakeToWork} onClick={this.takeToWork} bsStyle="warning">Взять в работу</Button> */}
                         <Button id='btn3' className={this.props.order.data.headerBtnAssignCar} bsStyle="success" onClick={this.assignCar}>Назначить авто и закрыть</Button>
-                        <Button id='btn4' disabled={this.props.order.data.onoffbtnDoneTrip} style={{ opacity: this.props.order.data.opacitybtnDoneTrip }} className={this.props.order.data.headerBtnDoneTrip} bsStyle="warning" onClick={this.doneTrip}>Завершить поездку и сохранить</Button>
+                        <Button id='btn4' disabled={this.props.order.data.onoffbtnDoneTrip} style={{ opacity: this.props.order.data.opacitybtnDoneTrip }} className={this.props.order.data.headerBtnDoneTrip} bsStyle="warning" onClick={this.doneTrip.bind(this)}>Завершить поездку и сохранить</Button>
                         {/* <Button id='btn6' className={this.props.order.headerBtnSendToBank} bsStyle="default">Передать данные о поездке в банк</Button> */}
                         <Button id='btn7' bsStyle="default" onClick={this.showHistory.bind(this)}>История</Button>
                     </div>

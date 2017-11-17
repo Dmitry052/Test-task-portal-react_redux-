@@ -150,7 +150,7 @@ export default function currentOrder(state = initialState, action) {
         state.data.headerBtnAssignCar = 'hidden';
         state.data.headerBtnDoneTrip = '';
         state.data.headerBtnSave = state.data.order_save_status_val_def === '' ? 'hidden' : '';
-            state.data.headerBtnSendToBank = 'hidden';
+        state.data.headerBtnSendToBank = 'hidden';
 
         state.data.onoffbtnDoneTrip = false;
         state.data.opacitybtnDoneTrip = 1;
@@ -317,7 +317,8 @@ export default function currentOrder(state = initialState, action) {
         state.data.order_wg = action.data[3].map((num, index, arr) => { return num.wg_name });
         state.data.order_wg_val_def = action.data[0].wg_name;
         state.data.order_executers = []
-        state.data.order_def_executor = action.data[0].displayname == null ? 'Выберете исполнителя' : action.data[0].displayname;
+        state.data.order_def_executor = action.data[0].assignee === null ? 'Выберете исполнителя' : action.data[0].assignee;
+
         // Данные о поездке для отправки в банк
         state.data.order_ride_duration = action.data[0].ride_duration;
         state.data.order_ride_distance = action.data[0].ride_distance;
@@ -332,10 +333,16 @@ export default function currentOrder(state = initialState, action) {
 
         state.data.up = false;
         state.data.down = false;
+        
         return { data: state.data }
     }
     if (action.type === 'listExecutors') {
-        state.data.order_executers = action.data.map((num, index, arr) => { return num.username });
+        state.data.order_executers = action.data.map((num, index, arr) => {
+            return {
+                id: num.id,
+                displayname: num.displayname
+            }
+        });
         return { data: state.data }
     }
     if (action.type === 'setDriver') {
