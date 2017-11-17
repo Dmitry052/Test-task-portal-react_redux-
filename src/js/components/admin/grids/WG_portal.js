@@ -72,19 +72,24 @@ class Conformity extends Component {
 
             }
         }
-        console.log('На входе',this.props.store.companytowgAdmin.comp_to_wg.company_id,this.props.store.companytowgAdmin.comp_to_wg.wg_id,this.props.store.companytowgAdmin.comp_to_wg.bank_wg_id);
+        // console.log('На входе',this.props.store.companytowgAdmin.comp_to_wg.company_id,this.props.store.companytowgAdmin.comp_to_wg.wg_id,this.props.store.companytowgAdmin.comp_to_wg.bank_wg_id);
         for (let key in this.props.store.companytowgAdmin.companyToWg) {
             // console.log(this.props.store.companytowgAdmin.companyToWg[key].company_id, this.props.store.companytowgAdmin.companyToWg[key].bank_wg_id,this.props.store.companytowgAdmin.companyToWg[key].companytowg_wg_id);
             if (this.props.store.companytowgAdmin.companyToWg[key].company_id === this.props.store.companytowgAdmin.comp_to_wg.company_id && this.props.store.companytowgAdmin.companyToWg[key].bank_wg_id === this.props.store.companytowgAdmin.comp_to_wg.bank_wg_id && this.props.store.companytowgAdmin.companyToWg[key].companytowg_wg_id === this.props.store.companytowgAdmin.comp_to_wg.wg_id) {
                 alert("Указаная связка уже существует");
                 check_wg_input = true;
                 break;
+            } else if (this.props.store.companytowgAdmin.companyToWg[key].bank_wg_id === this.props.store.companytowgAdmin.comp_to_wg.bank_wg_id){
+                alert("Указаная РГ банка уже используется");
+                check_wg_input = true;
+                break;
             }
+
         }
         if (!check_wg_input) {
-            // this.props.saveCompanyToWG(this.props.store.companytowgAdmin.comp_to_wg);
-            // this.props.currentMenu();
-            // this.props.show_comp_to_wg();
+            this.props.saveCompanyToWG(this.props.store.companytowgAdmin.comp_to_wg);
+            this.props.currentMenu();
+            this.props.show_comp_to_wg();
         }
     }
     handleRowSelect(isSelected, rows) {
