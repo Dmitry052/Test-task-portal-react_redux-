@@ -25,7 +25,7 @@ class History extends Component {
                             if (s.length > 2) {
                                 s[1] = s.slice(1, s.length).join('_');
                             }
-                            
+
                             if (s[0] === 'new' && s[1] === j[1]) {
                                 if (item[key] !== item[key2]) {
                                     switch (s[1]) {
@@ -76,7 +76,8 @@ class History extends Component {
                                             break;
                                     }
                                     if (item[key] === 'null') { item[key] = ''; }
-                                    if (item[key2] === 'null') { item[key] = ''; }
+                                    if (item[key2] === 'null') { item[key2] = ''; }
+                                    if (item[key] === '01.01.1970 03:00') { item[key] = ''; }
                                     data.push({ field: s[1], old: item[key], new: item[key2], user: item.displayname, time: item.date_edit });
                                 }
                                 break;
