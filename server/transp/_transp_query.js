@@ -82,7 +82,8 @@ var query = {
                                 ${Math.floor(now.getTime() / 1000)}
                             )`;
                         audit.push(query);
-                    }
+                        break;
+                    } 
                 }
                 return { type: "ORDER", data: [query_req, audit] };
             case 'saveDriver':

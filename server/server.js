@@ -186,6 +186,7 @@ app.get('/transp', function (req, res) {
 app.post('/transp', function (req, res) {
     var query = transp.action_POST(req.body.action, req.body.data, req.session.userID);
     if (query.type === 'ORDER') {
+
         if (query.data[1].length > 0) {
             for (key in query.data[1]) {
                 sqlConnetction.query(query.data[1][key], (err, result) => { });
