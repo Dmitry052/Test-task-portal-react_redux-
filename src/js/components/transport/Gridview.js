@@ -181,7 +181,7 @@ class Gridview extends Component {
             else {
                 this.props.assignCar(this.props.transp.user);
                 this.props.showALert('none');
-                 if (!this.props.order.data.saveBtn) { this.saveToDB(); }
+                if (!this.props.order.data.saveBtn) { this.saveToDB(); }
             }
         }
     }
@@ -189,7 +189,6 @@ class Gridview extends Component {
         this.setExecutor({ value: this.props.order.data.order_executers[0] });
     }
     doneTrip() {
-        console.log("В doneTrip");
         if (this.props.order.data.order_ride_duration === null || this.props.order.data.order_ride_duration === 'null') {
             this.props.showALert('block');
             this.setState({
@@ -237,15 +236,14 @@ class Gridview extends Component {
 
     }
     saveToDB() {
+        if (this.props.order.data.order_status_val_def === "Назначено в группу" && this.props.order.data.showAlert === 'block') {
+            this.props.showALert('none');
+        }
         if (this.props.order.data.order_status_val_def === "Машина назначена") {
-            this.props.saveBtn();
             this.assignCar();
-            this.props.saveBtn();
         }
         if (this.props.order.data.order_status_val_def === "Поездка завершена") {
-            this.props.saveBtn();
             this.doneTrip();
-            this.props.saveBtn();
         }
         // console.log('alert', this.props.order.data.showAlert);
         // ----------------------------------------------------
