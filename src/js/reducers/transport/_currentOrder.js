@@ -6,7 +6,7 @@ const initialState = {
         defValuefiltersGrid: '',
         widthGrid: '83%',
         leftGrid: '17%',
-
+        showAlert: 'none',
         saveBtn: false,
 
         order_view_id: 0,
@@ -468,6 +468,10 @@ export default function currentOrder(state = initialState, action) {
     }
     if (action.type === 'SAVE_BTN') {
         state.data.saveBtn = !state.data.saveBtn;
+        return { data: state.data }
+    }
+    if (action.type === 'SHOW_ALERT') {
+        state.data.showAlert = action.data;
         return { data: state.data }
     }
     return state;

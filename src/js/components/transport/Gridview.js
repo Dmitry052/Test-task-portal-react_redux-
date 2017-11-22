@@ -164,26 +164,24 @@ class Gridview extends Component {
     }
     assignCar() {
         if (this.props.order.data.order_def_executor === null) {
+            this.props.showALert('block');
             this.setState({
-                showAlert: 'block',
                 statusAlert: 'danger',
                 messageAlert: 'Исполнитель не выбран',
             })
         }
         else {
             if (this.props.order.data.defaultDriver === 'Выберете водителя') {
+                this.props.showALert('block');
                 this.setState({
-                    showAlert: 'block',
                     statusAlert: 'danger',
                     messageAlert: 'Водитель не выбран',
                 })
             }
             else {
                 this.props.assignCar(this.props.transp.user);
-                this.setState({
-                    showAlert: 'none',
-                });
-                if (!this.props.order.data.saveBtn) { this.saveToDB(); }
+                this.props.showALert('none');
+                 if (!this.props.order.data.saveBtn) { this.saveToDB(); }
             }
         }
     }
@@ -193,44 +191,44 @@ class Gridview extends Component {
     doneTrip() {
         console.log("В doneTrip");
         if (this.props.order.data.order_ride_duration === null || this.props.order.data.order_ride_duration === 'null') {
+            this.props.showALert('block');
             this.setState({
-                showAlert: 'block',
                 statusAlert: 'danger',
                 messageAlert: 'Данные о длительности поездки не заполнены',
             })
         }
         else if (this.props.order.data.order_ride_distance === null || this.props.order.data.order_ride_distance === 'null') {
+            this.props.showALert('block');
             this.setState({
-                showAlert: 'block',
                 statusAlert: 'danger',
                 messageAlert: 'Данные о пробеге не заполнены',
             })
         }
         else if (this.props.order.data.order_ride_price === null || this.props.order.data.order_ride_price === 'null' || this.props.order.data.order_ride_price === '') {
+            this.props.showALert('block');
             this.setState({
-                showAlert: 'block',
                 statusAlert: 'danger',
                 messageAlert: 'Поле "цена" не заполнено',
             })
         }
         else if (this.props.order.data.order_solution === null || this.props.order.data.order_solution === '') {
+            this.props.showALert('block');
             this.setState({
-                showAlert: 'block',
                 statusAlert: 'danger',
                 messageAlert: 'Не заполнено поле "Решение"',
             })
         }
         else if (this.props.order.data.order_def_closure_statuses === null || this.props.order.data.order_def_closure_statuses === '') {
+            this.props.showALert('block');
             this.setState({
-                showAlert: 'block',
                 statusAlert: 'danger',
                 messageAlert: 'Не указан код закрытия',
             })
         }
         else {
             this.props.doneTripStatus(this.props.transp.transpStatus[2].status);
+            this.props.showALert('none');
             this.setState({
-                showAlert: 'none',
                 statusAlert: 'danger',
                 messageAlert: '',
             });
@@ -249,8 +247,9 @@ class Gridview extends Component {
             this.doneTrip();
             this.props.saveBtn();
         }
+        // console.log('alert', this.props.order.data.showAlert);
         // ----------------------------------------------------
-        if (this.state.showAlert === 'block') {
+        if (this.props.order.data.showAlert === 'none') {
             var revoked = this.props.transp.transpStatus[3].status;
             var refusing = this.props.transp.transpStatus[4].status;
             var order = {
@@ -343,9 +342,6 @@ class Gridview extends Component {
             // console.log(order);
             this.props.saveOrder(order);
             this.refreshState.call(this);
-            this.setState({
-                showAlert: 'none',
-            });
             this.close();
         }
 
@@ -431,7 +427,6 @@ class Gridview extends Component {
         }
         return '';
     }
-
     render() {
         const options = {
             sizePerPage: 10,
@@ -548,7 +543,7 @@ class Gridview extends Component {
                         <h4><i className="fa fa-bookmark-o" aria-hidden="true"></i>{' '}{this.props.order.data.order_ID || 'SD12345678'}{' '}{' '} заказ на {this.props.order.data.order_date_deadline}</h4>
                         <Button id='btn1' className={this.props.order.data.headerBtnClose} onClick={this.close}><i className="fa fa-times" aria-hidden="true"></i></Button>
                     </div>
-                    <Alert id="alertBlock" style={{ display: this.state.showAlert }} bsStyle={this.state.statusAlert}>
+                    <Alert id="alertBlock" style={{ display: this.props.order.data.showAlert }} bsStyle={this.state.statusAlert}>
                         <center>{this.state.messageAlert}</center>
                     </Alert>
 
@@ -953,6 +948,9 @@ export default connect(
         // *******************************
         saveBtn: () => {
             dispatch({ type: 'SAVE_BTN' });
+        },
+        showALert: (status) => {
+            dispatch({ type: 'SHOW_ALERT', data: status });
         }
     })
 )(Gridview);
