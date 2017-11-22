@@ -7,6 +7,8 @@ const initialState = {
         widthGrid: '83%',
         leftGrid: '17%',
 
+        saveBtn: false,
+
         order_view_id: 0,
         // Управление, визуализация
         headerBtnClose: '',
@@ -333,7 +335,7 @@ export default function currentOrder(state = initialState, action) {
 
         state.data.up = false;
         state.data.down = false;
-        
+
         return { data: state.data }
     }
     if (action.type === 'listExecutors') {
@@ -412,8 +414,14 @@ export default function currentOrder(state = initialState, action) {
         // Проставляем дату
         state.data.order_ride_start_time_toDB = Math.floor(Date.now() / 1000);
         // state.order_ride_start_time = normalizeTime(state.order_ride_start_time_toDB);
-        // Пробрасываем в поле решение данные водителя        
-        state.data.order_solution = (state.data.order_solution === '' || state.data.order_solution === null ? '' : state.data.order_solution + '\n') + 'Водитель:' + state.data.defaultDriver + '\n' + 'тел.' + state.data.order_driver_phone + ' ' + ' ' + state.data.order_driver_brand_car + ' ' + state.data.order_driver_color_car + ' ' + state.data.order_driver_num_car;
+        // Пробрасываем в поле решение данные водителя
+        let newSolution = 'Водитель:' + state.data.defaultDriver + '\n' + 'тел.' + state.data.order_driver_phone + ' ' + ' ' + state.data.order_driver_brand_car + ' ' + state.data.order_driver_color_car + ' ' + state.data.order_driver_num_car;
+        // -----
+        if (state.data.order_solution.split('Водитель:').length === 1) {
+            state.data.order_solution = (state.data.order_solution === '' || state.data.order_solution === null ? '' : state.data.order_solution + '\n') + newSolution;
+        } else if (state.data.order_solution.split('---').length > 1) {
+            state.data.order_solution = newSolution;
+        }
     }
     if (action.type === 'assignCar') {
         fassignCar(action.data);
@@ -456,6 +464,10 @@ export default function currentOrder(state = initialState, action) {
     }
     if (action.type === 'DOWN') {
         state.data.down = !state.data.down;
+        return { data: state.data }
+    }
+    if (action.type === 'SAVE_BTN') {
+        state.data.saveBtn = !state.data.saveBtn;
         return { data: state.data }
     }
     return state;

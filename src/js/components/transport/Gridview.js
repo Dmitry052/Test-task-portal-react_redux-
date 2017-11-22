@@ -12,7 +12,7 @@ import MaskedInput from 'react-maskedinput';
 import Cars from './Cars';
 import Drivers from './Drivers';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-import History from './History'; 
+import History from './History';
 import ReactInterval from 'react-interval';
 
 class Gridview extends Component {
@@ -142,9 +142,12 @@ class Gridview extends Component {
         })
     }
     setStatus(status) {
-        this.props.setStatus(status);
-        this.setState({});
-
+        if (this.props.order.data.order_def_executor === 'Выберете исполнителя') {
+            alert("Не указан исполнитель");
+        } else {
+            this.props.setStatus(status);
+            this.setState({});
+        }
     }
     setWG(wg) {
         this.props.setWG(wg);
@@ -180,7 +183,7 @@ class Gridview extends Component {
                 this.setState({
                     showAlert: 'none',
                 });
-                this.saveToDB();
+                if (!this.props.order.data.saveBtn) { this.saveToDB(); }
             }
         }
     }
@@ -188,6 +191,7 @@ class Gridview extends Component {
         this.setExecutor({ value: this.props.order.data.order_executers[0] });
     }
     doneTrip() {
+        console.log("В doneTrip");
         if (this.props.order.data.order_ride_duration === null || this.props.order.data.order_ride_duration === 'null') {
             this.setState({
                 showAlert: 'block',
@@ -206,7 +210,7 @@ class Gridview extends Component {
             this.setState({
                 showAlert: 'block',
                 statusAlert: 'danger',
-                messageAlert: 'Данные о цене не заполнены',
+                messageAlert: 'Поле "цена" не заполнено',
             })
         }
         else if (this.props.order.data.order_solution === null || this.props.order.data.order_solution === '') {
@@ -230,108 +234,121 @@ class Gridview extends Component {
                 statusAlert: 'danger',
                 messageAlert: '',
             });
-            this.saveToDB();
+            if (!this.props.order.data.saveBtn) { this.saveToDB(); }
         }
 
     }
     saveToDB() {
-        var revoked = this.props.transp.transpStatus[3].status;
-        var refusing = this.props.transp.transpStatus[4].status;
-        // console.log(this.state.originOrder);
-        var order = {
-            id: this.props.order.data.db_id,
-            sb_id: this.props.order.data.order_ID,
-            status: (() => {
-                for (var key in this.props.transp.transpStatus) {
-                    if (this.props.transp.transpStatus[key].status === this.props.order.data.order_status_val_def) {
-                        return { new: this.props.transp.transpStatus[key].id, old: this.state.originOrder.id_status };
-                    }
-                }
-            })(),
-            driver_id: (() => {
-                for (var key in this.props.transp.carDrivers) {
-                    if (this.props.transp.carDrivers[key].driver_fullname === this.props.order.data.defaultDriver) {
-                        return { new: this.props.transp.carDrivers[key].id, old: this.state.originOrder.driver_id };
-                    }
-                }
-                return { new: null, old: null }
-            })(),
-            workgroup_id: (() => {
-                for (var key in this.props.transp.transpUserToWg) {
-                    if (this.props.transp.transpUserToWg[key].wg_name === this.props.order.data.order_wg_val_def) {
-                        return { new: this.props.transp.transpUserToWg[key].id, old: this.state.originOrder.workgroup_id };
-                    }
-                }
-            })(),
-            assignee: (() => {
-                for (var key in this.props.order.data.order_executers) {
-                    if (this.props.order.data.order_executers[key].displayname === this.props.order.data.order_def_executor) {
-                        return { new: Number(this.props.order.data.order_executers[key].id), old: Number(this.state.originOrder.assignee_id) };
-                    }
-                }
-                return { new: null, old: null }
-            })(),
-            ride_start_time: { new: this.props.order.data.order_ride_start_time_toDB, old: this.state.originOrder.ride_start_time },
-            ride_end_time: (() => {
-                if (this.props.order.data.order_status_val_def === revoked || this.props.order.data.order_status_val_def === refusing) {
-                    return { new: Math.floor(Date.now() / 1000), old: this.state.originOrder.ride_end_time };
-                }
-                else {
-                    return { new: this.props.order.data.order_ride_end_time_toDB, old: this.state.originOrder.ride_end_time };
-                }
-            })(),
-            ride_duration: {
-                new: this.props.order.data.order_ride_duration === '' || this.props.order.data.order_ride_duration === 'null' ? null : this.props.order.data.order_ride_duration,
-                old: this.state.originOrder.ride_duration === '' || this.state.originOrder.ride_duration === 'null' ? null : this.state.originOrder.ride_duration
-            },
-            ride_distance: {
-                new: this.props.order.data.order_ride_distance === '' || this.props.order.data.order_ride_distance === 'null' ? null : this.props.order.data.order_ride_distance,
-                old: this.state.originOrder.ride_distance === '' || this.state.originOrder.ride_distance === 'null' ? null : this.state.originOrder.ride_distance
-            },
-            ride_idle_time: {
-                new: this.props.order.data.order_ride_idle_time === '' || this.props.order.data.order_ride_idle_time === 'null' ? null : this.props.order.data.order_ride_idle_time,
-                old: this.state.originOrder.ride_idle_time === '' || this.state.originOrder.ride_idle_time === 'null' ? null : this.state.originOrder.ride_idle_time
-            },
-            ride_price: {
-                new: this.props.order.data.order_ride_price === '' || this.props.order.data.order_ride_price === 'null' ? null : this.props.order.data.order_ride_price,
-                old: this.state.originOrder.ride_price === '' || this.state.originOrder.ride_price === 'null' ? null : this.state.originOrder.ride_price
-            },
-            solution: {
-                new: this.props.order.data.order_solution === '' || this.props.order.data.order_solution === 'null' ? null : this.props.order.data.order_solution,
-                old: this.state.originOrder.solution === '' || this.state.originOrder.solution === 'null' ? null : this.state.originOrder.solution
-            },
-            closure_code: (() => {
-                let currentCode;
-                if (this.props.order.data.order_status_val_def === 'Назначено в группу') {
-                    currentCode = null;
-                }
-                else if (this.props.order.data.order_status_val_def === 'Машина назначена' || this.props.order.data.order_status_val_def === 'Поездка завершена') {
-                    currentCode = 'Решено полностью';
-                }
-                else if (this.props.order.data.order_status_val_def === 'Отозвана клиентом') {
-                    currentCode = 'Отозвано клиентом';
-                }
-                else if (this.props.order.data.order_status_val_def === 'Отказ в обслуживании') {
-                    currentCode = 'Отказ в обслуживании';
-                }
-                for (let key in this.props.transp.closureStatuses) {
-                    if (this.props.transp.closureStatuses[key].closure_code_name === currentCode) {
-                        return {
-                            new: this.props.transp.closureStatuses[key].id,
-                            old: this.state.originOrder.closure_code
+        if (this.props.order.data.order_status_val_def === "Машина назначена") {
+            this.props.saveBtn();
+            this.assignCar();
+            this.props.saveBtn();
+        }
+        if (this.props.order.data.order_status_val_def === "Поездка завершена") {
+            this.props.saveBtn();
+            this.doneTrip();
+            this.props.saveBtn();
+        }
+        // ----------------------------------------------------
+        if (this.state.showAlert === 'block') {
+            var revoked = this.props.transp.transpStatus[3].status;
+            var refusing = this.props.transp.transpStatus[4].status;
+            var order = {
+                id: this.props.order.data.db_id,
+                sb_id: this.props.order.data.order_ID,
+                status: (() => {
+                    for (var key in this.props.transp.transpStatus) {
+                        if (this.props.transp.transpStatus[key].status === this.props.order.data.order_status_val_def) {
+                            return { new: this.props.transp.transpStatus[key].id, old: this.state.originOrder.id_status };
                         }
                     }
-                }
-                return { new: null, old: null }
-            })(),
+                })(),
+                driver_id: (() => {
+                    for (var key in this.props.transp.carDrivers) {
+                        if (this.props.transp.carDrivers[key].driver_fullname === this.props.order.data.defaultDriver) {
+                            return { new: this.props.transp.carDrivers[key].id, old: this.state.originOrder.driver_id };
+                        }
+                    }
+                    return { new: null, old: null }
+                })(),
+                workgroup_id: (() => {
+                    for (var key in this.props.transp.transpUserToWg) {
+                        if (this.props.transp.transpUserToWg[key].wg_name === this.props.order.data.order_wg_val_def) {
+                            return { new: this.props.transp.transpUserToWg[key].id, old: this.state.originOrder.workgroup_id };
+                        }
+                    }
+                })(),
+                assignee: (() => {
+                    for (var key in this.props.order.data.order_executers) {
+                        if (this.props.order.data.order_executers[key].displayname === this.props.order.data.order_def_executor) {
+                            return { new: Number(this.props.order.data.order_executers[key].id), old: Number(this.state.originOrder.assignee_id) };
+                        }
+                    }
+                    return { new: null, old: null }
+                })(),
+                ride_start_time: { new: this.props.order.data.order_ride_start_time_toDB, old: this.state.originOrder.ride_start_time },
+                ride_end_time: (() => {
+                    if (this.props.order.data.order_status_val_def === revoked || this.props.order.data.order_status_val_def === refusing) {
+                        return { new: Math.floor(Date.now() / 1000), old: this.state.originOrder.ride_end_time };
+                    }
+                    else {
+                        return { new: this.props.order.data.order_ride_end_time_toDB, old: this.state.originOrder.ride_end_time };
+                    }
+                })(),
+                ride_duration: {
+                    new: this.props.order.data.order_ride_duration === '' || this.props.order.data.order_ride_duration === 'null' ? null : this.props.order.data.order_ride_duration,
+                    old: this.state.originOrder.ride_duration === '' || this.state.originOrder.ride_duration === 'null' ? null : this.state.originOrder.ride_duration
+                },
+                ride_distance: {
+                    new: this.props.order.data.order_ride_distance === '' || this.props.order.data.order_ride_distance === 'null' ? null : this.props.order.data.order_ride_distance,
+                    old: this.state.originOrder.ride_distance === '' || this.state.originOrder.ride_distance === 'null' ? null : this.state.originOrder.ride_distance
+                },
+                ride_idle_time: {
+                    new: this.props.order.data.order_ride_idle_time === '' || this.props.order.data.order_ride_idle_time === 'null' ? null : this.props.order.data.order_ride_idle_time,
+                    old: this.state.originOrder.ride_idle_time === '' || this.state.originOrder.ride_idle_time === 'null' ? null : this.state.originOrder.ride_idle_time
+                },
+                ride_price: {
+                    new: this.props.order.data.order_ride_price === '' || this.props.order.data.order_ride_price === 'null' ? null : this.props.order.data.order_ride_price,
+                    old: this.state.originOrder.ride_price === '' || this.state.originOrder.ride_price === 'null' ? null : this.state.originOrder.ride_price
+                },
+                solution: {
+                    new: this.props.order.data.order_solution === '' || this.props.order.data.order_solution === 'null' ? null : this.props.order.data.order_solution,
+                    old: this.state.originOrder.solution === '' || this.state.originOrder.solution === 'null' ? null : this.state.originOrder.solution
+                },
+                closure_code: (() => {
+                    let currentCode;
+                    if (this.props.order.data.order_status_val_def === 'Назначено в группу') {
+                        currentCode = null;
+                    }
+                    else if (this.props.order.data.order_status_val_def === 'Машина назначена' || this.props.order.data.order_status_val_def === 'Поездка завершена') {
+                        currentCode = 'Решено полностью';
+                    }
+                    else if (this.props.order.data.order_status_val_def === 'Отозвана клиентом') {
+                        currentCode = 'Отозвано клиентом';
+                    }
+                    else if (this.props.order.data.order_status_val_def === 'Отказ в обслуживании') {
+                        currentCode = 'Отказ в обслуживании';
+                    }
+                    for (let key in this.props.transp.closureStatuses) {
+                        if (this.props.transp.closureStatuses[key].closure_code_name === currentCode) {
+                            return {
+                                new: this.props.transp.closureStatuses[key].id,
+                                old: this.state.originOrder.closure_code
+                            }
+                        }
+                    }
+                    return { new: null, old: null }
+                })(),
+            }
+            // console.log(order);
+            this.props.saveOrder(order);
+            this.refreshState.call(this);
+            this.setState({
+                showAlert: 'none',
+            });
+            this.close();
         }
-        console.log(order);
-        this.props.saveOrder(order);
-        this.refreshState.call(this);
-        this.setState({
-            showAlert: 'none',
-        });
-        this.close();
+
     }
     refreshState() {
         for (var key in this.props.transp.left_menu) {
@@ -716,7 +733,6 @@ class Gridview extends Component {
                                 <div id="solution" className='panel panel-default col-lg-12 col-md-12 col-sm-12'>
                                     <div className="panel-heading">
                                         <h4>Решение</h4>
-
                                     </div>
                                     <div className="panel-body">
                                         <textarea
@@ -933,6 +949,10 @@ export default connect(
         },
         getHistory: (sb_id) => {
             dispatch(getHistory(sb_id));
+        },
+        // *******************************
+        saveBtn: () => {
+            dispatch({ type: 'SAVE_BTN' });
         }
     })
 )(Gridview);

@@ -318,6 +318,10 @@ body > div:nth-child(5) > div > div {
   background: #fff160 !important;
   color: #000 !important; }
 
+#alertBlock > center {
+  font-weight: 400;
+  color: #000; }
+
 #orderBlock {
   padding: 0 0; }
 
