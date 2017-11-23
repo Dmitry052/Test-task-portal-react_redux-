@@ -224,7 +224,7 @@ class Gridview extends Component {
                 messageAlert: 'Не указан код закрытия',
             })
         }
-        else {
+        else { 
             this.props.doneTripStatus(this.props.transp.transpStatus[2].status);
             this.props.showALert('none');
             this.setState({
@@ -236,7 +236,8 @@ class Gridview extends Component {
 
     }
     saveToDB() {
-        if (this.props.order.data.saveBtn) {
+        if (!this.props.order.data.saveBtn) {
+            this.props.saveBtn();
             if (this.props.order.data.order_status_val_def === "Назначено в группу" && this.props.order.data.showAlert === 'block') {
                 this.props.showALert('none');
             }
@@ -244,10 +245,11 @@ class Gridview extends Component {
                 this.assignCar();
             }
             if (this.props.order.data.order_status_val_def === "Поездка завершена") {
+                this.assignCar();
                 this.doneTrip();
             }
+            this.props.saveBtn();
         }
-
         // console.log('alert', this.props.order.data.showAlert);
         // ----------------------------------------------------
         if (this.props.order.data.showAlert === 'none') {
@@ -357,7 +359,7 @@ class Gridview extends Component {
                     return { new: null, old: null }
                 })(),
             }
-            console.log(order);
+            // console.log(order);
             this.props.saveOrder(order);
             this.refreshState.call(this);
             this.close();
