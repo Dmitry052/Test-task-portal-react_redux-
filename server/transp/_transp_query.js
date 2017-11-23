@@ -2,7 +2,6 @@ var dbUtills = require('./transp_dbUtills');
 
 var query = {
     action_GET: function (action, userID, serviceType, companyID, executor, sb_id, authUser, data) {
-        console.log('data in utills', data);
         switch (action) {
             // Фильтры левого меню
             case 'myWG':
@@ -136,7 +135,7 @@ var query = {
                 var query = [];
                 for (var i = 0; i < data.length; i++) {
                     query.push(`DELETE FROM transport_cars WHERE id = ${data[i]}`);
-                }
+                } 
                 return { type: "DEL_CARS", data: query }
             default:
                 return null;

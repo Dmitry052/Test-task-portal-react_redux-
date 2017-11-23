@@ -91,11 +91,12 @@ class Drivers extends Component {
         }
         var check = false;
         for (var key in driver) {
-            if ((driver[key] === undefined || driver[key] === null) && key !== 'car_id') {
+            if ((driver[key] === undefined || driver[key] === null) && key !== 'id') {
                 check = true;
                 break;
             }
         }
+        
         if (check) {
             alert("Необходимо заполнить все поля.")
         }

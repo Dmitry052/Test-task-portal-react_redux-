@@ -25,7 +25,7 @@ class LeftMenu extends Component {
             nameFilters: 'Меню',
             nameFilter1: 'Типы услуг',
             nameFilter2: 'Компании',
-            nameFilter3: 'Пользователь-Рабочая группа',
+            nameFilter3: 'Пользователи РГ портала',
             nameFilter4: 'РГ портала',
             nameFilter5: 'Пользователи',
             nameFilter6: 'РГ банка',
@@ -51,7 +51,7 @@ class LeftMenu extends Component {
                 nameFilters: 'Меню',
                 nameFilter1: 'Типы услуг',
                 nameFilter2: 'Компании',
-                nameFilter3: 'Пользователь-Рабочая группа',
+                nameFilter3: 'Пользователи РГ портала',
                 nameFilter4: 'РГ портала',
                 nameFilter5: 'Пользователи',
                 nameFilter6: 'РГ банка',
@@ -93,17 +93,13 @@ class LeftMenu extends Component {
                     <Button onClick={this.toggle}><i className={this.state.iconFilters}></i>{' '}{this.state.nameFilters}</Button>
                     <Collapse in={this.state.collapse}>
                         <Nav bsStyle="pills">
-                        <NavItem eventKey={2} href="#" className={this.props.transp.left_menu.filter3} onClick={this.hendleMenu.bind(this, 'company', 2)}><i className={this.state.iconFilter2}></i>{' '}{this.state.nameFilter2}</NavItem>
-                        <NavItem eventKey={5} href="#" className={this.props.transp.left_menu.filter1} onClick={this.hendleMenu.bind(this, 'users', 0)} ><i className={this.state.iconFilter5}></i>{' '}{this.state.nameFilter5}</NavItem>
-                        <NavItem eventKey={6} href="#" className={this.props.transp.left_menu.filter6} onClick={this.hendleMenu.bind(this, 'wgbank', 5)} ><i className={this.state.iconFilter6}></i>{' '}{this.state.nameFilter6}</NavItem>
-                        <NavItem eventKey={4} href="#" className={this.props.transp.left_menu.filter5} onClick={this.hendleMenu.bind(this, 'wg', 4)}><i className={this.state.iconFilter4}></i>{' '}{this.state.nameFilter4}</NavItem>
-                            
-                            <NavItem eventKey={1} href="#" className={this.props.transp.left_menu.filter2} onClick={this.hendleMenu.bind(this, 'st', 1)}><i className={this.state.iconFilter1}></i>{' '}{this.state.nameFilter1}</NavItem>
-                            
+                            <NavItem eventKey={2} href="#" className={this.props.transp.left_menu.filter3} onClick={this.hendleMenu.bind(this, 'company', 2)}><i className={this.state.iconFilter2}></i>{' '}{this.state.nameFilter2}</NavItem>
+                            <NavItem eventKey={5} href="#" className={this.props.transp.left_menu.filter1} onClick={this.hendleMenu.bind(this, 'users', 0)} ><i className={this.state.iconFilter5}></i>{' '}{this.state.nameFilter5}</NavItem>
                             <NavItem eventKey={3} href="#" className={this.props.transp.left_menu.filter4} onClick={this.hendleMenu.bind(this, 'usertowg', 3)}><i className={this.state.iconFilter3}></i>{' '}{this.state.nameFilter3}</NavItem>
-                            
-                            
-                            
+                            <NavItem eventKey={6} href="#" className={this.props.transp.left_menu.filter6} onClick={this.hendleMenu.bind(this, 'wgbank', 5)} ><i className={this.state.iconFilter6}></i>{' '}{this.state.nameFilter6}</NavItem>
+                            <NavItem eventKey={4} href="#" className={this.props.transp.left_menu.filter5} onClick={this.hendleMenu.bind(this, 'wg', 4)}><i className={this.state.iconFilter4}></i>{' '}{this.state.nameFilter4}</NavItem>
+                            <NavItem eventKey={1} href="#" className={this.props.transp.left_menu.filter2} onClick={this.hendleMenu.bind(this, 'st', 1)}><i className={this.state.iconFilter1}></i>{' '}{this.state.nameFilter1}</NavItem>
+
                         </Nav>
                     </Collapse>
                 </div>

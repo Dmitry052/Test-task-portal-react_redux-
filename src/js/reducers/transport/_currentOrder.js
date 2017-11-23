@@ -417,7 +417,10 @@ export default function currentOrder(state = initialState, action) {
         // Пробрасываем в поле решение данные водителя
         let newSolution = 'Водитель:' + state.data.defaultDriver + '\n' + 'тел.' + state.data.order_driver_phone + ' ' + ' ' + state.data.order_driver_brand_car + ' ' + state.data.order_driver_color_car + ' ' + state.data.order_driver_num_car;
         // -----
-        if (state.data.order_solution.split('Водитель:').length === 1) {
+        if (state.data.order_solution === '' || state.data.order_solution === null) {
+            state.data.order_solution = newSolution;
+        }
+        else if (state.data.order_solution.split('Водитель:').length === 1) {
             state.data.order_solution = (state.data.order_solution === '' || state.data.order_solution === null ? '' : state.data.order_solution + '\n') + newSolution;
         } else if (state.data.order_solution.split('---').length > 1) {
             state.data.order_solution = newSolution;

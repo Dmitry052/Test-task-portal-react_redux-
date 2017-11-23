@@ -593,12 +593,19 @@ export const deleteDrivers = (drivers) => dispatch => {
 
 };
 export const deleteCars = (cars) => dispatch => {
-  axios.post(`${apiPrefix}/transp/deleteCars`, cars).then((response) => {
-    if (response.data !== true) {
-      dispatch({
-        type: "CAR_ALERT",
-        data: response.data.data
-      });
+  axios({
+    method: 'post',
+    url: `${apiPrefix}/transp`,
+    data: {
+      action: 'deleteCars',
+      data: cars
     }
+  }).then((response) => {
+    // if (response.data !== true) {
+    //   dispatch({
+    //     type: "CAR_ALERT",
+    //     data: response.data.data
+    //   });
+    // }
   });
 };

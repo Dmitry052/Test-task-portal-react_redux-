@@ -236,15 +236,18 @@ class Gridview extends Component {
 
     }
     saveToDB() {
-        if (this.props.order.data.order_status_val_def === "Назначено в группу" && this.props.order.data.showAlert === 'block') {
-            this.props.showALert('none');
+        if (this.props.order.data.saveBtn) {
+            if (this.props.order.data.order_status_val_def === "Назначено в группу" && this.props.order.data.showAlert === 'block') {
+                this.props.showALert('none');
+            }
+            if (this.props.order.data.order_status_val_def === "Машина назначена") {
+                this.assignCar();
+            }
+            if (this.props.order.data.order_status_val_def === "Поездка завершена") {
+                this.doneTrip();
+            }
         }
-        if (this.props.order.data.order_status_val_def === "Машина назначена") {
-            this.assignCar();
-        }
-        if (this.props.order.data.order_status_val_def === "Поездка завершена") {
-            this.doneTrip();
-        }
+
         // console.log('alert', this.props.order.data.showAlert);
         // ----------------------------------------------------
         if (this.props.order.data.showAlert === 'none') {
@@ -283,7 +286,14 @@ class Gridview extends Component {
                     }
                     return { new: null, old: null }
                 })(),
-                ride_start_time: { new: this.props.order.data.order_ride_start_time_toDB, old: this.state.originOrder.ride_start_time },
+                ride_start_time: (() => {
+                    if (this.props.order.data.order_status_val_def === "Назначено в группу") {
+                        return { new: null, old: this.state.originOrder.ride_start_time }
+                    }
+                    else {
+                        return { new: this.props.order.data.order_ride_start_time_toDB, old: this.state.originOrder.ride_start_time }
+                    }
+                })(),
                 ride_end_time: (() => {
                     if (this.props.order.data.order_status_val_def === revoked || this.props.order.data.order_status_val_def === refusing) {
                         return { new: Math.floor(Date.now() / 1000), old: this.state.originOrder.ride_end_time };
@@ -308,10 +318,20 @@ class Gridview extends Component {
                     new: this.props.order.data.order_ride_price === '' || this.props.order.data.order_ride_price === 'null' ? null : this.props.order.data.order_ride_price,
                     old: this.state.originOrder.ride_price === '' || this.state.originOrder.ride_price === 'null' ? null : this.state.originOrder.ride_price
                 },
-                solution: {
-                    new: this.props.order.data.order_solution === '' || this.props.order.data.order_solution === 'null' ? null : this.props.order.data.order_solution,
-                    old: this.state.originOrder.solution === '' || this.state.originOrder.solution === 'null' ? null : this.state.originOrder.solution
-                },
+                solution: (() => {
+                    if (this.props.order.data.order_status_val_def === "Назначено в группу") {
+                        return {
+                            new: null,
+                            old: this.state.originOrder.solution === '' || this.state.originOrder.solution === 'null' ? null : this.state.originOrder.solution
+                        }
+                    }
+                    else {
+                        return {
+                            new: this.props.order.data.order_solution === '' || this.props.order.data.order_solution === 'null' ? null : this.props.order.data.order_solution,
+                            old: this.state.originOrder.solution === '' || this.state.originOrder.solution === 'null' ? null : this.state.originOrder.solution
+                        }
+                    }
+                })(),
                 closure_code: (() => {
                     let currentCode;
                     if (this.props.order.data.order_status_val_def === 'Назначено в группу') {
@@ -337,7 +357,7 @@ class Gridview extends Component {
                     return { new: null, old: null }
                 })(),
             }
-            // console.log(order);
+            console.log(order);
             this.props.saveOrder(order);
             this.refreshState.call(this);
             this.close();

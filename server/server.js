@@ -127,12 +127,12 @@ app.post('/', (req, res) => {
 });
 // **************************************************
 app.get('/admin', function (req, res) {
-    console.log(req.query);
     var query = admin.action_GET(req.query.action, req.query.data);
     if (query !== null) {
         sqlConnetction.query(query, (err, result) => { res.send(result) });
     }
     else {
+        console.log(req.session.serviceType);
         if (!req.session.serviceType) { res.redirect('/') }
         if (req.session.serviceType === 1) { res.redirect('/expl') }
         if (req.session.serviceType === 2) { res.redirect('/transp') }
@@ -143,14 +143,14 @@ app.post('/admin', function (req, res) {
     var query = admin.action_POST(req.body.action, req.body.data);
 
     if (query.type === 'USER_TO_WG' || query.type === 'COMPANY_TO_WG' || query.type === 'INSERT' || query.type === 'UPDATE' || query.type === 'ST' || query.type === 'WG' || query.type === 'WGbank' || query.type === 'COMPANY') {
-        sqlConnetction.query(query.data, function (err, result) { });
-        return res.sendStatus(200);
+        sqlConnetction.query(query.data, function (err, result) { return res.sendStatus(200); });
+
     }
     if (query.type === 'DEL_USER_TO_WG' || query.type === 'DEL_COMPANY_TO_WG' || query.type === 'DELETE' || query.type === 'DEL_ST' || query.type === 'DEL_WG' || query.type === 'DEL_WGbank' || query.type === 'DEL_COMPANY') {
         for (key in query.data) {
-            sqlConnetction.query(query.data[key], (err, result) => { });
+            sqlConnetction.query(query.data[key], (err, result) => { return res.sendStatus(200); });
         }
-        return res.sendStatus(200);
+
     }
     return res.sendStatus(404);
 })
@@ -163,6 +163,7 @@ app.get('/expl', function (req, res) {
     else {
         if (!req.session.serviceType) { res.redirect('/') }
         if (req.session.serviceType === 2) { res.redirect('/transp') }
+        if (req.session.serviceType === 777) { res.redirect('/admin') }
         res.render('index');
     }
 });
@@ -176,6 +177,7 @@ app.get('/transp', function (req, res) {
         else {
             if (!req.session.serviceType) { res.redirect('/') }
             else if (req.session.serviceType === 1) { res.redirect('/expl') }
+            else if (req.session.serviceType === 777) { res.redirect('/admin') }
             res.render('index');
         }
     }

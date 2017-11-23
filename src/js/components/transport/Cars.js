@@ -69,10 +69,10 @@ class Cars extends Component {
                 }
             })(),
         }
-
+        // console.log('car', car);
         var check = false;
         for (var key in car) {
-            if (car[key] === undefined || car[key] === null || car[key] === '') {
+            if (car[key] === undefined || car[key] === null || car[key] === '' || car[key] === '---') {
                 check = true;
                 break;
             }
@@ -99,6 +99,7 @@ class Cars extends Component {
         for (var key of selected) {
             key[1] === true ? trueArr.push(key[0]) : '';
         }
+        console.log(trueArr);
         this.props.deleteCars(trueArr);
         this.props.carsDrivers();
         this.setState({});
@@ -148,7 +149,7 @@ class Cars extends Component {
                 </BootstrapTable>
                 <Modal isOpen={this.props.transp.directoties.showAddCar}
                     contentLabel="Modal"
-                    style={{ content: { width: '600px', margin: 'auto', 'background-color': '#f5f5f5', height: '490px' } }}
+                    style={{ content: { width: '600px', margin: 'auto', 'background-color': '#f5f5f5', height: '485px' } }}
                 >
                     <div className='btnModalCar'>
                         <span>{this.props.transp.directoties.car_header}</span>
