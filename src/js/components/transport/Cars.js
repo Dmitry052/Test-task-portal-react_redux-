@@ -141,7 +141,8 @@ class Cars extends Component {
                     options={options}
                     selectRow={selectRow}
                 >
-                    <TableHeaderColumn isKey={true} dataField='vehicle_brand' filter={{ type: 'TextFilter', defaultValue: '' }}>Марка</TableHeaderColumn>
+                    <TableHeaderColumn isKey={true} dataField='id' width='5%' filter={{ type: 'TextFilter', defaultValue: '' }}>ID</TableHeaderColumn>
+                    <TableHeaderColumn dataField='vehicle_brand' filter={{ type: 'TextFilter', defaultValue: '' }}>Марка</TableHeaderColumn>
                     <TableHeaderColumn dataField='vehicle_id_number' filter={{ type: 'TextFilter', defaultValue: '' }}>Регистрационный номер</TableHeaderColumn>
                     <TableHeaderColumn dataField={'vehicle_color' === 1 ? 'sdfds' : 'vehicle_color'} filter={{ type: 'TextFilter', defaultValue: '' }}>Цвет</TableHeaderColumn>
                     <TableHeaderColumn dataField='companyname' filter={{ type: 'SelectFilter', options: wg }}>Компания</TableHeaderColumn>

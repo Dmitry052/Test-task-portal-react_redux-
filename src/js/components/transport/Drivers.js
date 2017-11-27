@@ -96,7 +96,7 @@ class Drivers extends Component {
                 break;
             }
         }
-        
+
         if (check) {
             alert("Необходимо заполнить все поля.")
         }
@@ -163,7 +163,8 @@ class Drivers extends Component {
                     options={options}
                     selectRow={selectRow}
                 >
-                    <TableHeaderColumn isKey={true} dataField='driver_fullname' filter={{ type: 'TextFilter', defaultValue: '' }}>ФИО водителя</TableHeaderColumn>
+                    <TableHeaderColumn isKey={true} dataField='id' width='5%' filter={{ type: 'TextFilter', defaultValue: '' }}>ID</TableHeaderColumn>
+                    <TableHeaderColumn dataField='driver_fullname' filter={{ type: 'TextFilter', defaultValue: '' }}>ФИО водителя</TableHeaderColumn>
                     <TableHeaderColumn dataField='driver_phone' filter={{ type: 'TextFilter', defaultValue: '' }}>Телефон</TableHeaderColumn>
                     <TableHeaderColumn dataField='vehicle_id_number' filter={{ type: 'TextFilter', defaultValue: '' }}>Регистрационный номер</TableHeaderColumn>
                     <TableHeaderColumn dataField='companyname' filter={{ type: 'TextFilter', defaultValue: '' }}>Компания</TableHeaderColumn>
@@ -171,7 +172,7 @@ class Drivers extends Component {
                 </BootstrapTable>
                 <Modal isOpen={this.props.transp.directoties.showAddDriver}
                     contentLabel="Modal"
-                    style={{ content: { width: '600px', margin: 'auto', 'background-color': '#f5f5f5', height: '475px' } }}
+                    style={{ content: { width: '600px', margin: 'auto', 'background-color': '#f5f5f5', height: '480px' } }}
                 >
                     <div className='btnModalDriver'>
                         <span>{this.props.transp.directoties.driver_header}</span>
