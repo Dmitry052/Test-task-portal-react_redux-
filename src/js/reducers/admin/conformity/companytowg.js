@@ -95,7 +95,7 @@ export default function companyToWg(state = initialState, action) {
         };
     }
     if (action.type === "SET_COMPANY_COMP_TO_WG_ADMIN") {
-        if (action.data.event === '---') { state.comp_to_wg.checked_wg = false; }
+        if (action.data.event === '---') { state.comp_to_wg.checked_wg = false; state.comp_to_wg.list_company = [] }
         state.comp_to_wg.companyname = action.data.event;
         state.comp_to_wg.company_id = (() => {
             for (let key in action.data.data) {

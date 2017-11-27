@@ -222,7 +222,7 @@ export default connect(
         },
         set_company_comp_to_wg: (company, company_id) => {
             dispatch({ type: 'SET_COMPANY_COMP_TO_WG_ADMIN', data: company });
-            dispatch(wgincomapny(company_id));
+            if (company_id !== undefined) { dispatch(wgincomapny(company_id)); }
         },
         set_wgbank_comp_to_wg: (wgbank) => {
             dispatch({ type: 'SET_WGBANK_COMP_TO_WG_ADMIN', data: wgbank });
