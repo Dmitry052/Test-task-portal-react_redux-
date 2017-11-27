@@ -148,7 +148,7 @@ listExecutors: `SELECT users.id as id,username,users.displayname
 
 closureStatuses: `SELECT * FROM closure_statuses`,
 
-companyToUser: `select *
+companyToUser: `select company.id,company.companyname
 from users
 left join usertowg on users.id = usertowg.username_id
 left join companytowg on companytowg.wg_id = usertowg.wg_id

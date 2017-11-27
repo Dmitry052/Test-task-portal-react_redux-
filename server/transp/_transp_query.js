@@ -32,7 +32,7 @@ var query = {
             case 'userstowg':
                 return dbUtills.usersToWg + userID;
             case 'companyToUser':
-                return dbUtills.companyToUser + userID;
+                return dbUtills.companyToUser + userID + ' group by company.id,company.companyname';
             case 'closureStatuses':
                 return dbUtills.closureStatuses;
             case 'transpExecutor':
