@@ -190,8 +190,8 @@ app.post('/transp', function (req, res) {
     if (query.type === 'ORDER') {
 
         if (query.data[1].length > 0) {
-            for (key in query.data[1]) {
-                sqlConnetction.query(query.data[1][key], (err, result) => { });
+            for (let i = 0; i < query.data[1].length; i++) {
+                sqlConnetction.query(query.data[1][i], (err, result) => { if (i + 1 === query.data.length) { res.sendStatus(200); } });
             }
         }
         sqlConnetction.query(query.data[0], (err, result) => { res.send(result) });
@@ -200,8 +200,8 @@ app.post('/transp', function (req, res) {
         sqlConnetction.query(query.data, (err, result) => { res.send(result) });
     }
     else if (query.type === 'DEL_DRIVERS' || query.type === 'DEL_CARS') {
-        for (key in query.data) {
-            sqlConnetction.query(query.data[key], (err, result) => { });
+        for (let i = 0; i < query.data.length; i++) {
+            sqlConnetction.query(query.data[i], (err, result) => { if (i + 1 === query.data.length) { res.sendStatus(200); } });
         }
     }
     else {
