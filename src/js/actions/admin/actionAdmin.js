@@ -326,6 +326,7 @@ export const saveCompanyToWG = (company) => dispatch => {
           }
         }
       }).then((response) => {
+        dispatch(currentMenu('wg'));
       }).catch((error) => { alert("Нет ответа от сервера"); });
     }).catch((error) => { alert("Нет ответа от сервера 1"); });
   }
@@ -356,7 +357,7 @@ export const deleteCompanyToWG = (company) => dispatch => {
       data: company
     }
   }).then((response) => {
-    // 
+    dispatch(currentMenu('wg'));
   }).catch(function (error) {
     alert("Нет ответа от сервера");
   });

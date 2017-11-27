@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { connect, connectAdvanced } from 'react-redux';
 import { saveCompanyToWG, currentMenu, deleteCompanyToWG, saveUserToWG, deleteUserToWG, wgincomapny, userinwg, stName } from 'Actions/admin/actionAdmin';
 import Modal from 'react-modal';
+import { setTimeout } from 'timers';
 
 class Conformity extends Component {
     create_new_comp_to_wg() {
@@ -79,7 +80,7 @@ class Conformity extends Component {
                 alert("Указаная связка уже существует");
                 check_wg_input = true;
                 break;
-            } else if (this.props.store.companytowgAdmin.companyToWg[key].bank_wg_id === this.props.store.companytowgAdmin.comp_to_wg.bank_wg_id){
+            } else if (this.props.store.companytowgAdmin.companyToWg[key].bank_wg_id === this.props.store.companytowgAdmin.comp_to_wg.bank_wg_id) {
                 alert("Указаная РГ банка уже используется");
                 check_wg_input = true;
                 break;
@@ -88,7 +89,7 @@ class Conformity extends Component {
         }
         if (!check_wg_input) {
             this.props.saveCompanyToWG(this.props.store.companytowgAdmin.comp_to_wg);
-            this.props.currentMenu();
+            // this.props.currentMenu();
             this.props.show_comp_to_wg();
         }
     }
@@ -107,7 +108,7 @@ class Conformity extends Component {
         }
         this.props.deleteCompanyToWG(trueArr);
         this.props.uncheck_wg_comp_to_wg();
-        this.props.currentMenu();
+        // this.props.currentMenu();
     }
 
     render() {
@@ -244,13 +245,13 @@ export default connect(
         },
         saveCompanyToWG: (company) => {
             dispatch(saveCompanyToWG(company));
-            dispatch(currentMenu('wg'));
+            // dispatch(currentMenu('wg'));
         },
         deleteCompanyToWG: (company) => {
             dispatch(deleteCompanyToWG(company));
         },
-        currentMenu: () => {
-            dispatch(currentMenu('wg'));
-        }
+        // currentMenu: () => {
+        //     dispatch(currentMenu('wg'));
+        // }
     })
 )(Conformity);

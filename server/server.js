@@ -146,13 +146,14 @@ app.post('/admin', function (req, res) {
         sqlConnetction.query(query.data, function (err, result) { return res.sendStatus(200); });
 
     }
-    if (query.type === 'DEL_USER_TO_WG' || query.type === 'DEL_COMPANY_TO_WG' || query.type === 'DELETE' || query.type === 'DEL_ST' || query.type === 'DEL_WG' || query.type === 'DEL_WGbank' || query.type === 'DEL_COMPANY') {
-        for (key in query.data) {
-            sqlConnetction.query(query.data[key], (err, result) => { return res.sendStatus(200); });
+    else if (query.type === 'DEL_USER_TO_WG' || query.type === 'DEL_COMPANY_TO_WG' || query.type === 'DELETE' || query.type === 'DEL_ST' || query.type === 'DEL_WG' || query.type === 'DEL_WGbank' || query.type === 'DEL_COMPANY') {
+        for (let i = 0; i < query.data.length; i++) {
+            sqlConnetction.query(query.data[i], (err, result) => { if (i + 1 === query.data.length) { res.sendStatus(200); } });
         }
-
     }
-    return res.sendStatus(404);
+    else {
+        return res.sendStatus(404);
+    }
 })
 // Эксплуатация
 app.get('/expl', function (req, res) {
@@ -191,7 +192,7 @@ app.post('/transp', function (req, res) {
 
         if (query.data[1].length > 0) {
             for (let i = 0; i < query.data[1].length; i++) {
-                sqlConnetction.query(query.data[1][i], (err, result) => { if (i + 1 === query.data.length) { res.sendStatus(200); } });
+                sqlConnetction.query(query.data[1][i], (err, result) => { if (i + 1 === query.data[1].length) { res.sendStatus(200); } });
             }
         }
         sqlConnetction.query(query.data[0], (err, result) => { res.send(result) });
