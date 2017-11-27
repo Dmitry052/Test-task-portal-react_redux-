@@ -189,10 +189,9 @@ app.get('/transp', function (req, res) {
 app.post('/transp', function (req, res) {
     var query = transp.action_POST(req.body.action, req.body.data, req.session.userID);
     if (query.type === 'ORDER') {
-
         if (query.data[1].length > 0) {
             for (let i = 0; i < query.data[1].length; i++) {
-                sqlConnetction.query(query.data[1][i], (err, result) => { if (i + 1 === query.data[1].length) { res.sendStatus(200); } });
+                sqlConnetction.query(query.data[1][i], (err, result) => { if (i + 1 === query.data[1].length) {  } });
             }
         }
         sqlConnetction.query(query.data[0], (err, result) => { res.send(result) });
