@@ -46,8 +46,17 @@ app.use(session({
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-    res.setHeader('Access-Control-Allow-Origin', 'http://www.sfriend.ru:3000');
+//    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+//    res.setHeader('Access-Control-Allow-Origin', 'http://www.sfriend.ru:3000');
+
+
+  var allowedOrigins = ['http://127.0.0.1:3000', 'http://sfriend:3000', 'http://www.sfriend:3000'];
+  var origin = req.headers.origin;
+  if(allowedOrigins.indexOf(origin) > -1){
+       res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+
+
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -70,6 +79,11 @@ app.set('views', path.join(__dirname, "../views"));
 app.set('view engine', 'pug');
 // **************************************************
 app.get('/', function (req, res) {
+var host = req.headers.host.split(".");
+
+    if(host[0] !== 'www'){
+       res.redirect(301,"http://www.sfriend.ru:3000");
+    }
     if (req.session.authUser && req.session.serviceType === 1) {
         res.redirect('/expl');
 
