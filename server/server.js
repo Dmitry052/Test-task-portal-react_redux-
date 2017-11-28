@@ -17,14 +17,12 @@ var transp = require("./transp/_transp_query");
 var expl = require("./expl/_expl_query");
 
 var fs = require('fs');
-var http = require('http');
 var https = require('https');
 var privateKey = fs.readFileSync(path.resolve(__dirname,'https/privkey.pem'));
 var certificate = fs.readFileSync(path.resolve(__dirname,'https/cert.pem'));
 var credentials = {key: privateKey, cert: certificate};
 
 var app = express();
-var http = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
 
 
@@ -87,10 +85,6 @@ app.use('/static', express.static(path.join(__dirname, "../public")));
 app.set('views', path.join(__dirname, "../views"));
 // Используемый шаблонизатор
 app.set('view engine', 'pug');
-
-app.get('*',function(req,res){
-console.log("test");
-});
 
 // **************************************************
 app.get('/', function (req, res) {
