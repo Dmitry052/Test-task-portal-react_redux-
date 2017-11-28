@@ -25,8 +25,6 @@ var credentials = {key: privateKey, cert: certificate};
 var app = express();
 var httpsServer = https.createServer(credentials, app);
 
-
-
 var sqlConnetction = mysql.createConnection({
     host: config.db.host,
     port: config.db.port,
@@ -88,11 +86,6 @@ app.set('view engine', 'pug');
 
 // **************************************************
 app.get('/', function (req, res) {
-//console.log(req.headers.host);
-//var host = req.headers.host.split(".");
-//    if(host[0] !== 'www'){
-//       res.redirect(301,"https://www.sfriend.ru:3000");
-//    }
     if (req.session.authUser && req.session.serviceType === 1) {
         res.redirect('/expl');
 
@@ -143,7 +136,8 @@ app.post('/', (req, res) => {
                     }
                 });
             } else {
-                res.send('I do not know you. <a href="/">Signin</a>');
+                res.redirect('/');
+                // res.send('I do not know you. <a href="/">Signin</a>');
             }
         }
     });
