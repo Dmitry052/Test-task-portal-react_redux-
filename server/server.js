@@ -16,8 +16,18 @@ var admin = require("./admin/_admin_query");
 var transp = require("./transp/_transp_query");
 var expl = require("./expl/_expl_query");
 
+var fs = require('fs');
+var http = require('http');
+var https = require('https');
+var privateKey = fs.readFileSync(path.resolve(__dirname,'https/privkey.pem'));
+var certificate = fs.readFileSync(path.resolve(__dirname,'https/cert.pem'));
+var credentials = {key: privateKey, cert: certificate};
 
 var app = express();
+var http = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
+
+
 
 var sqlConnetction = mysql.createConnection({
     host: config.db.host,
@@ -50,7 +60,7 @@ app.use(function (req, res, next) {
 //    res.setHeader('Access-Control-Allow-Origin', 'http://www.sfriend.ru:3000');
 
 
-  var allowedOrigins = ['http://127.0.0.1:3000', 'http://sfriend:3000', 'http://www.sfriend:3000'];
+  var allowedOrigins = ['http://127.0.0.1:3000', 'https://sfriend:3000', 'https://www.sfriend:3000'];
   var origin = req.headers.origin;
   if(allowedOrigins.indexOf(origin) > -1){
        res.setHeader('Access-Control-Allow-Origin', origin);
@@ -77,13 +87,18 @@ app.use('/static', express.static(path.join(__dirname, "../public")));
 app.set('views', path.join(__dirname, "../views"));
 // Используемый шаблонизатор
 app.set('view engine', 'pug');
+
+app.get('*',function(req,res){
+console.log("test");
+});
+
 // **************************************************
 app.get('/', function (req, res) {
-var host = req.headers.host.split(".");
-
-    if(host[0] !== 'www'){
-       res.redirect(301,"http://www.sfriend.ru:3000");
-    }
+//console.log(req.headers.host);
+//var host = req.headers.host.split(".");
+//    if(host[0] !== 'www'){
+//       res.redirect(301,"https://www.sfriend.ru:3000");
+//    }
     if (req.session.authUser && req.session.serviceType === 1) {
         res.redirect('/expl');
 
@@ -240,7 +255,9 @@ app.get('/404', function (req, res) {
 app.get('*', function (req, res) {
     res.redirect('/404');
 });
-app.listen(config.serverPort, function () {
+
+
+httpsServer.listen(config.serverPort, function () {
     console.log(`Server is running on port ${config.serverPort}`);
 });
 
