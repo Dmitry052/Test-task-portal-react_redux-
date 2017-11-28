@@ -7,7 +7,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 class History extends Component {
 
     render() {
-        console.log('История', this.props.history.data.dataHistory);
+        // console.log('История', this.props.history.data.dataHistory);
         let data = [];
         if (this.props.history.data.dataHistory[0] === undefined) {
             data = [];
@@ -87,7 +87,7 @@ class History extends Component {
                 }
             });
         }
-        console.log(data);
+        // console.log(data);
         return (
             <div className="dataHistory">
                 <BootstrapTable className='col-lg-12 col-md-12'

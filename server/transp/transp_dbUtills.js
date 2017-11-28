@@ -119,7 +119,7 @@ inner join transport_cars_status on transport_cars_status.id = transport_cars.st
 where users.id=`,
 
 cars: `SELECT transport_cars.id, vehicle_brand,vehicle_id_number,vehicle_color,company.id as company_id,companyname,
-transport_cars_status.status,transport_cars.status as num_status 
+transport_cars_status.status,transport_cars.status as num_status
 FROM transport_cars
 inner join transport_cars_status on transport_cars_status.id = transport_cars.status
 inner join company on company.id = transport_cars.company_id

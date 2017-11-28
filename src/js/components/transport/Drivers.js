@@ -83,7 +83,7 @@ class Drivers extends Component {
             company_id: (() => {
                 for (var key in this.props.transp.companyToUser) {
                     if (this.props.transp.companyToUser[key].companyname === this.props.transp.directoties.driver_company) {
-                        return this.props.transp.companyToUser[key].company_id;
+                        return this.props.transp.companyToUser[key].id;
                     }
                 }
                 return null;
@@ -96,7 +96,6 @@ class Drivers extends Component {
                 break;
             }
         }
-
         if (check) {
             alert("Необходимо заполнить все поля.")
         }
@@ -172,7 +171,7 @@ class Drivers extends Component {
                 </BootstrapTable>
                 <Modal isOpen={this.props.transp.directoties.showAddDriver}
                     contentLabel="Modal"
-                    style={{ content: { width: '600px', margin: 'auto', 'background-color': '#f5f5f5', height: '480px' } }}
+                    style={{ content: { width: '600px', margin: 'auto', 'backgroundColor': '#f5f5f5', height: '480px' } }}
                 >
                     <div className='btnModalDriver'>
                         <span>{this.props.transp.directoties.driver_header}</span>

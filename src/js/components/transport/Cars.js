@@ -64,12 +64,12 @@ class Cars extends Component {
             company_id: (() => {
                 for (var key in this.props.transp.companyToUser) {
                     if (this.props.transp.companyToUser[key].companyname === this.props.transp.directoties.car_company) {
-                        return this.props.transp.companyToUser[key].company_id;
+                        return this.props.transp.companyToUser[key].id;
                     }
                 }
             })(),
         }
-        // console.log('car', car);
+        
         var check = false;
         for (var key in car) {
             if (car[key] === undefined || car[key] === null || car[key] === '' || car[key] === '---') {
@@ -99,7 +99,7 @@ class Cars extends Component {
         for (var key of selected) {
             key[1] === true ? trueArr.push(key[0]) : '';
         }
-        console.log(trueArr);
+        // console.log(trueArr);
         this.props.deleteCars(trueArr);
         this.props.carsDrivers();
         this.setState({});
