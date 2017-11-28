@@ -847,6 +847,10 @@ div.btnModalCar {
 #gridCars > button:nth-child(2) {
   margin-left: 5px; }
 
+.dropdown-menu {
+  max-height: 150px;
+  overflow-y: scroll; }
+
 body > div:nth-child(8) > div > div {
   padding: 0 0 !important; }
 

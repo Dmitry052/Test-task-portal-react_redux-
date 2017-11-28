@@ -150,7 +150,7 @@ class Cars extends Component {
                 </BootstrapTable>
                 <Modal isOpen={this.props.transp.directoties.showAddCar}
                     contentLabel="Modal"
-                    style={{ content: { width: '600px', margin: 'auto', 'background-color': '#f5f5f5', height: '485px' } }}
+                    style={{ content: { width: '600px', margin: 'auto', 'background-color': '#f5f5f5', height: '485px', overflow: 'hidden' } }}
                 >
                     <div className='btnModalCar'>
                         <span>{this.props.transp.directoties.car_header}</span>
