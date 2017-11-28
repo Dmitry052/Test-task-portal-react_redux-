@@ -109,7 +109,7 @@ app.post('/', (req, res) => {
         var user = result[0];
 
         if (!user) {
-            return res.send('No user. <a href="/">Login</a>');
+            return res.redirect('/');
         }
         else {
             if (passwordHash.verify(pwd, user.password)) {
