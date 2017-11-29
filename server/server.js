@@ -86,6 +86,7 @@ app.set('view engine', 'pug');
 
 // **************************************************
 app.get('/', function (req, res) {
+    console.log(req.connection.remoteAddress);
     if (req.session.authUser && req.session.serviceType === 1) {
         res.redirect('/expl');
 
