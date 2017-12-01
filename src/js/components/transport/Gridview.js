@@ -360,8 +360,8 @@ class Gridview extends Component {
                 })(),
             }
             // console.log(order);
-            this.props.saveOrder(order);
-            this.refreshState.call(this);
+            this.props.saveOrder(order,this.refreshState.bind(this));
+            // this.refreshState.call(this);
             this.close();
         }
 
@@ -921,8 +921,9 @@ export default connect(
         setSolution: (text) => {
             dispatch(setSolution(text));
         },
-        saveOrder: (order) => {
+        saveOrder: (order,refresh) => {
             dispatch(saveOrder(order));
+            refresh();
         },
         assignCar: (user) => {
             dispatch(assignCar(user));

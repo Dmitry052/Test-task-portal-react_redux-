@@ -1,5 +1,6 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-// const config = require('./etc/config.json');
+const NODE_ENV = process.env.NODE_ENV || 'development';
+const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
@@ -47,6 +48,7 @@ module.exports = {
             filename: 'css/style.css',
             allChunks: true,
         }),
+        
     ],
     resolve: {
         alias: {

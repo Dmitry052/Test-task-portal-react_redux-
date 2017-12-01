@@ -21,6 +21,7 @@ class LeftMenu extends Component {
             iconFilter4: 'fa fa-tasks',
             iconFilter5: 'fa fa-sign-in',
             iconFilter6: 'fa fa-tasks',
+            iconFilter7: 'fa fa-tasks',
 
             nameFilters: 'Меню',
             nameFilter1: 'Типы услуг',
@@ -29,6 +30,7 @@ class LeftMenu extends Component {
             nameFilter4: 'РГ портала',
             nameFilter5: 'Пользователи',
             nameFilter6: 'РГ банка',
+            nameFilter7: 'Заявки',
 
         };
         this.handleCheckedMenu = this.handleCheckedMenu.bind(this);
@@ -55,6 +57,7 @@ class LeftMenu extends Component {
                 nameFilter4: 'РГ портала',
                 nameFilter5: 'Пользователи',
                 nameFilter6: 'РГ банка',
+                nameFilter7: 'Заявки',
 
             });
         }
@@ -71,6 +74,7 @@ class LeftMenu extends Component {
                 nameFilter4: '',
                 nameFilter5: '',
                 nameFilter6: '',
+                nameFilter7: '',
 
             });
         }
@@ -99,6 +103,8 @@ class LeftMenu extends Component {
                             <NavItem eventKey={6} href="#" className={this.props.transp.left_menu.filter6} onClick={this.hendleMenu.bind(this, 'wgbank', 5)} ><i className={this.state.iconFilter6}></i>{' '}{this.state.nameFilter6}</NavItem>
                             <NavItem eventKey={4} href="#" className={this.props.transp.left_menu.filter5} onClick={this.hendleMenu.bind(this, 'wg', 4)}><i className={this.state.iconFilter4}></i>{' '}{this.state.nameFilter4}</NavItem>
                             <NavItem eventKey={1} href="#" className={this.props.transp.left_menu.filter2} onClick={this.hendleMenu.bind(this, 'st', 1)}><i className={this.state.iconFilter1}></i>{' '}{this.state.nameFilter1}</NavItem>
+
+                            <NavItem eventKey={7} href="#" onClick={this.hendleMenu.bind(this, 'orderlist', 6)}><i className={this.state.iconFilter7}></i>{' '}{this.state.nameFilter7}</NavItem>
 
                         </Nav>
                     </Collapse>

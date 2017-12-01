@@ -7,6 +7,7 @@ import Wgbank from './grids/WG_bank';
 import Users from './grids/Users';
 import Company from './grids/Company';
 import Usertowg from './grids/Usertowg';
+import Orders from './grids/Orders';
 
 
 class Body extends Component {
@@ -18,6 +19,7 @@ class Body extends Component {
             st: <Service_type />, 
             company: <Company />, 
             usertowg: <Usertowg />,
+            orderlist: <Orders />
 
         };
         return (
