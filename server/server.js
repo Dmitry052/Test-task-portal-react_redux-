@@ -18,9 +18,9 @@ var expl = require("./expl/_expl_query");
 
 var fs = require('fs');
 var https = require('https');
-var privateKey = fs.readFileSync(path.resolve(__dirname,'https/privkey.pem'));
-var certificate = fs.readFileSync(path.resolve(__dirname,'https/cert.pem'));
-var credentials = {key: privateKey, cert: certificate};
+var privateKey = fs.readFileSync(path.resolve(__dirname, 'https/privkey.pem'));
+var certificate = fs.readFileSync(path.resolve(__dirname, 'https/cert.pem'));
+var credentials = { key: privateKey, cert: certificate };
 
 var app = express();
 var httpsServer = https.createServer(credentials, app);
@@ -52,15 +52,15 @@ app.use(session({
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-//    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-//    res.setHeader('Access-Control-Allow-Origin', 'http://www.sfriend.ru:3000');
+    //    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    //    res.setHeader('Access-Control-Allow-Origin', 'http://www.sfriend.ru:3000');
 
 
-  var allowedOrigins = ['http://127.0.0.1:3000', 'https://sfriend:3000', 'https://www.sfriend:3000'];
-  var origin = req.headers.origin;
-  if(allowedOrigins.indexOf(origin) > -1){
-       res.setHeader('Access-Control-Allow-Origin', origin);
-  }
+    var allowedOrigins = ['http://127.0.0.1:3000', 'https://sfriend:3000', 'https://www.sfriend:3000'];
+    var origin = req.headers.origin;
+    if (allowedOrigins.indexOf(origin) > -1) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
 
 
 
@@ -86,7 +86,7 @@ app.set('view engine', 'pug');
 
 // **************************************************
 app.get('/', function (req, res) {
-    console.log(req.connection.remoteAddress);
+    // console.log(req.connection.remoteAddress);
     if (req.session.authUser && req.session.serviceType === 1) {
         res.redirect('/expl');
 
@@ -104,6 +104,7 @@ app.post('/', (req, res) => {
     // Данные с формы
     var uname = req.body.login;
     var pwd = req.body.password;
+    console.log("111111",req.body);
     // Поиск пользователя вБД
     var query = 'SELECT * FROM users WHERE authid = ?';
     sqlConnetction.query(query, ['local:' + uname], function (err, result) {
@@ -113,7 +114,15 @@ app.post('/', (req, res) => {
             return res.redirect('/');
         }
         else {
-            if (passwordHash.verify(pwd, user.password)) {
+            // Смотрим кто пришёл для подсчёта ошибок ввода
+            if (!req.session.signinUser) {
+                req.session.signinUser = { user: user.displayname, count: 0 };
+            }
+            else if (req.session.signinUser.user !== user.displayname) {
+                req.session.signinUser = { user: user.displayname, count: 0 };
+            }
+
+            if (passwordHash.verify(pwd, user.password) && user.status === 1) {
                 req.session.authUser = user.displayname;
                 req.session.save(function () {
                     // Определяем сервис сотрудника
@@ -133,12 +142,20 @@ app.post('/', (req, res) => {
                     else {
                         req.session.serviceType = 777;
                         res.redirect('/admin');
-                        // res.send("Администратор<br><a href='/logout'>Logout</a>");
                     }
                 });
             } else {
+
+                req.session.signinUser.count++;
+                if (req.session.signinUser.count >= 3) {
+                    // Блокируем
+                    var query = `UPDATE users SET status = 0 where id = ${user.id}`;
+                    req.session.signinUser.count = 0;
+                    sqlConnetction.query(query, function (err, result) { });
+                }
+
                 res.redirect('/');
-                // res.send('I do not know you. <a href="/">Signin</a>');
+
             }
         }
     });
@@ -190,6 +207,7 @@ app.get('/expl', function (req, res) {
 app.get('/transp', function (req, res) {
     if (req.query.action !== 'AUTH') {
         var query = transp.action_GET(req.query.action, req.session.userID, req.session.serviceType, req.session.companyID, req.query.executor, req.query.sb_id, req.session.authUser, req.query.data);
+        console.log(req.query);
         if (query !== null) {
             sqlConnetction.query(query, (err, result) => { res.send(result) });
         }
@@ -209,7 +227,7 @@ app.post('/transp', function (req, res) {
     if (query.type === 'ORDER') {
         if (query.data[1].length > 0) {
             for (let i = 0; i < query.data[1].length; i++) {
-                sqlConnetction.query(query.data[1][i], (err, result) => { if (i + 1 === query.data[1].length) {  } });
+                sqlConnetction.query(query.data[1][i], (err, result) => { if (i + 1 === query.data[1].length) { } });
             }
         }
         sqlConnetction.query(query.data[0], (err, result) => { res.send(result) });

@@ -12,7 +12,7 @@ import Orders from './grids/Orders';
 
 class Body extends Component {
     render() {
-        let grids = {
+        const grids = {
             wg: <Wg />, 
             wgbank: <Wgbank />,
             users: <Users />, 

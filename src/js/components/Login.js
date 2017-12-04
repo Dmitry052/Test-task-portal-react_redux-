@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import axios from 'axios';
+import { apiPrefix } from './../../../etc/config.json';
 
 class Login extends Component {
   constructor(props) {
@@ -12,7 +14,6 @@ class Login extends Component {
 
     this.handleChangeLogin = this.handleChangeLogin.bind(this);
     this.handleChangePass = this.handleChangePass.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChangeLogin(event) {
@@ -30,20 +31,26 @@ class Login extends Component {
       })
     )
   }
-
-  handleSubmit() {
-    // console.log(this.inputLogin.value, this.inputPassword.value);
-    this.props.auth(this.inputLogin.value, this.inputPassword.value);
-
+  signin() {
+    axios({
+      method: 'post',
+      url: `${apiPrefix}/`,
+      data: {
+        login: this.state.login,
+        password: this.state.password
+      }
+    }).then((response) => {
+      console.log("Пришёл ответ");
+      // location.reload();
+    })
   }
-
   render() {
     return (
       <div className="Login">
         <form method="post" action="/">
           <div>
-          <h2>Вход</h2>
-          <span>Пожалуйста, заполните следующие поля для входа:</span>
+            <h2>Вход</h2>
+            <span>Пожалуйста, заполните следующие поля для входа:</span>
           </div>
           <FormGroup controlId="login" bsSize="small">
             <ControlLabel>Логин</ControlLabel>
@@ -69,7 +76,7 @@ class Login extends Component {
               placeholder="Введите пароль"
             />
           </FormGroup>
-          <Button block bsSize="small" bsStyle="primary" type="submit">
+          <Button block bsSize="small" bsStyle="primary" onClick={this.signin.bind(this)}>
             Вход
           </Button>
         </form>
