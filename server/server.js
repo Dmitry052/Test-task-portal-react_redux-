@@ -100,11 +100,15 @@ app.get('/', function (req, res) {
         res.render('index');
     }
 });
+app.post('/newUser', (req, res) => {
+    query = `UPDATE users SET password = '${passwordHash.generate(req.body.password)}',status = 1 WHERE authid = '${'local:' + req.body.login}' `
+    sqlConnetction.query(query, function (err, result) { res.send("ok") });
+});
 app.post('/', (req, res) => {
     // Данные с формы
     var uname = req.body.login;
     var pwd = req.body.password;
-    // Поиск пользователя вБД
+    // Поиск пользователя в БД
     var query = 'SELECT * FROM users WHERE authid = ?';
     sqlConnetction.query(query, ['local:' + uname], function (err, result) {
         var user = result[0];
@@ -120,32 +124,39 @@ app.post('/', (req, res) => {
             else if (req.session.signinUser.user !== user.displayname) {
                 req.session.signinUser = { user: user.displayname, count: 0 };
             }
+            console.log(passwordHash.generate(pwd))
+            console.log(pwd, user.password);
+            if (passwordHash.verify(pwd, user.password)) {
+                if (user.status === 1) {
+                    delete req.session.signinUser;
+                    req.session.authUser = user.displayname;
+                    req.session.save(function () {
+                        // Определяем сервис сотрудника
+                        if (uname !== 'admin') {
+                            var query = 'SELECT company_id,users.id,service_type FROM users INNER JOIN company ON users.company_id=company.id WHERE authid = ?';
+                            sqlConnetction.query(query, ['local:' + uname], function (err, result) {
+                                var st = result[0];
+                                req.session.serviceType = st.service_type;
+                                req.session.companyID = st.company_id;
+                                req.session.userID = st.id;
+                                // Направляем пользователя соглавное его сервису
+                                if (st.service_type === 1) { res.redirect('/expl'); console.log(`Accessed ${req.session.authUser}`); }
+                                else if (st.service_type === 2) { res.redirect('/transp'); console.log(`Accessed ${req.session.authUser}`); }
+                                else { res.send("Неизвестная организация"); }
+                            });
 
-            if (passwordHash.verify(pwd, user.password) && user.status === 1) {
-                delete req.session.signinUser;
-                req.session.authUser = user.displayname;
-                req.session.save(function () {
-                    // Определяем сервис сотрудника
-                    if (uname !== 'admin') {
-                        var query = 'SELECT company_id,users.id,service_type FROM users INNER JOIN company ON users.company_id=company.id WHERE authid = ?';
-                        sqlConnetction.query(query, ['local:' + uname], function (err, result) {
-                            var st = result[0];
-                            req.session.serviceType = st.service_type;
-                            req.session.companyID = st.company_id;
-                            req.session.userID = st.id;
-                            // Направляем пользователя соглавное его сервису
-                            if (st.service_type === 1) { res.redirect('/expl'); console.log(`Accessed ${req.session.authUser}`); }
-                            else if (st.service_type === 2) { res.redirect('/transp'); console.log(`Accessed ${req.session.authUser}`); }
-                            else { res.send("Неизвестная организация"); }
-                        });
+                        }
+                        else {
+                            req.session.serviceType = 777;
+                            res.redirect('/admin');
 
-                    }
-                    else {
-                        req.session.serviceType = 777;
-                        res.redirect('/admin');
-
-                    }
-                });
+                        }
+                    });
+                }
+                else if (user.status === 11) {
+                    console.log(user.status)
+                    res.send({ type: 'newuser' });
+                }
             } else {
                 req.session.signinUser.count++;
                 if (req.session.signinUser.count >= 3) {

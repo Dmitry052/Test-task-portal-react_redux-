@@ -36,6 +36,18 @@ textarea {
 #bodyAdmin button {
   margin: 5px 5px; }
 
+#saveNewPass {
+  float: right; }
+
+#newPass, #confPass {
+  padding: 5px 5px; }
+
+body > div.ReactModalPortal > div > div > div:nth-child(1) > span {
+  padding-right: 15px; }
+
+body > div.ReactModalPortal > div > div > div:nth-child(2) > span {
+  padding-right: 4px; }
+
 #headerUsersAdmin, #headerSTAdmin {
   height: 28px;
   background: #303a46; }

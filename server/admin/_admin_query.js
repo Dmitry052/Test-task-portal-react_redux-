@@ -40,9 +40,10 @@ var query = {
                 var query;
                 if (data.type === 'INSERT') {
                     var now = new Date();
-                    query = `INSERT INTO users(authid,username,password,displayname,created_at,company_id,email) VALUES (
+                    query = `INSERT INTO users(authid,username,password,displayname,created_at,company_id,email,status) VALUES (
                         'local:${data.login}','${data.login}','${passwordHash.generate(data.pass)}','${data.displayname}',${Math.floor(now.getTime() / 1000)},${data.company_id},'
-                        ${data.email}')`;
+                        ${data.email}',${data.block === false || data.block === 'new' ? data.block === 'new' ? 11 : 1 : 0})`;
+
                     return { type: 'INSERT', data: query };
                 }
                 if (data.type === 'UPDATE') {
@@ -72,6 +73,7 @@ var query = {
                     }
 
                 }
+                
                 return { type: 'UPDATE', data: query };
             case 'deleteUsers':
                 var query = [];

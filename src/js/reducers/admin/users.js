@@ -12,7 +12,7 @@ const initialState = {
         company_id: '',
         companyname: '',
         usergroups: [],
-        block: true
+        block: true,
     }
 }
 
@@ -112,7 +112,8 @@ export default function users(state = initialState, action) {
             email: '',
             company_id: '',
             companyname: '',
-            usergroups: []
+            usergroups: [],
+            block: 'new'
         }
         return {
             users: state.users,
