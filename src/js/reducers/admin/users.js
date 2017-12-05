@@ -37,7 +37,7 @@ export default function users(state = initialState, action) {
     }
     // ---------------------------------------
     if (action.type === "SET_BLOCK_USER_ADMIN") {
-        state.user.block = action.data;
+        state.user.block = state.user.block === 'new' ? 'new' : action.data;
         return {
             users: state.users,
             user: state.user,
