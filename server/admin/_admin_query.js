@@ -54,7 +54,8 @@ var query = {
                         displayname = '${data.displayname}',
                         created_at = ${Math.floor(now.getTime() / 1000)},
                         company_id = ${data.company_id},
-                        email = '${data.email}'
+                        email = '${data.email}',
+                        status = ${data.block === false ? 1 : 0}
                         WHERE id = ${data.id}`;
                     }
                     else {
@@ -65,7 +66,8 @@ var query = {
                         displayname = '${data.displayname}',
                         created_at = ${Math.floor(now.getTime() / 1000)},
                         company_id = ${data.company_id},
-                        email = '${data.email}'
+                        email = '${data.email}',
+                        status = ${data.block === false ? 1 : 0}
                         WHERE id = ${data.id}`;
                     }
 

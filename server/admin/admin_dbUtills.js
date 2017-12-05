@@ -1,6 +1,6 @@
 module.exports = {
     st: `SELECT * FROM service_types`,
-    users: `SELECT users.id,username,displayname,companyname,company_id,created_at,email 
+    users: `SELECT users.id,username,displayname,companyname,company_id,created_at,email,status 
     FROM users
     left join company on company.id = users.company_id`,
     usergroups: `SELECT workgroups.id,wg_name 

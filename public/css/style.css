@@ -113,8 +113,6 @@ textarea {
   background: #303a46; }
 
 @media all and (min-width: 480px) {
-  .Login {
-    padding: 4% 0%; }
   .Login form {
     margin: 0 auto;
     max-width: 357px;
@@ -126,6 +124,10 @@ textarea {
   #logout > button > a {
     color: #fff;
     text-decoration: none; } }
+
+#alert {
+  margin: 0 auto;
+  width: 500px; }
 
 .jumbotron {
   width: 400px;

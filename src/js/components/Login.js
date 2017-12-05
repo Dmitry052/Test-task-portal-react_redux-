@@ -9,7 +9,13 @@ class Login extends Component {
 
     this.state = {
       login: '',
-      password: ''
+      password: '',
+      show: 'none',
+      count: 0,
+      text: '',
+      defaultText: 'Не правильно введён логин или пароль. Осталось попыток ввода:',
+      noUser: 'Пользователь с указаным логином не существует',
+      kickText: 'Указаный пользователь блокирован. Обратитесь к администратору.'
     };
 
     this.handleChangeLogin = this.handleChangeLogin.bind(this);
@@ -40,13 +46,52 @@ class Login extends Component {
         password: this.state.password
       }
     }).then((response) => {
-      console.log("Пришёл ответ");
-      // location.reload();
+      if (typeof response.data === "object") {
+        if (response.data.type !== 'nouser') {
+          this.setState({
+            show: '',
+            count: 3 - response.data.count
+          })
+          if (response.data.status > 0) {
+            this.setState({
+              text: this.state.defaultText
+            })
+          }
+          else {
+            this.setState({
+              text: this.state.kickText,
+              count: ''
+            })
+          }
+        }
+        else{
+          this.setState({
+            text: this.state.noUser,
+            show: '',
+            count: ''
+          })
+        }
+
+      }
+      else {
+        location.reload();
+      }
+    })
+  }
+  closeAlert() {
+    this.setState({
+      show: 'none',
     })
   }
   render() {
     return (
       <div className="Login">
+        <div style={{ display: this.state.show }} id="alert" className="alert alert-danger">
+          <a href="#" className="close" data-dismiss="alert" aria-label="close" onClick={this.closeAlert.bind(this)}>&times;</a>
+          <strong>Ошибка</strong><br />
+          {this.state.text}{' '}{this.state.count}
+        </div>
+
         <form method="post" action="/">
           <div>
             <h2>Вход</h2>
@@ -80,6 +125,7 @@ class Login extends Component {
             Вход
           </Button>
         </form>
+
       </div>
     )
   }

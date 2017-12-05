@@ -1,6 +1,6 @@
 @media all and (min-width: 480px) {
       .Login {
-      padding: 4% 0%;
+      // padding: 4% 0%;
       
     }
     .Login form {
@@ -18,4 +18,8 @@
       color: #fff;
       text-decoration: none;
     }
+  }
+  #alert{
+    margin: 0 auto;
+    width: 500px;
   }

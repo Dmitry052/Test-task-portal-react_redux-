@@ -11,7 +11,8 @@ const initialState = {
         email: '',
         company_id: '',
         companyname: '',
-        usergroups: []
+        usergroups: [],
+        block: true
     }
 }
 
@@ -35,6 +36,15 @@ export default function users(state = initialState, action) {
         };
     }
     // ---------------------------------------
+    if (action.type === "SET_BLOCK_USER_ADMIN") {
+        state.user.block = action.data;
+        return {
+            users: state.users,
+            user: state.user,
+            editModal: state.editModal,
+            check_users: state.check_users
+        };
+    }
     if (action.type === "SET_LOGIN_USER_ADMIN") {
         state.user.login = action.data;
         return {
@@ -122,7 +132,8 @@ export default function users(state = initialState, action) {
             email: action.data.email,
             company_id: action.data.company_id,
             companyname: action.data.companyname,
-            usergroups: []
+            usergroups: [],
+            block: action.data.status === 1 ? false : true
         }
         return {
             users: state.users,
@@ -133,7 +144,7 @@ export default function users(state = initialState, action) {
     }
     // ---------------------------------------
     if (action.type === "CHECK_USER_ADMIN") {
-        state.check_users.set(action.data.id,action.data.status);
+        state.check_users.set(action.data.id, action.data.status);
         return {
             users: state.users,
             user: state.user,

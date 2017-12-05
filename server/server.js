@@ -104,14 +104,13 @@ app.post('/', (req, res) => {
     // Данные с формы
     var uname = req.body.login;
     var pwd = req.body.password;
-    console.log("111111",req.body);
     // Поиск пользователя вБД
     var query = 'SELECT * FROM users WHERE authid = ?';
     sqlConnetction.query(query, ['local:' + uname], function (err, result) {
         var user = result[0];
 
         if (!user) {
-            return res.redirect('/');
+            res.send({ type: 'nouser' });
         }
         else {
             // Смотрим кто пришёл для подсчёта ошибок ввода
@@ -123,6 +122,7 @@ app.post('/', (req, res) => {
             }
 
             if (passwordHash.verify(pwd, user.password) && user.status === 1) {
+                delete req.session.signinUser;
                 req.session.authUser = user.displayname;
                 req.session.save(function () {
                     // Определяем сервис сотрудника
@@ -138,23 +138,25 @@ app.post('/', (req, res) => {
                             else if (st.service_type === 2) { res.redirect('/transp'); console.log(`Accessed ${req.session.authUser}`); }
                             else { res.send("Неизвестная организация"); }
                         });
+
                     }
                     else {
                         req.session.serviceType = 777;
                         res.redirect('/admin');
+
                     }
                 });
             } else {
-
                 req.session.signinUser.count++;
                 if (req.session.signinUser.count >= 3) {
                     // Блокируем
                     var query = `UPDATE users SET status = 0 where id = ${user.id}`;
-                    req.session.signinUser.count = 0;
                     sqlConnetction.query(query, function (err, result) { });
+                    res.send({ type: 'error', status: `${user.status}`, count: req.session.signinUser.count });
+                    req.session.signinUser.count = 0;
+                } else {
+                    res.send({ type: 'error', status: `${user.status}`, count: req.session.signinUser.count });
                 }
-
-                res.redirect('/');
 
             }
         }

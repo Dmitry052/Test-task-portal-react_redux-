@@ -14,6 +14,9 @@ class Users extends Component {
     closeModal() {
         this.props.showUser();
     }
+    setCheckBlock(e) {
+        this.props.setCheckBlock(e.target.checked);
+    }
     setLogin() {
         this.props.setLogin(this.login.value);
     }
@@ -119,6 +122,10 @@ class Users extends Component {
         var formated_date = day + "-" + month + "-" + year + " " + hours + ":" + min;
         return formated_date;
     }
+    statusFormatter(cell, row) {
+        if (cell === 1) { return 'Активный' }
+        else { return 'Блокирован'; }
+    }
 
     render() {
         const options = {
@@ -146,6 +153,7 @@ class Users extends Component {
                 >
                     <TableHeaderColumn dataField='id' width='12%' isKey={true} filter={{ type: 'TextFilter' }} >ID</TableHeaderColumn>
                     <TableHeaderColumn dataField='username' filter={{ type: 'TextFilter' }} >Логин</TableHeaderColumn>
+                    <TableHeaderColumn dataField='status' dataFormat={this.statusFormatter.bind(this)} filter={{ type: 'TextFilter' }}>Статус</TableHeaderColumn>
                     <TableHeaderColumn dataField='displayname' width='15%' filter={{ type: 'TextFilter' }}>Отображаемое имя</TableHeaderColumn>
                     <TableHeaderColumn dataField='email' filter={{ type: 'TextFilter' }}>Email</TableHeaderColumn>
                     <TableHeaderColumn dataField='created_at' width='20%' dataFormat={this.formatDate.bind(this)} filter={{ type: 'TextFilter' }}>Создан</TableHeaderColumn>
@@ -153,10 +161,13 @@ class Users extends Component {
                 </BootstrapTable>
 
                 <Modal isOpen={this.props.users.editModal} contentLabel="Modal"
-                    style={{ content: { width: '600px', border: 0, margin: 'auto', 'backgroundColor': '#f5f5f5', height: '400px' } }}
+                    style={{ content: { width: '600px', border: 0, margin: 'auto', 'backgroundColor': '#f5f5f5', height: '440px' } }}
                 >
                     <div id="headerUsersAdmin">
                         <button className="btn btn-danger" onClick={this.closeModal.bind(this)}><i className="fa fa-times" aria-hidden="true" /></button>
+                        <div className='col-lg-12 col-md-12 col-sm-12'>
+                            <label>Блокирован <input type="checkbox" checked={this.props.user.block} onChange={this.setCheckBlock.bind(this)} /></label>
+                        </div>
                         <div className='col-lg-12 col-md-12 col-sm-12'>
                             <span>Логин<span>*</span></span>
                             <input type='text'
@@ -234,6 +245,9 @@ export default connect(
     dispatch => ({
         showUser: () => {
             dispatch({ type: 'SHOW_USER_ADMIN' });
+        },
+        setCheckBlock: (check) =>{
+            dispatch({ type: 'SET_BLOCK_USER_ADMIN', data: check })
         },
         setLogin: (login) => {
             dispatch({ type: 'SET_LOGIN_USER_ADMIN', data: login })
