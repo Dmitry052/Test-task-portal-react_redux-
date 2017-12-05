@@ -12,7 +12,7 @@ const initialState = {
         company_id: '',
         companyname: '',
         usergroups: [],
-        block: true,
+        block: false,
     }
 }
 
